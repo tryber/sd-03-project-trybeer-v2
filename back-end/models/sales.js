@@ -1,13 +1,13 @@
 const createSales = (sequelize, DataTypes) => {
   const sales = sequelize.define('sales', {
     id: { type: DataTypes.INTEGER, primaryKey: true },
-    userId: DataTypes.INTEGER,
-    totalPrice: DataTypes.DECIMAL(9, 2),
-    deliveryAddress: DataTypes.STRING,
-    deliveryNumber: DataTypes.STRING,
-    deliveryCity: DataTypes.STRING,
-    deliveryDistrict: DataTypes.STRING,
-    saleDate: DataTypes.DATE,
+    user_id: DataTypes.INTEGER,
+    total_price: DataTypes.DECIMAL(9, 2),
+    delivery_address: DataTypes.STRING,
+    delivery_number: DataTypes.STRING,
+    delivery_city: DataTypes.STRING,
+    delivery_cistrict: DataTypes.STRING,
+    sale_date: DataTypes.DATE,
     status: DataTypes.STRING,
   },
   {
@@ -15,7 +15,7 @@ const createSales = (sequelize, DataTypes) => {
   });
   sales.associate = (models) => {
     sales.belongsTo(models.users,
-      { foreignKey: 'userId', as: 'user' });
+      { foreignKey: 'user_id', as: 'user' });
   };
   return sales;
 };
