@@ -1,0 +1,45 @@
+.admin-order-items {
+  display: flex;
+}
+
+.sale-number {
+  position: relative;
+  right: 25%;
+}
+
+.sale-Pendente {
+  color: #CBDA23;
+  position: absolute;
+  right: 5%;
+}
+
+.sale-Entregue {
+  color: #1CD118;
+  position: absolute;
+  right: 5%;
+}
+
+.product-unit-price {
+  font-size: 0.8em;
+}
+
+.sale-Pendente-btn {
+  background-color: #1CD118;
+  padding: 2% 8%;
+}
+
+.sale-Entregue-btn {
+  display: none;
+}
+
+.sale-items {
+  border: 1px solid black;
+  height: 80%;
+  margin: 20px 50px;
+  width: 100%;
+}
+
+.sale-total {
+  bottom: 5%;
+  position: absolute;
+}

@@ -1,0 +1,10 @@
+.admin-profile {
+  display: flex;
+}
+
+.admin-profile-aside {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
