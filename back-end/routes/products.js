@@ -2,9 +2,11 @@ const { Router } = require('express');
 const { productsControllers } = require('../controllers');
 const { authMiddleware } = require('../middleware');
 
-const products = Router();
+const productsRouter = Router();
 
-products
-  .get('/', authMiddleware(true), productsControllers.getAll);
+module.exports = (io) => {
+  productsRouter
+    .get('/', authMiddleware(true), productsControllers.getAll);
 
-module.exports = products;
+  return productsRouter;
+};
