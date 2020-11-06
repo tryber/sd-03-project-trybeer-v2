@@ -1,0 +1,44 @@
+a {
+  color: white;
+  text-decoration: none;
+}
+.content {
+  display: flex;
+  padding-left: 3%;
+  width: 80%;
+}
+
+.divTitle {
+  color: white;
+}
+
+.menu-logout {
+  align-items: flex-end;
+  align-self: stretch;
+  display: flex;
+  height: 50vw;
+  justify-content: flex-start;
+}
+
+.menu {
+  display: flex;
+}
+
+.side-bar {
+  align-items: stretch;
+  background-color: black;
+  border-color: rgba(64, 194, 133, 0.693);
+  border-radius: 0;
+  border-right: 1px solid;
+  display: flex;
+  flex-direction: column;
+  height: 100vw;
+  width: 20%;
+}
+
+.white-border {
+  border-bottom: 1px white solid;
+  border-top: 1px white solid;
+  display: flex;
+  width: 100%;
+}
