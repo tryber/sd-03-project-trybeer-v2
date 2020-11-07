@@ -1,25 +1,25 @@
-const { getAllSales, updateSaleById, getSale, getSaleInfo, checkout, getSaleByUserId, insertSaleProduct } = require('../models/salesModel');
+const { sales, salesProducts } = require('../models');
 
 const getAll = async () => {
-  const sales = await getAllSales();
-  if (!sales) {
+  const results = await sales.findAll();
+  if (!results) {
     return { error: 'no_sales' };
   }
-  return sales;
+  return results;
 };
 
 const updateSale = async (id, status) => {
-  const update = await updateSaleById(id, status);
+  const update = await sales.update({ id }, { status });
   return update;
 };
 
 const getSaleById = async (id) => {
   if (!parseInt(id, 10)) return { error: 'invalid_id' };
-  const sale = await getSaleInfo(id);
+  const sale = await sales.findByPk(id);
   if (!sale) {
     return { error: 'no_sales' };
   }
-  const saleProducts = await getSale(id);
+  const saleProducts = await sales.findByPk(id);
   const fullSale = { ...sale, saleProducts };
 
   return fullSale;
@@ -34,7 +34,7 @@ const finishSale = async (user, order) => {
     const { cart, street, streetNumber } = order;
     const timeStamp = new Date();
     const total = cartTotal(cart);
-    const saleId = await checkout(
+    const saleId = await sales.create(
       user.id,
       total,
       street,
@@ -44,7 +44,7 @@ const finishSale = async (user, order) => {
       'Pendente',
     );
     console.log(saleId);
-    if (saleId) await insertSaleProduct(saleId, cart);
+    if (saleId) await salesProducts.create({ sale_id: saleId, cart });
   } catch (e) {
     return { error: 'internal_error' };
   }
@@ -52,7 +52,7 @@ const finishSale = async (user, order) => {
 
 const getSaleByUser = async (id) => {
   try {
-    const sale = await getSaleByUserId(id);
+    const sale = await sales.findAll({ where: { id } });
     return sale;
   } catch (e) {
     console.error(e);

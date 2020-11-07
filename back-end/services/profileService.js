@@ -1,12 +1,13 @@
-const userModel = require('../models/userModel');
+const { users } = require('../models');
 
 const updateUser = async (name, email) => {
-  const userExists = await userModel.getByEmail(email);
-  if (!userExists) {
+  const [user] = await users.findAll({}, { where: { email } });
+  if (!user) {
     return { error: 'user_not_exist' };
   }
-  await userModel.updateUser(name, email);
-  const result = await userModel.getByEmail(email);
+  const { id } = user;
+  await users.update({ includes: { id } }, { name, email });
+  const result = await users.findAll({ email });
   return result;
 };
 

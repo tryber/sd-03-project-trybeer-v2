@@ -1,13 +1,13 @@
 const createToken = require('../token/createToken');
-const { getByEmail } = require('../models/userModel');
+const { users } = require('../models');
 
-const loginService = async (mail, password) => {
-  const user = await getByEmail(mail);
+const loginService = async (email, password) => {
+  const user = await users.findAll({ email });
 
   if (!user) return { error: 'invalid_user' };
-  const { name, email, role, id } = user;
+  const { name, email: mail, role, id } = user;
   if (user && user.password === password) {
-    return createToken(name, email, role, id);
+    return createToken(name, mail, role, id);
   }
   return { error: 'invalid_user' };
 };
