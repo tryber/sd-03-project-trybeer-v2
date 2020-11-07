@@ -1,0 +1,28 @@
+.OrdersContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.OrdersCard {
+  align-items: center;
+  background-color: white;
+  border: 1px solid #3F7D20;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px;
+  padding: 10px;
+  width: 50%;
+}
+
+.OrdersContainer a {
+  color: black;
+  text-decoration: none;
+}
+
+.OrdersCard p {
+  margin: 5px;
+  padding: 10px;
+}

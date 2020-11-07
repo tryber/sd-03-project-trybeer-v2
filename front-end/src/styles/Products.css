@@ -1,0 +1,77 @@
+body {
+  background-color: #F3EFF5;
+}
+
+.ProductsContainer {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 100px;
+  width: 70%;
+}
+
+.ProductsCards {
+  align-items: center;
+  background-color: white;
+  border: 1px #3F7D20 solid;
+  border-radius: 10%;
+  box-shadow: 2px 2px 2px 0.1px black;
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  margin: 10px;
+  margin-left: 5%;
+  width: 250px;
+}
+
+.CardTitle {
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.ProductsCards img {
+  width: 150px;
+}
+
+.BtnCard {
+  align-items: center;
+  border-top: 1px solid #3F7D20;
+  display: flex;
+  height: 50%;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.BtnCard button {
+  cursor: pointer;
+  font-size: 20pt;
+  height: 80%;
+  font-weight: 600;
+  width: 30%;
+}
+
+.BtnMinus {
+  background-color: white;
+  border: none;
+  color: red;
+}
+
+.BtnPlus {
+  background-color: white;
+  border: none;
+  color: green;
+}
+
+.FooterProducts {
+  background-color: #3F7D20;
+  bottom: 0;
+  color: white;
+  height: 50px;
+  position: fixed;
+  width: 100%;
+}
+
+.FooterProducts button {
+  cursor: pointer;
+  margin: 0 10px;
+}

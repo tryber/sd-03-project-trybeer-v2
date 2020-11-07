@@ -1,0 +1,29 @@
+.ProfileContainer {
+  background-image: url(../images/FundoLogin.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.FormContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 15%;
+  padding-bottom: 15%;
+}
+
+.FormContainer p {
+  margin: 5px;
+}
+
+.FormContainer button {
+  background-color: #72B01D;
+  border-color: #72B01D;
+  margin: 20px;
+  padding: 5px 10px;
+  width: 150px;
+}
+
+.FormContainer input {
+  margin: 10px;
+}
