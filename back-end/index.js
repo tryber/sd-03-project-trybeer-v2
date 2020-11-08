@@ -7,7 +7,7 @@ const cors = require('cors');
 const login = require('./controllers/login');
 // const profile = require('./controllers/profile');
 // const userRegister = require('./controllers/userRegister');
-// const products = require('./controllers/products');
+const products = require('./controllers/products');
 // const productList = require('./controllers/productList');
 // const checkout = require('./controllers/checkout');
 // const orderDetails = require('./controllers/orderDetails');
@@ -30,7 +30,7 @@ app.use('/login', login);
 // app.use('/orderDetails', orderDetails);
 
 // app.use('/images', express.static(path.join(__dirname, '/images')));
-// app.use('/products', products);
+app.use('/products', products);
 // app.use('/adminOrders', adminOrders);
 
 const PORT = process.env.PORT || 3001;
