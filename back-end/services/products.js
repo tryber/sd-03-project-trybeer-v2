@@ -3,7 +3,7 @@ const { products } = require('../models');
 
 const getAllProducts = async () => {
 const result = await products.findAll();
-console.log(result);
+return result.map((e) => e.dataValues);
 }
 
 module.exports = { getAllProducts };
