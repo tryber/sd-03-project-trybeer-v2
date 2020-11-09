@@ -12,7 +12,7 @@ const products = require('./controllers/products');
 const checkout = require('./controllers/checkout');
 // const orderDetails = require('./controllers/orderDetails');
 // const userInfo = require('./controllers/userInfo');
-// const admin = require('./controllers/admin');
+const admin = require('./controllers/admin');
 // const adminOrders = require('./controllers/adminOrders');
 
 const app = express();
@@ -20,7 +20,7 @@ app.use(cors(), bodyParser.json());
 
 app.use('/', bodyParser.json());
 
-// app.use('/admin', admin); Marco
+app.use('/admin', admin); // Marco
 app.use('/checkout', checkout);
 app.use('/login', login);
 // app.use('/userInfo', userInfo); Fabiano
