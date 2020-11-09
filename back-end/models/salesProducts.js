@@ -9,14 +9,14 @@ const createSalesProducts = (sequelize, DataTypes) => {
     models.sales.belongsToMany(models.products, {
       as: 'products',
       through: salesProducts,
-      foreignKey: 'id',
-      otherKey: 'id',
+      foreignKey: 'product_id',
+      otherKey: 'sale_id',
     });
     models.products.belongsToMany(models.sales, {
       as: 'sales',
       through: salesProducts,
-      foreignKey: 'id',
-      otherKey: 'id',
+      foreignKey: 'sale_id',
+      otherKey: 'product_id',
     });
   };
   return salesProducts;

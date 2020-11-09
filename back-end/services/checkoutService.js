@@ -1,37 +1,48 @@
-// // const { createOrder } = require('../models/salesModel');
-// // const { saveOrderWithProductDetails } = require('../models/saveOrderDetails');
+// const { createOrder } = require('../models/salesModel');
+// const { saveOrderWithProductDetails } = require('../models/saveOrderDetails');
+const { sales, products, salesProducts } = require('../models');
 
-// const checkoutService = async (req, res) => {
-//   const {
-//     userId,
-//     totalPrice,
-//     deliveryAddress,
-//     deliveryNumber,
-//     saleDate,
-//     status,
-//     store,
-//   } = req.body;
+const checkoutService = async (req, res) => {
+  const {
+    userId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber,
+    saleDate,
+    status,
+    store,
+  } = req.body;
 
-//   // Validações
-//   const finalStore = store.reduce((acc, e) => {
-//     if (acc.find((el) => el.name === e.name)) {
-//       return [...acc.filter((el) => el.name !== e.name),
-//         { name: e.name, quantity: acc.filter((el) => el.name === e.name)[0].quantity + 1 }];
-//     }
-//     return [...acc, { name: e.name, quantity: 1 }];
-//   }, []);
+  // Validações
+  const finalStore = store.reduce((acc, e) => {
+    if (acc.find((el) => el.name === e.name)) {
+      return [...acc.filter((el) => el.name !== e.name),
+      { name: e.name, quantity: acc.filter((el) => el.name === e.name)[0].quantity + 1 }];
+    }
+    return [...acc, { name: e.name, quantity: 1 }];
+  }, []);
 
-//   // Salva no banco
-//   const response = await createOrder(
-//     userId,
-//     totalPrice,
-//     deliveryAddress,
-//     deliveryNumber,
-//     saleDate,
-//     status,
-//   );
-//   await saveOrderWithProductDetails(finalStore);
-//   res.status(201).send(response);
-// };
+  // Salva no banco
 
-// module.exports = checkoutService;
+  const response = await sales.create({
+    user_id: userId,
+    total_price: totalPrice,
+    delivery_address: deliveryAddress,
+    delivery_number: deliveryNumber,
+    sale_date: saleDate,
+    status,
+  });
+  const { id: saleId } = response;
+  finalStore.map(async ({ name, quantity }) => {
+    const { id: productId } = (await products.findAll({ where: { name } }))[0];
+    salesProducts.create({
+      sale_id: saleId,
+      product_id: productId,
+      quantity,
+    });
+  });
+
+  res.status(201).send(response);
+};
+
+module.exports = checkoutService;
