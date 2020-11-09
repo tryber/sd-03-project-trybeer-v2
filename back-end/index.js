@@ -11,13 +11,13 @@ const {
 
 const { getAllProducts } = require('./controllers/productController');
 
-// const {
-//   createSale,
-//   getSales,
-//   listSales,
-//   saleDetails,
-//   setAsDelivered,
-// } = require('./controllers/saleController');
+const {
+  listSales,
+  // createSale,
+  // getSales,
+  // saleDetails,
+  // setAsDelivered,
+} = require('./controllers/saleController');
 
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
@@ -32,7 +32,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.get('/', (_req, res) => res.send());
 
 app.get('/products', auth(true), (req, res) => getAllProducts(req, res));
-// app.get('/admin/orders', listSales);
+app.get('/admin/orders', listSales);
 // app.get('/admin/orders/:id', saleDetails);
 // app.get('/orders', (req, res) => getSales(req, res));
 
