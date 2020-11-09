@@ -1,4 +1,3 @@
-
 const user = (sequelize, DataTypes) => sequelize.define('user', {
   id: {
     type: DataTypes.INTEGER,

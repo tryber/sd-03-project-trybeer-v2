@@ -1,5 +1,3 @@
-
-
 const product = (sequelize, DataTypes) => sequelize.define('product', {
   id: {
     type: DataTypes.INTEGER,
@@ -13,7 +11,7 @@ const product = (sequelize, DataTypes) => sequelize.define('product', {
     unique: true,
   },
   price: {
-    type: DataTypes.DECIMAL(4,2),
+    type: DataTypes.DECIMAL(4, 2),
     allowNull: false,
   },
   url_image: {
@@ -21,6 +19,6 @@ const product = (sequelize, DataTypes) => sequelize.define('product', {
     allowNull: false,
     default: '',
   },
-});
+}, { timestamps: false });
 
 module.exports = product;

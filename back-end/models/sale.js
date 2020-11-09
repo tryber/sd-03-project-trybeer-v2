@@ -1,5 +1,3 @@
-
-
 const Sale = (sequelize, DataTypes) => {
   const sale = sequelize.define('sale', {
     id: {
@@ -13,7 +11,7 @@ const Sale = (sequelize, DataTypes) => {
       allowNull: false,
     },
     total_price: {
-      type: DataTypes.DECIMAL(9,2),
+      type: DataTypes.DECIMAL(9, 2),
       allowNull: false,
     },
     delivery_address: {
@@ -37,6 +35,6 @@ const Sale = (sequelize, DataTypes) => {
     sale.belongsTo(models.user, { as: 'user', foreignKey: 'user_id' });
   };
   return sale;
-}
+};
 
 module.exports = Sale;

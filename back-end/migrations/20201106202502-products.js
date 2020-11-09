@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => queryInterface.createTable('products', {
     id: {
@@ -14,7 +12,7 @@ module.exports = {
       unique: true,
     },
     price: {
-      type: Sequelize.DECIMAL(4,2),
+      type: Sequelize.DECIMAL(4, 2),
       allowNull: false,
     },
     url_image: {
@@ -26,4 +24,3 @@ module.exports = {
 
   down: async (queryInterface, _Sequelize) => queryInterface.dropTable('products'),
 };
-

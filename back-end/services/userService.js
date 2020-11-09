@@ -19,28 +19,28 @@ const RegisterUser = async (userData) => {
   return createdUser;
 };
 
-// const LoginUser = async (userEmail, userPass) => {
-//   const user = await getUserByEmail(userEmail);
-//   if (user.email !== userEmail) return { status: 404, message: 'Não há cadastro com esse email.' };
-//   if (user.password !== userPass) return { status: 400, message: 'Senha incorreta.' };
-//   const { password, ...userData } = user;
-//   const token = jwt.sign(userData, JWT_SECRET || 'tentecerveja', jwtConfig);
-//   return { ...userData, token };
-// };
+const LoginUser = async (userEmail, userPass) => {
+  const { dataValues } = await user.findOne({ where: { email: userEmail } });
+  if (dataValues.email !== userEmail) return { status: 404, message: 'Não há cadastro com esse email.' };
+  if (dataValues.password !== userPass) return { status: 400, message: 'Senha incorreta.' };
+  const { password, ...userData } = dataValues;
+  const token = jwt.sign(userData, JWT_SECRET || 'tentecerveja', jwtConfig);
+  return { ...userData, token };
+};
 
-// const UpdateUserName = async (userName, userEmail) => {
-//   if (userName.length <= 1 || userName.length > 24) return { status: 400, message: 'Nome inválido.' };
-//   await updateName(userName, userEmail);
-//   const user = await getUserByEmail(userEmail);
-//   const { password, ...userData } = user;
-//   const token = jwt.sign(userData, JWT_SECRET || 'tentecerveja', jwtConfig);
-//   return { ...userData, token, message: 'Atualização concluída com sucesso' };
-// };
+const UpdateUserName = async (userName, userEmail) => {
+  if (userName.length <= 1 || userName.length > 24) return { status: 400, message: 'Nome inválido.' };
+  await user.update({ name: userName }, { where: { email: userEmail } });
+  const dbUser = await user.findOne({ where: { email: userEmail } });
+  const { password, ...userData } = dbUser;
+  const token = jwt.sign(userData, JWT_SECRET || 'tentecerveja', jwtConfig);
+  return { ...userData, token, message: 'Atualização concluída com sucesso' };
+};
 
 module.exports = {
   RegisterUser,
-  // LoginUser,
-  // UpdateUserName,
+  LoginUser,
+  UpdateUserName,
 };
 
 // const ValidadeUser = async (name, email, password, dbEmail) => {
