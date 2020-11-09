@@ -5,11 +5,12 @@ import Routers from './Routers/index';
 import { socketToReduxAction } from './Redux/action/socketToReduxAction';
 import './App.css';
 
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    const socket = socketIo('localhost:3001');
-    console.log(socket)
+    const socket = socketIo('http://localhost:3001', { transports: ['websocket'] });
+    // const socket = socketIo('http://localhost:3001/');
     dispatch(socketToReduxAction(socket));
   }, []);
 
