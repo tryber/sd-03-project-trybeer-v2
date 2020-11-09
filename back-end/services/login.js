@@ -14,7 +14,7 @@ const validateLogin = async (email, pass) => {
   const userInfo = (await users.findAll({ where: { email } }))[0];
   if (!userInfo.id) return { code: 404, message: 'usuário não encontrado' };
   if (userInfo.password !== pass) return { code: 401, message: 'senha incorreta' };
-  const { password, ...info } = userInfo;
+  const { password, ...info } = userInfo.dataValues;
   return info;
 };
 
