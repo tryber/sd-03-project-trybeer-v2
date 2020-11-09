@@ -1,11 +1,14 @@
 // const model = require('../models/products');
 const { products } = require('../models');
 
-// const getAllProducts = async () => {
-//   const result = await products.findAll();
-//   return result.map((e) => e.dataValues);
-// }
+const getAllProducts = async () => {
+  const result = await products.findAll();
+  return result.map((e) => {
+    const { id, name, price, url_image } = e.dataValues;
+    return { id, name, price: Number(price), urlImage: url_image };
+  });
+}
 
-const getAllProducts = async () => await products.findAll();
+// const getAllProducts = async () => await products.findAll();
 
 module.exports = { getAllProducts };

@@ -29,7 +29,7 @@ app.use('/profile', profile);
 // app.use('/productList', productList);
 // app.use('/orderDetails', orderDetails);
 
-// app.use('/images', express.static(path.join(__dirname, '/images')));
+app.use('/images', express.static(path.join(__dirname, '/images')));
 app.use('/products', products);
 // app.use('/adminOrders', adminOrders);
 
