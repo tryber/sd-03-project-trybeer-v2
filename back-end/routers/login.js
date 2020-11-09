@@ -1,10 +1,10 @@
 const express = require('express');
 const rescue = require('express-rescue');
 
-const loginController = require('../controllers/loginController');
-
 const login = express.Router();
+const loginTest = (userController) => {
+  login.post('/', rescue(userController.loginController));
+  return login;
+};
 
-login.post('/', rescue(loginController));
-
-module.exports = login;
+module.exports = loginTest;

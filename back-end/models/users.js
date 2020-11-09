@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       role: DataTypes.STRING,
     },
-    { timestamps: true },
+    { timestamps: false },
   );
 
   User.associate = (models) => {

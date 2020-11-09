@@ -2,6 +2,7 @@ const loginService = require('../services/loginService');
 
 const loginController = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log('req.body:', req.body)
   const response = await loginService(email, password);
 
   if (response.error) return next(response.error);
