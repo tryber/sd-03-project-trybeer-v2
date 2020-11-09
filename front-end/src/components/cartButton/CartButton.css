@@ -1,0 +1,18 @@
+.cart-content {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.cart-button {
+  width: 25rem;
+  margin: 20px 0;
+  color: white;
+  border-color: #8a3033;
+  background-color: #8a3033;
+}
+
+.cart-button:hover {
+  color: white;
+}
