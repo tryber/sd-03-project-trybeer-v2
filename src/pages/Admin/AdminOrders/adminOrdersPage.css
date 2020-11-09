@@ -1,0 +1,8 @@
+.admin-orders-page-container {
+  display: flex;
+  flex-wrap: wrap; 
+  width: 900px; 
+  margin: auto; 
+  padding-left: 150px; 
+  padding-bottom: 30px;
+}

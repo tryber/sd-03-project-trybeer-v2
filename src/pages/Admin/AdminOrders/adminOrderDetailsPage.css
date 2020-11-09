@@ -1,0 +1,67 @@
+.admin-order-details-li{
+  list-style-type: none;
+}
+
+.admin-details-order-info {
+  margin: auto;
+}
+
+.admin-details-card {
+  background-color: #ffc500;
+  border-radius: 15px;
+  box-shadow: 0 11px 18px -8px rgba(0, 0, 0, 0.795);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto;
+  padding: 15px;
+  width: 600px;
+  margin-bottom: 25px;
+  height: 25px;
+}
+
+.details-total-price {
+  justify-content: space-evenly;
+}
+
+.details-span-sq {
+  width: 30px;
+  text-align: left;
+}
+
+.details-span-pn {
+  width: 250px;
+  text-align: left;
+}
+
+.details-span-tp {
+  width: 70px;
+  text-align: left;
+}
+
+.details-span-up {
+  width: 70px;
+  text-align: left;
+}
+
+.status-btn {
+  width: 250px;
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  border: none;
+  background-color: rgba(0, 139, 0, 0.767);
+  font-size: 15px;
+  color: #333;
+}
+
+.status-btn:hover {
+  width: 250px;
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  border: none;
+  background-color: rgba(0, 110, 0, 0.938);
+  font-size: 15px;
+  color: rgb(46, 46, 46);
+}
