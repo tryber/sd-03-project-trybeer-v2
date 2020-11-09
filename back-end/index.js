@@ -20,15 +20,15 @@ app.use('/images', express.static(`${process.cwd()}/images`));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/login', routers.login(userController));
+app.use('/login', routers.login(userController.loginController));
 
-app.use('/register', routers.register(userController));
+app.use('/register', routers.register(userController.createUser));
 
-app.use('/profile', routers.profile);
+app.use('/profile', routers.profile(userController.updateUser));
 
 app.use('/products', routers.products);
 
-// app.use('/admin', routers.admin);
+// app.use('/admin', routers.admin);z
 
 // app.use('/orders', routers.orders);
 
