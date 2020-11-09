@@ -6,7 +6,7 @@ const getUserController = require('./controllers/userController');
 const getUserService = require('./services/userService');
 const { users } = require('./models');
 
-const userService = getUserService(users)
+const userService = getUserService(users);
 const userController = getUserController(userService);
 
 const routers = require('./routers/index');
@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 app.use('/login', routers.login(userController));
 
-app.use('/register', routers.register);
+app.use('/register', routers.register(userController));
 
 app.use('/profile', routers.profile);
 

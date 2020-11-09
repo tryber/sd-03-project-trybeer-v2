@@ -9,7 +9,7 @@ const getUserByEmail = (users) => async (email) => {
 const createUser = (users) => async (userInfo) => {
   const { name, email, password, role } = userInfo;
 
-  const user = await getUserByEmail(email);
+  const [user] = await users.findAll({ where: { email } });
 
   if (user) {
     return { error: 'email_in_use' };
@@ -23,8 +23,7 @@ const createUser = (users) => async (userInfo) => {
 };
 
 const updateUser = (users) => async (name, email) => {
-  const user = await getUserByEmail(email);
-  console.log(user);
+  const user = await users.findAll({ where: { email } });
   if (!user) {
     return { error: 'user_not_exist' };
   }
