@@ -3,8 +3,8 @@ const rescue = require('express-rescue');
 
 const register = express.Router();
 
-const registerRouter = (userController) => {
-  register.post('/', rescue(userController.createUser));
+const registerRouter = (createUser) => {
+  register.post('/', rescue(createUser));
   return register;
 };
 

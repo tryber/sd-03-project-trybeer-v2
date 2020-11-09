@@ -19,7 +19,7 @@ const loginController = (service) => async (req, res, next) => {
 
 const createUser = (service) => async (req, res, next) => {
   const { name, email, password, role } = req.body;
-  console.log('req.body:', req.body)
+  console.log('req.body:', req.body);
   const response = await service.createUser({ name, email, password, role });
 
   if (response.error) return next(response.error);
