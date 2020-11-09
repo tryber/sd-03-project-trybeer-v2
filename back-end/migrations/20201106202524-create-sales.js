@@ -29,6 +29,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      delivery_city: {
+        allowNull: false,
+        type: Sequelize.STRING, 
+      },
+      delivery_district: {
+        allowNull: false,
+        type: Sequelize.STRING, 
+      },
       sale_date: {
         allowNull: false,
         type: Sequelize.DATE,

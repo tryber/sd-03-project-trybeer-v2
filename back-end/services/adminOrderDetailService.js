@@ -9,6 +9,7 @@ const adminOrderDetailService = async (req, res) => {
   if (result) {
     const products = await productService.getAllProducts();
     const orderStatus = await sales.findAll({ where: { id }}); // getStatusOrderById(id);
+    console.log(orderStatus);
     let orderProducts = [];
     result.map((e) => {
       orderProducts = [

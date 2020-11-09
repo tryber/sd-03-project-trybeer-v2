@@ -8,6 +8,8 @@ const checkoutService = async (req, res) => {
     totalPrice,
     deliveryAddress,
     deliveryNumber,
+    deliveryDistrict,
+    deliveryCity,
     saleDate,
     status,
     store,
@@ -29,6 +31,8 @@ const checkoutService = async (req, res) => {
     total_price: totalPrice,
     delivery_address: deliveryAddress,
     delivery_number: deliveryNumber,
+    delivery_district: deliveryDistrict,
+    delivery_city: deliveryCity,
     sale_date: saleDate,
     status,
   });
