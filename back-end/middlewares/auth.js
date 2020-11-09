@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig, secret } = require('./jwtConfiguration');
-const { usersModel } = require('../models');
+const { User } = require('../models');
 
 const generateJwt = (data) => {
   const token = jwt.sign({ data }, secret, jwtConfig);
@@ -13,11 +13,11 @@ const validateJWT = async (req, res, next) => {
   if (!token) return res.status(401).json({ message: 'missing auth token' });
 
   try {
-    const decoded = jwt.verify(token, secret);
+    const { data: { email } } = jwt.verify(token, secret);
 
-    const user = await usersModel.getUserByEmail(decoded.data.email);
+    const user = await User.findAll({ where: { email }, raw: true });
 
-    if (!user) {
+    if (!user[0]) {
       return res.status(401).json({ message: 'invalid token' });
     }
 

@@ -1,4 +1,4 @@
-const { usersModel } = require('../models');
+const { User } = require('../models');
 const { generateJwt } = require('../middlewares/auth');
 
 // Referência regex para validação de email:
@@ -24,7 +24,7 @@ const registerUser = async (name, email, password, role = 'client') => {
 
   if (typeof isEntriesValid === 'object') return isEntriesValid;
 
-  const id = await usersModel.registerUser(name, email, password, role);
+  const { dataValues: { id } } = await User.create({ name, email, password, role });
 
   const { token } = generateJwt({ id, name, email, password, role });
 
@@ -35,25 +35,33 @@ const registerUser = async (name, email, password, role = 'client') => {
 const userLogin = async (email, password) => {
   if (!email || !password) return { message: 'All fields must be filled' };
 
-  const user = await usersModel.getUserByEmail(email);
+  const user = await User.findAll({ where: { email }, raw: true });
 
-  if (!user || user.password !== password) return { message: 'Incorrect username or password' };
+  const { email: userEmail, password: userPassword } = user[0];
 
-  const { token } = generateJwt(user);
+  if (
+    !userEmail || userPassword !== password
+  ) return { message: 'Incorrect username or password' };
 
-  const { role, name } = user;
+  const { token } = generateJwt(user[0]);
+
+  const { role, name } = user[0];
 
   return { name, email, role, token };
 };
 
 const editUser = async (name, email) => {
-  const user = await usersModel.getUserByEmail(email);
+  const user = await User.findAll({ where: { email }, raw: true });
 
-  if (user.email !== email) return { message: 'Invalid email', code: '409' };
+  if (user[0].email !== email) return { message: 'Invalid email', code: '409' };
 
-  await usersModel.editUser(name, email);
+  await User.update({ name, email }, { where: { email } });
 
-  return { name, email };
+  const updatedUser = await User.findAll({ where: { email }, raw: true });
+
+  const { email: userEmail, name: userName } = updatedUser[0];
+
+  return { name: userName, email: userEmail };
 };
 
 module.exports = { registerUser, userLogin, editUser };
