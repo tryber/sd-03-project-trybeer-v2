@@ -3,6 +3,11 @@ import { Link, useHistory } from "react-router-dom";
 import "./index.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 
+const cleanUser = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('role');
+};
+
 const SideMenu = () => {
   const role = localStorage.getItem('role');
 
@@ -31,7 +36,7 @@ const SideMenu = () => {
       <Link to="/login">
         <button
           data-testid="side-menu-item-logout"
-          onClick={() => localStorage.removeItem('token')}
+          onClick={cleanUser}
           type="button"
         >
           Sair

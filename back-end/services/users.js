@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
+const Models = require('../models');
 
 const { SECRET = 'preguicaDeCriarUmSegredo' } = process.env;
 
@@ -7,8 +8,6 @@ const options = {
   expiresIn: '1d',
   algorithm: 'HS256',
 };
-
-const { usersModel } = require('../models');
 
 const emailSchema = Joi.string().email()
   .required();
@@ -52,21 +51,19 @@ const userSchema = Joi.object({
   role: roleSchema,
 });
 
-const getUserByEmail = async (email) => usersModel.getUserByEmail(email);
+const getUserByEmail = async (email) => Models.users.findOne({ where: { email } })
+  .then((user) => user.dataValues);
 
-const createUser = async (newUser) => usersModel
-  .createUser(newUser)
-  .then(({ id, email, name, role }) => ({ id, email, name, role }));
+const createUser = async ({ id, email, name, password, role }) => Models.users
+  .create({ id, email, name, role, password })
+  .then((insertion) => insertion.dataValues);
 
-const changeUserName = async (name, { id, email }) => {
-  if ((!id && !email) || (id && email)) return { error: 'Erro Interno' };
+const changeUserName = async (name, { id }) => {
+  const { dataValues: { password, ...user } } = await Models.users.findByPk(id);
 
-  const { password, ...user } = id
-    ? await usersModel.getUserById(id)
-    : await usersModel.getUserByEmail(email);
+  const [updated] = await Models.users.update({ name }, { where: { id } });
 
-  if (id) await usersModel.changeUserNameById(id, name);
-  if (email) await usersModel.changeUserNameByEmail(email, name);
+  if (!updated) return { error: true, message: 'not updated' };
 
   return { ...user, name };
 };

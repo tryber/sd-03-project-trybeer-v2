@@ -50,9 +50,9 @@ const validate = (req, _res, next) => {
 const register = rescue(async (req, res, next) => {
   const { email, password, role, name } = req.validated;
 
-  const { id } = await usersServices.getUserByEmail(email);
+  const possibleUser = await usersServices.getUserByEmail(email);
 
-  if (id) return next(Boom.conflict('E-mail already in database.'));
+  if (possibleUser) return next(Boom.conflict('E-mail already in database.'));
 
   const newUser = await usersServices.createUser({ email, name, password, role });
 
@@ -72,8 +72,7 @@ const changeUser = rescue(async (req, res, next) => {
   if (error) return next(Boom.badData(error));
   const changedUser = await usersServices.changeUserName(name, { id });
 
-  if (changeUser.error) return next(Boom.internal(error));
-
+  if (changedUser.error) return next(Boom.internal(changedUser.message));
   return res.status(200).json({ ...changedUser });
 });
 

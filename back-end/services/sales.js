@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi');
-const { salesModel } = require('../models');
+const Models = require('../models');
 
 const idSchema = Joi.number()
   .integer()
@@ -47,33 +47,26 @@ const checkoutSchema = Joi.object({
   products: productsSchema,
 });
 
-const addSale = async (saleObj) => {
-  const sale = await salesModel.addSale(saleObj);
-  return sale;
-};
+const addSale = async (saleObj) => Models.sales.create(saleObj);
 
-const addToIntermediate = async (saleIntermediateInfo) => {
-  const intermediateInfo = await salesModel.addToIntermediate(
-    saleIntermediateInfo,
-  );
-  return intermediateInfo;
-};
+const addToIntermediate = async (saleIntermediateInfo) => Models.sales
+  .addToIntermediate(saleIntermediateInfo);
 
 const getAll = async (id) => (id
-  ? salesModel.getAll(id)
-  : salesModel.getAllAdmin());
+  ? Models.sales.getAll(id)
+  : Models.sales.getAllAdmin());
 
-const getById = async (id) => salesModel
+const getById = async (id) => Models.sales
   .getById(id)
   .then((sale) => sale
-      || { error: true, message: 'Compra não encontrada' });
+    || { error: true, message: 'Compra não encontrada' });
 
-const getProducts = async (id) => salesModel.getProducts(id);
+const getProducts = async (id) => Models.sales.getProducts(id);
 
-const deliverySale = async (id, status) => salesModel.updateStatus(id, status);
+const deliverySale = async (id, status) => Models.sales.updateStatus(id, status);
 
 const confirmOwnerShip = async (userRequestId, saleId) => {
-  const { userId } = await salesModel.getById(saleId);
+  const { userId } = await Models.sales.getById(saleId);
   if (userRequestId !== userId) return { error: true, message: 'Essa compra não é sua' };
   return { ok: true };
 };

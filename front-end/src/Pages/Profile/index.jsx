@@ -66,7 +66,7 @@ const Profile = () => {
               aria-label="change name"
               data-testid={role === 'administrator' ? "profile-name" : "profile-name-input"}
               className="change-user-input"
-              onChange={(event) => setOficialName(event.target.value)}
+              onChange={(event) => setName(event.target.value)}
               name="name"
               id="name"
               defaultValue={name}
