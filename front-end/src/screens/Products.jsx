@@ -77,6 +77,7 @@ const Products = () => {
       updateCart[cartIndex].list = updateCart[cartIndex].list.filter((e) => e.id !== product.id);
       setCarts([...updateCart]);
       localStorage.setItem('carts', JSON.stringify([...updateCart]));
+      return;
     }
     const updateCart = [...carts];
     updateCart[cartIndex].list[cartItemIndex].qty -= 1;

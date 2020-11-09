@@ -16,7 +16,7 @@ function OrderDetail(props) {
       Authorization: currentUser.token,
     });
 
-    return fetch(`http://localhost:3001/orders/${match.params.id}`, { headers })
+    fetch(`http://localhost:3001/orders/${match.params.id}`, { headers })
       .then((response) => response.json()
         .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
       .then((data) => setOrderInfo(data))
@@ -24,6 +24,7 @@ function OrderDetail(props) {
         if (err.message === 'Order not found') return setOrderInfo({ message: err.message });
         return setLoggedIn(false);
       });
+    return () => (console.log(''));
   }, [currentUser, props]);
 
   if (!loggedIn) return <Redirect to="/login" />;

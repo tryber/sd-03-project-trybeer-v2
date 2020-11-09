@@ -16,11 +16,12 @@ function Orders(props) {
       Authorization: currentUser.token,
     });
 
-    return fetch('http://localhost:3001/orders', { headers })
+    fetch('http://localhost:3001/orders', { headers })
       .then((response) => response.json()
         .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
       .then((data) => setOrdersList(data))
       .catch(() => setLoggedIn(false));
+    return () => (console.log(''));
   }, [currentUser, props]);
 
   if (!loggedIn) return <Redirect to="/login" />;
@@ -41,7 +42,7 @@ function Orders(props) {
       <Header title="Meus Pedidos" />
       <section className="OrdersContainer">
         {ordersList.map((order, index) => (
-          <Link to={ `/orders/${order.id}` } key="order">
+          <Link to={ `/orders/${order.id}` } key={ order.id }>
             <div data-testid={ `${index}-order-card-container` } className="OrdersCard">
               <p data-testid={ `${index}-order-number` }>
                 Pedido
