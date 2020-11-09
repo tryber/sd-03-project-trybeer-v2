@@ -11,13 +11,13 @@ export const getUserFromAPI = async (email, password) => {
       password,
     },
   })
-    .catch(({ err }) => err);
-
+    .then((resp) => resp.data)
+    .catch((e) => console.log('Login error', e));
   return response;
 };
 
 export const postNewUserAPI = async (name, email, password, seller) => {
-  const dataResponse = await axios({
+  const response = await axios({
     baseURL: `${url}register`,
     method: 'post',
     data: {
@@ -28,9 +28,9 @@ export const postNewUserAPI = async (name, email, password, seller) => {
     },
   })
     .then((resp) => resp.data)
-    .catch(({ response }) => response.data);
+    .catch((e) => console.log('Register error', e));
 
-  return dataResponse;
+  return response;
 };
 
 export const postUpdateName = async (name, email, token) => {
@@ -46,7 +46,7 @@ export const postUpdateName = async (name, email, token) => {
     },
   })
     .then((resp) => resp.data)
-    .catch(({ err }) => err);
+    .catch((e) => console.log('Update User error', e));
 
   return response;
 };
@@ -60,7 +60,7 @@ export const getProductsFromAPI = async (token) => {
     },
   })
     .then((resp) => resp.data)
-    .catch(({ err }) => err);
+    .catch((e) => console.log('List Products error', e));
 
   return response;
 };
@@ -74,7 +74,7 @@ export const getOrdersFromAPI = async (token) => {
     },
   })
     .then((res) => res.data)
-    .catch(({ err }) => err);
+    .catch((e) => console.log('Orders List error', e));
 
   return response;
 };
@@ -88,18 +88,18 @@ export const getOrderList = async (token) => {
     },
   })
     .then((result) => result.data)
-    .catch(({ err }) => err);
+    .catch((e) => console.log('Order error', e));
   return orders;
 };
 
 export const getOrderData = async (id) => {
-  const { saleItems, saleInfo } = await axios({
+  const response = await axios({
     baseURL: `${url}admin/orders/${id}`,
     method: 'get',
   })
     .then((result) => result.data)
-    .catch(({ err }) => err);
-  return { saleItems, saleInfo };
+    .catch((e) => console.log('Order data Error', e));
+  return response;
 };
 
 export const markOrderAsDelivered = async (id) => {
@@ -121,7 +121,7 @@ export const postNewOrder = async (nameAdress, numberAdress, cart, user, justNum
       justNumberPrice,
     },
   })
-    .catch(({ err }) => err);
+    .catch((e) => console.log('Create Order error', e));
 
   return response;
 };

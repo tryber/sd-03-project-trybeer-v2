@@ -1,13 +1,18 @@
-// const moment = require('moment');
-// const {
-//   registerSaleProduct,
-//   createSale,
-//   getSales,
-//   getSaleById,
-//   getSalesById,
-//   getSaleItems,
-//   finishSale,
-// } = require('../models/saleModel');
+const moment = require('moment');
+const { sale } = require('../models');
+
+const getAllSales = async () => {
+  const sales = await sale.findAll({}, { include: 'user' });
+  if (sales.length === 0) return { status: 404, message: 'Nenhuma venda encontrada.' }
+
+  return sales;
+
+  // return sales.map(
+  //   ([id, userId, totalPrice, deliveryAddress, deliveryNumber, date, status]) => (
+  //     { id, userId, totalPrice, deliveryAddress, deliveryNumber, date, status }
+  //   ),
+  // );
+};
 
 // const insertSale = async (id, addressName, addressNumber, totalPrice, cart) => {
 //   // moment.locale('pt-BR');
@@ -39,16 +44,6 @@
 //   return sales;
 // };
 
-// const getAllSales = async () => {
-//   const sales = await getSales();
-
-//   return sales.map(
-//     ([id, userId, totalPrice, deliveryAddress, deliveryNumber, date, status]) => (
-//       { id, userId, totalPrice, deliveryAddress, deliveryNumber, date, status }
-//     ),
-//   );
-// };
-
 // const getSaleInfo = async (id) => {
 //   const saleInfo = await getSaleById(id);
 //   const saleItems = await getSaleItems(id);
@@ -59,10 +54,10 @@
 
 // const endSale = async (id) => finishSale(id);
 
-// module.exports = {
-//   insertSale,
-//   getAllSales,
-//   getSalesByUser,
-//   getSaleInfo,
-//   endSale,
-// };
+module.exports = {
+  getAllSales,
+  // insertSale,
+  // getSalesByUser,
+  // getSaleInfo,
+  // endSale,
+};

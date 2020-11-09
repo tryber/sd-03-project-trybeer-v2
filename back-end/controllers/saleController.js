@@ -1,11 +1,16 @@
-// const jwt = require('jsonwebtoken');
-// const {
-//   insertSale,
-//   getAllSales,
-//   getSaleInfo,
-//   getSalesByUser,
-//   endSale,
-// } = require('../services/saleService');
+const jwt = require('jsonwebtoken');
+const {
+  getAllSales,
+  // insertSale,
+  // getSaleInfo,
+  // getSalesByUser,
+  // endSale,
+} = require('../services/saleService');
+
+const listSales = async (_req, res) => {
+  const sales = await getAllSales();
+  return res.status(sales.status).json(sales);
+};
 
 // const createSale = async (req, res) => {
 //   const data = req.body;
@@ -23,11 +28,6 @@
 //   const JWT_SECRET = 'tentecerveja';
 //   const { id } = jwt.verify(authorization, JWT_SECRET);
 //   const sales = await getSalesByUser(id);
-//   return res.status(200).json(sales);
-// };
-
-// const listSales = async (_req, res) => {
-//   const sales = await getAllSales();
 //   return res.status(200).json(sales);
 // };
 
@@ -53,10 +53,10 @@
 //   }
 // };
 
-// module.exports = {
-//   createSale,
-//   getSales,
-//   listSales,
-//   saleDetails,
-//   setAsDelivered,
-// };
+module.exports = {
+  listSales,
+  // createSale,
+  // getSales,
+  // saleDetails,
+  // setAsDelivered,
+};
