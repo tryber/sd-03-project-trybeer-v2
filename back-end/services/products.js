@@ -7,8 +7,6 @@ const getAllProducts = async () => {
     const { id, name, price, url_image } = e.dataValues;
     return { id, name, price: Number(price), urlImage: url_image };
   });
-}
-
-// const getAllProducts = async () => await products.findAll();
+};
 
 module.exports = { getAllProducts };

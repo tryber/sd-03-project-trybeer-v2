@@ -11,7 +11,16 @@ const BeerProvider = ({ children }) => {
   const [statusChanged, setStatusChanged] = useState(false);
 
   const context = {
-    cart, setCart,title, setTitle, orderNumber, setOrderNumber,orderInfo, setOrderInfo,statusChanged, setStatusChanged,
+    cart,
+    setCart,
+    title,
+    setTitle,
+    orderNumber,
+    setOrderNumber,
+    orderInfo,
+    setOrderInfo,
+    statusChanged,
+    setStatusChanged,
   };
 
   return (

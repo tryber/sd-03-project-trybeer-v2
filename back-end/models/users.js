@@ -12,7 +12,7 @@ const createUsers = (sequelize, DataTypes) => {
   },
   {
     timestamps: false,
- });
+  });
   users.associate = (models) => {
     users.hasMany(models.sales,
       { foreignKey: 'id', as: 'user' });
