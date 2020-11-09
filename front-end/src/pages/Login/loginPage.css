@@ -1,0 +1,52 @@
+.form-container {
+  background-color: #FFC500;
+  border-radius: 15px;
+  box-shadow: 0 11px 18px -8px rgba(0, 0, 0, 0.795);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 20px;
+}
+
+.login-labels p{
+  margin: 0;
+  padding: 5px;
+  color: #333;
+}
+
+.login-div-inputs {
+  margin: 10px 0;
+}
+
+.inputs {
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid #333;
+  border-radius: 4px;
+  padding: 5px;
+
+}
+
+.login-button:disabled {
+  width: 245px;
+  margin: 10px 0;
+  background-color: transparent;
+  color: gray;
+  border: none;
+}
+
+.login-button {
+  width: 245px;
+  margin: 10px 0;
+  background-color: transparent;
+  color: black;
+  border: none;
+}
+
+.sign-in-button {
+  background-color: transparent;
+  border: none;
+  margin-top: 15px;
+  font-size: small;
+
+}

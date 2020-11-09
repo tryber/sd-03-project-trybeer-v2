@@ -1,28 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import AuthProvider from './context/AuthContextProvider';
+import ProductProvider from './context/ProductContextProvider';
 import './App.css';
+import AdminOrdersPage from './pages/Admin/AdminOrders/AdminOrdersPage';
+import OrderDetailsPage from './pages/Admin/AdminOrders/AdminOrderDetailsPage';
+import LoginPage from './pages/Login/LoginPage';
+import ProductsPage from './pages/Client/ClientProducts/ProductsPage';
+import RegisterPage from './pages/Register/RegisterPage';
+import ClientProfile from './pages/Client/ClientProfile/ClientProfile';
+import AdminProfile from './pages/Admin/AdminProfile/AdminProfile';
+import ClientOrders from './pages/Client/ClientOrders/ClientOrders';
+import OrderDetail from './pages/Client/OrderDetail/OrderDetail';
+import CheckoutPage from './pages/Client/CheckoutPage/CheckoutPage';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          {' '}
-          <code>src/App.js</code>
-          {' '}
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AuthProvider>
+        <ProductProvider>
+          <Router>
+            <Switch>
+              <Route exact path="/login" component={ LoginPage } />
+              <Route exact path="/" component={ LoginPage } />
+              <Route exact path="/products" component={ ProductsPage } />
+              <Route path="/checkout" component={ CheckoutPage } />
+              <Route path="/register" component={ RegisterPage } />
+              <Route path="/admin/profile" component={ AdminProfile } />
+              <Route path="/admin/orders/:id" component={ OrderDetailsPage } />
+              <Route path="/admin/orders" component={ AdminOrdersPage } />
+              <Route path="/profile" component={ ClientProfile } />
+              <Route path="/orders/:id" component={ OrderDetail } />
+              <Route path="/orders" component={ ClientOrders } />
+            </Switch>
+          </Router>
+        </ProductProvider>
+      </AuthProvider>
     </div>
   );
 }
