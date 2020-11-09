@@ -9,7 +9,7 @@ const server = express();
 server.use(bodyParser.json());
 server.use(cors());
 
-const httpServer = http.createServer(server)
+const httpServer = http.createServer(server);
 
 const { io } = socketFactory(httpServer);
 

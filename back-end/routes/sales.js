@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { salesControllers } = require('../controllers');
 const { authMiddleware } = require('../middleware');
 
-const salesRouter =  Router();
+const salesRouter = Router();
 
 module.exports = (io) => {
   salesRouter
