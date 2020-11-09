@@ -5,7 +5,7 @@ import { allProducts, allSales, allSalesProducts } from '../../services/trybeerU
 
 const RecipeAppProvider = ({ children }) => {
   const [newUser, setNewUser] = useState([]);
-  const [token, setToken] = useState([]);
+  const [token, setToken] = useState(null);
   const [salesProduct, setSalesProduct] = useState([]);
   const [sales, setSales] = useState([]);
   const [products, setProducts] = useState([]);
