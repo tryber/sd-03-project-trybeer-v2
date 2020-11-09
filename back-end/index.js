@@ -20,18 +20,18 @@ app.use(cors(), bodyParser.json());
 
 app.use('/', bodyParser.json());
 
-// app.use('/admin', admin);
+// app.use('/admin', admin); Marco
 app.use('/checkout', checkout);
 app.use('/login', login);
-// app.use('/userInfo', userInfo);
+// app.use('/userInfo', userInfo); Fabiano
 app.use('/profile', profile);
 app.use('/register', userRegister);
-// app.use('/productList', productList);
-// app.use('/orderDetails', orderDetails);
+// app.use('/productList', productList); Marco
+// app.use('/orderDetails', orderDetails); Fabiano
 
 app.use('/images', express.static(path.join(__dirname, '/images')));
 app.use('/products', products);
-// app.use('/adminOrders', adminOrders);
+// app.use('/adminOrders', adminOrders); WIllian
 
 const PORT = process.env.PORT || 3001;
 
