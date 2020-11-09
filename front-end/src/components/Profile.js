@@ -65,11 +65,11 @@ function Profile() {
               </p>
             )
             : (<input
-              type="email"
-              id="email"
-              value={ email }
-              data-testid="profile-email-input"
-              readOnly
+                type="email"
+                id="email"
+                value={ email }
+                data-testid="profile-email-input"
+                readOnly
             />)}
         </label>
 
@@ -87,12 +87,12 @@ function Profile() {
               </p>
             )
             : <input
-              type="name"
-              id="name"
-              value={ name }
-              onChange={ (event) => setName(event.target.value) }
-              required
-              data-testid={ role === 'administrator' ? 'profile-name' : 'profile-name-input' }
+                type="name"
+                id="name"
+                value={ name }
+                onChange={ (event) => setName(event.target.value) }
+                required
+                data-testid={ role === 'administrator' ? 'profile-name' : 'profile-name-input' }
             />}
         </label>
 
