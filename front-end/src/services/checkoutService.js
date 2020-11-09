@@ -7,7 +7,6 @@ const checkOut = async (
   status,
   products,
 ) => {
-  console.log(token);
   const response = await fetch('http://localhost:3001/checkout', {
     method: 'POST',
     headers: {
