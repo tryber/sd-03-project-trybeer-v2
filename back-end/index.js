@@ -2,6 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 // const path = require('path');
+
+const app = express();
+const httpServer = require('http').createServer(app);
+const io = require('socket.io')(httpServer);
+
 const getUserController = require('./controllers/userController');
 const getUserService = require('./services/userService');
 const { users } = require('./models');
@@ -11,8 +16,6 @@ const userController = getUserController(userService);
 
 const routers = require('./routers/index');
 const { errorHandler } = require('./middlewares');
-
-const app = express();
 
 app.use(cors());
 
@@ -34,5 +37,14 @@ app.use('/products', routers.products);
 
 // app.use('/checkout', routers.checkout);
 
+app.use('/chat', (_req, res) => {
+  res.send(200);
+});
+
+io.on('connection', async (socket) => {
+  socket.emit('message', { message: 'Hello, you\'re on!' });
+});
+
 app.use(errorHandler);
-app.listen(3001, console.log(`listen on port ${3001}`));
+
+httpServer.listen(3001, console.log(`listen on port ${3001}`));
