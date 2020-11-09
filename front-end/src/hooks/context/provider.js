@@ -4,7 +4,7 @@ import TrybeerContext from './context';
 import { allProducts, allSales, allSalesProducts } from '../../services/trybeerUserAPI';
 
 const RecipeAppProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
+  const [newUser, setNewUser] = useState([]);
   const [token, setToken] = useState([]);
   const [salesProduct, setSalesProduct] = useState([]);
   const [sales, setSales] = useState([]);
@@ -35,8 +35,8 @@ const RecipeAppProvider = ({ children }) => {
   };
 
   const context = {
-    user,
-    setUser,
+    newUser,
+    setNewUser,
     token,
     setToken,
     salesProduct,
