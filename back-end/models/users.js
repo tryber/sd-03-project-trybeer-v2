@@ -10,9 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     { timestamps: false },
   );
 
-  /*   User.associate = (models) => {
-    User.hasMany(models.sales, { as: 'sales' });
+  User.associate = (models) => {
+    User.hasMany(models.sales,
+      { as: 'user', foreignKey: 'id' });
   };
- */
+
   return User;
 };
