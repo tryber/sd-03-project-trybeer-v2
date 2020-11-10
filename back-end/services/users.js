@@ -52,7 +52,7 @@ const userSchema = Joi.object({
 });
 
 const getUserByEmail = async (email) => Models.users.findOne({ where: { email } })
-  .then((user) => user.dataValues);
+  .then((user) => user && user.dataValues);
 
 const createUser = async ({ id, email, name, password, role }) => Models.users
   .create({ id, email, name, role, password })

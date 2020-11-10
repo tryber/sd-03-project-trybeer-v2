@@ -10,7 +10,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     const socket = socketIo('http://localhost:3001', { transports: ['websocket'] });
-    // const socket = socketIo('http://localhost:3001/');
+
     dispatch(socketToReduxAction(socket));
   }, []);
 

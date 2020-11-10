@@ -1,6 +1,14 @@
 const socketIo = require('socket.io');
 
-const onConnection = (socket) => console.log('Batata');
+const orders = [];
+
+const addStatusToOrder = (status) => {
+
+};
+
+const onConnection = (socket) => {
+  socket.on('Status', (status) => addStatusToOrder(status));
+};
 
 module.exports = (httpServer) => {
   const io = socketIo(httpServer, { origins: '*:*' });
