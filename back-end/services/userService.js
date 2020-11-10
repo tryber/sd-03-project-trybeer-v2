@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const userModel = require('../models/userModel');
+const { users } = require('../models');
 
 const secret = 'donthack';
 
@@ -27,7 +27,7 @@ const login = async (userEmail, userPassword) => {
 
   if (isValid) return isValid;
 
-  const user = await userModel.login(userEmail);
+  const user = await users.findOne({ where: { email: userEmail } });
   if (!user || userPassword !== user.password) {
     return { status: 401, message: 'Incorrect user email or password.' };
   }
@@ -42,14 +42,13 @@ const login = async (userEmail, userPassword) => {
 const newUser = async (name, email, Password, role) => {
   const validate = valideteNewUser(name, email, Password);
   if (validate) return validate;
-
-  const existingEmail = await userModel.login(email);
+  const existingEmail = await users.findOne({ where: { email } });
 
   if (existingEmail) {
     return { status: 403, message: 'E-mail already in database.' };
   }
 
-  await userModel.register(name, email, Password, role);
+  await users.create({ name, email, password: Password, role });
 
   const data = await login(email, Password);
 
@@ -61,9 +60,9 @@ const update = async (name, paramsEmail, email) => {
     return { status: 403, message: 'Wrong user token.' };
   }
 
-  await userModel.updateName(email, name);
+  await users.update({ name }, { where: { email } });
 
-  const { password, ...data } = await userModel.login(email);
+  const { password, ...data } = await users.findOne({ where: { email } });
 
   return data;
 };

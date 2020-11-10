@@ -1,5 +1,5 @@
 const rescue = require('express-rescue');
-const orderModel = require('../models/orderModel');
+const orderModel = require('../models/models/orderModel');
 const orderService = require('../services/orderService');
 
 const registerNewSale = rescue(async (req, res) => {

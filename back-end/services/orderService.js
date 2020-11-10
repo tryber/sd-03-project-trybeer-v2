@@ -1,4 +1,4 @@
-const orderModel = require('../models/orderModel');
+const orderModel = require('../models/models/orderModel');
 
 const newSale = async (uId, price, address, number, products) => {
   const date = new Date().toISOString()
