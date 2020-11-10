@@ -17,6 +17,7 @@ import ProfilePage from './pages/clientProfilePage/ProfilePage';
 import ClientOrdersPage from './pages/clientOrdersPage/ClientOrdersPage';
 import ClientOrderDetail from './pages/clientOrderDetail/ClientOrderDetail';
 import AdminOrderDetail from './pages/adminOrderDetail/AdminOrderDetail';
+import ChatPage from './pages/chat/ChatPage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/register" component={ SignupPage } />
         <Route path="/products" component={ ProductsPage } />
         <Route path="/login" component={ LoginPage } />
+        <Route path="/chat" component={ ChatPage } />
         <Route exact path="/">
           <Redirect to="/login" />
         </Route>
