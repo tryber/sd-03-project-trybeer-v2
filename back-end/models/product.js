@@ -1,7 +1,7 @@
 const Product = (sequelize, DataTypes) => {
-   const product = sequelize.define('product', {
+  const product = sequelize.define('product', {
     id: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false,
@@ -23,6 +23,6 @@ const Product = (sequelize, DataTypes) => {
   }, { timestamps: false });
   // product.belongsToMany('sale', { through: 'sale_products' });
   return product;
-}
+};
 
 module.exports = Product;

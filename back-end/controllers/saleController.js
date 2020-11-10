@@ -1,9 +1,9 @@
 const {
   getAllSales,
   insertSale,
-  getSaleInfo,
-  getSalesByUserId,
-  // endSale,
+  // getSalesByUserId,
+  // getSaleInfo,
+  // // endSale,
 } = require('../services/saleService');
 
 const listSales = async (_req, res) => {
@@ -11,22 +11,19 @@ const listSales = async (_req, res) => {
   return res.status(sales.status).json(sales.response);
 };
 
-const getSalesById = async (req, res) => {
-  const { id } = req.params;
-  const sales = await getSalesByUserId(id);
-  return res.status(sales.status).json(sales.response);
-};
+// const getSalesById = async (req, res) => {
+//   const { id } = req.params;
+//   const sales = await getSalesByUserId(id);
+//   return res.status(sales.status).json(sales.response);
+// };
 
 const createSale = async (req, res) => {
-  // const data = req.body;
-  // const { nameAdress, numberAdress } = data;
-  const { cart, user: { id }, justNumberPrice, nameAdress, numberAdress } = req.body;
-
+  const { id } = req.user;
+  const { cart, justNumberPrice, nameAdress, numberAdress } = req.body;
   const sale = await insertSale(id, nameAdress, numberAdress, justNumberPrice, cart);
 
-  return res.status(200).json(sale);
+  return res.status(sale.status).json(sale.response);
 };
-
 
 // const saleDetails = async (req, res) => {
 //   const sales = await getSaleInfo(req.params.id);
@@ -52,8 +49,8 @@ const createSale = async (req, res) => {
 
 module.exports = {
   listSales,
-  // createSale,
-  getSalesById,
+  createSale,
+  // getSalesById,
   // saleDetails,
   // setAsDelivered,
 };

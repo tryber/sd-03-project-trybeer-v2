@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
     await queryInterface.bulkInsert('sales_products', [
@@ -22,7 +20,7 @@ module.exports = {
         sale_id: 2,
         product_id: 4,
         quantity: 1,
-      }
+      },
     ], {});
   },
 

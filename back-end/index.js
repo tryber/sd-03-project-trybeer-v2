@@ -13,7 +13,7 @@ const { getAllProducts } = require('./controllers/productController');
 
 const {
   listSales,
-  // createSale,
+  createSale,
   // getSales,
   // saleDetails,
   // setAsDelivered,
@@ -31,16 +31,16 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.get('/', (_req, res) => res.send());
 
-app.get('/products', auth(true), (req, res) => getAllProducts(req, res));
+app.get('/products', auth(true), getAllProducts);
 app.get('/admin/orders', listSales);
 // app.get('/admin/orders/:id', saleDetails);
 // app.get('/orders', (req, res) => getSales(req, res));
 
 // app.post('/admin/orders/:id', setAsDelivered);
-app.post('/login', (req, res) => loginController(req, res));
-app.post('/register', (req, res) => registerController(req, res));
-app.post('/profile', (req, res) => updateNameController(req, res));
-// app.post('/orders', (req, res) => createSale(req, res));
+app.post('/login', loginController);
+app.post('/register', registerController);
+app.post('/profile', updateNameController);
+app.post('/orders', auth(true), createSale);
 
 app.use(errorHandler);
 

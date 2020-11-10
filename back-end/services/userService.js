@@ -20,10 +20,10 @@ const RegisterUser = async (userData) => {
 };
 
 const LoginUser = async (userEmail, userPass) => {
-  const { dataValues } = await user.findOne({ where: { email: userEmail } });
-  if (dataValues.email !== userEmail) return { status: 404, message: 'Não há cadastro com esse email.' };
-  if (dataValues.password !== userPass) return { status: 400, message: 'Senha incorreta.' };
-  const { password, ...userData } = dataValues;
+  const response = await user.findOne({ where: { email: userEmail } });
+  if (!response || response.dataValues.email !== userEmail) return { status: 404, message: 'Não há cadastro com esse email.' };
+  if (response.dataValues.password !== userPass) return { status: 400, message: 'Senha incorreta.' };
+  const { password, ...userData } = response.dataValues;
   const token = jwt.sign(userData, JWT_SECRET || 'tentecerveja', jwtConfig);
   return { ...userData, token };
 };
