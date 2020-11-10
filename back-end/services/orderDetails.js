@@ -1,14 +1,20 @@
-const { salesProducts, products } = require('../models');
+const { salesProducts, products, sales, users } = require('../models');
 
-const getDetails = async (orderNumber) => {
+const getDetails = async (orderNumber, userEmail) => {
+  let statusCLient;
+
   const orderDetails = await salesProducts.findAll({ where: { sale_id: orderNumber } });
+  const findId = await users.findAll({ where: { email: userEmail } });
+  const { id } = findId[0];
+
+  await sales.findAll({ where: { user_id: id } }).then((result) => result.map((e) => {
+    statusCLient = e.dataValues.status;
+    return statusCLient;
+  }));
 
   const details = orderDetails.map(async ({ quantity, product_id: productId }) => {
-    // console.log(await products.findByPk(productId));
     const { name, price } = await products.findByPk(productId);
-    // const totalPrice = Number(price) * quantity;
-    // return { quantity, name, price: totalPrice };
-    return { quantity, name, price };
+    return { quantity, name, price, statusCLient };
   });
   const promise = await Promise.all(details);
   return promise;
