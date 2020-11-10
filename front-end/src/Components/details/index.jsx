@@ -16,7 +16,8 @@ const Details = ({
   const changeOrderStatus = (preparar) => {
     setInfo({ ...info, status: 'Entregue' });
 
-    socket.emit('Status', preparar ? 'Preparando' : 'Entregue');
+    socket.emit('Status-id', id);
+    socket.on('Status', ({ status }) => setStatus(status));
 
     axios.put(`http://localhost:3001/sales/${id}`, {
       status: preparar ? 'Preparando' : 'Entregue',
@@ -36,7 +37,7 @@ const Details = ({
           <h2 className={ status } data-testid="top-title">Detalhes do pedido</h2>
           <br />
           <h2 className={ status } data-testid="order-date">{handleDate(data)}</h2>
-        </>}
+          </>}
       <div className="details-container">
         {children}
       </div>
@@ -61,7 +62,7 @@ const Details = ({
           >
             Marcar como entregue
           </button>
-        </>}
+           </>}
     </div>
   );
 };
