@@ -31,36 +31,38 @@ function ClientOrderDetail({ match }) {
       <MenuTop pageTitle="Detalhes de Pedido" />
       <Sidebar />
       <div id="wrapper" className="order-details-page container">
-        {order ? (
+        {order && order.products ?(
           <div className="card">
-            {console.log(order)}
-            {console.log(order[0]["products.name"])}
+            {console.log(order.products)}
             <div className="card-header">
               <h3
                 className="card-text"
                 data-testid="order-number"
-              >{`Pedido ${order && order[0].id}`}</h3>
+              >{`Pedido ${order.id} - ${order.status}`}</h3>
               <p className="card-text" data-testid="order-date">
-                {formatDate(order && order[0].sale_date)}
+                {formatDate(order.sale_date)}
               </p>
             </div>
             <ul className="list-group list-group-flush">
-              {order && order.map(
+              {order.products
+                && order.products.map(
                 (
-                  el,
+                  {
+                    id: productId, sales_products : { quantity }, name, price,
+                  },
                   index
                 ) => (
-                  <li className="list-group-item" key={el["products.id"]}>
+                  <li className="list-group-item" key={productId}>
                     <div>
                       <h4 data-testid={`${index}-product-name`}>
-                        {el['products.name']}
+                        {name}
                       </h4>
                       <p
                         data-testid={`${index}-product-qtd`}
-                      >{`Quantidade: ${0}`}</p>
+                      >{`Quantidade: ${quantity}`}</p>
                       <p data-testid={`${index}-product-total-value`}>
                         {`Total do produto: R$ ${formatPrice(
-                          el['products.price'] * 1
+                          price * quantity
                         )}`}
                       </p>
                     </div>
@@ -70,7 +72,7 @@ function ClientOrderDetail({ match }) {
             </ul>
             <div className="card-footer">
               <h3 className="card-text" data-testid="order-total-value">
-                {`Total: R$ ${order ? formatPrice(order[0].total_price): '0,00'}`}
+                {`Total: R$ ${order ? formatPrice(order.total_price): '0,00'}`}
               </h3>
             </div>
           </div>

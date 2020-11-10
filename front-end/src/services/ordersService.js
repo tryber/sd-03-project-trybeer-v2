@@ -14,16 +14,19 @@ export const getAllAdminOrders = async (token) => {
   return orders;
 };
 
-export const getOneOrder = async (id, token) => fetch(`http://localhost:3001/search/${id}`, {
-  headers: { authorization: token },
-})
-  .then((response) => response.json())
-  .then((order) => order);
+export const getOneOrder = async (id, token) =>
+  fetch(`http://localhost:3001/search/${id}`, {
+    headers: { authorization: token },
+  })
+    .then((response) => response.json())
+    .then((order) => order);
 
-export const updateOrderStatus = async (id, token) => {
+export const updateOrderStatus = async (id, status, token) => {
+  console.log(status);
   const response = await fetch(`http://localhost:3001/orders/${id}`, {
     method: 'PUT',
     headers: { authorization: token },
+    body: JSON.stringify({ status }),
   });
   const order = await response.json();
   return order;

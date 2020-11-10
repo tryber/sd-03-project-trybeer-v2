@@ -1,4 +1,4 @@
-const formatPrice = (price) => {
+const formatPrice = (price = 0) => {
   const decimal = 2;
   const priceString = price.toFixed(decimal).toString();
   const priceArray = priceString.split('.');

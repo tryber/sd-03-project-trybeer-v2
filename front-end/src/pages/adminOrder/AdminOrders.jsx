@@ -23,47 +23,55 @@ function AdminOrders() {
     <div className="d-flex">
       <AdminMenuSideBar />
       <div className="orders-list container">
-        {orders && orders.map(
-          (
-            {
-              orderNumber, totalPrice, deliveryAddress, deliveryNumber, status,
-            },
-            index,
-          ) => (
-            <div
-              className="card order-card"
-              data-testid={ `${index}-order-card-container` }
-              key={ orderNumber }
-            >
-              <div className="card-body" onClick={ () => onCardClick(orderNumber) }>
-                <h5
-                  className="card-title"
-                  data-testid={ `${index}-order-number` }
-                >
-                  {`Pedido ${orderNumber}`}
-                </h5>
+        {orders &&
+          orders.map(
+            (
+              {
+                id,
+                total_price: totalPrice,
+                delivery_address: deliveryAddress,
+                delivery_number: deliveryNumber,
+                status,
+              },
+              index
+            ) => (
+              <div
+                className="card order-card"
+                data-testid={`${index}-order-card-container`}
+                key={id}
+              >
+                <div className="card-body" onClick={() => onCardClick(id)}>
+                  <h5
+                    className="card-title"
+                    data-testid={`${index}-order-number`}
+                  >
+                    {`Pedido ${id}`}
+                  </h5>
 
-                <h6 className="card-text" data-testid={ `${index}-order-address` }>
-                  {`Rua ${deliveryAddress}, ${deliveryNumber}`}
-                </h6>
+                  <h6
+                    className="card-text"
+                    data-testid={`${index}-order-address`}
+                  >
+                    {`Rua ${deliveryAddress}, ${deliveryNumber}`}
+                  </h6>
 
-                <h5
-                  className="card-text"
-                  data-testid={ `${index}-order-total-value` }
-                >
-                  {`R$ ${formatPrice(totalPrice)}`}
-                </h5>
+                  <h5
+                    className="card-text"
+                    data-testid={`${index}-order-total-value`}
+                  >
+                    {`R$ ${formatPrice(totalPrice)}`}
+                  </h5>
 
-                <h6
-                  className="card-text"
-                  data-testid={ `${index}-order-status` }
-                >
-                  {status}
-                </h6>
+                  <h6
+                    className="card-text"
+                    data-testid={`${index}-order-status`}
+                  >
+                    {status}
+                  </h6>
+                </div>
               </div>
-            </div>
-          ),
-        )}
+            )
+          )}
       </div>
     </div>
   );

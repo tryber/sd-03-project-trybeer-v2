@@ -14,8 +14,8 @@ function AdminOrderDetail({ match }) {
   const token = user ? user.token : '';
   const { id } = match.params;
 
-  const alterStatus = async (orderId) => {
-    const resp = await updateOrderStatus(orderId, token);
+  const alterStatus = async (orderId, status) => {
+    const resp = await updateOrderStatus(orderId, status, token);
     setOrder(resp);
   };
 
@@ -36,14 +36,9 @@ function AdminOrderDetail({ match }) {
           <div className="card checkout-card">
             <div className="card-header">
               <h1 data-testid="order-number">
-                Pedido
-                {' '}
-                {order.saleID ? order.saleID : ''}
+                {`Pedido ${order.id}`}
                 <span data-testid="order-status">
-                  {' '}
-                  -
-                  {' '}
-                  {order.status ? order.status : ''}
+                  {` - ${order.status}`}
                 </span>
               </h1>
             </div>
@@ -52,32 +47,32 @@ function AdminOrderDetail({ match }) {
                 && order.products.map(
                   (
                     {
-                      soldProductID, soldQuantity, productName, productPrice,
+                      id: productId, sales_products : { quantity }, name, price,
                     },
                     index,
                   ) => (
-                    <li className="list-group-item" key={ soldProductID }>
+                    <li className="list-group-item" key={ productId }>
                       <div>
                         <div>
                           <span>Quantidade: </span>
                           {' '}
                           <span data-testid={ `${index}-product-qtd` }>
-                            {soldQuantity}
+                            {quantity}
                           </span>
                         </div>
                         <h3 data-testid={ `${index}-product-name` }>
-                          {productName}
+                          {name}
                         </h3>
                         <h3 data-testid={ `${index}-order-unit-price` }>
                           (R$
                           {' '}
-                          {productPrice.toFixed(2).replace('.', ',')}
+                          {price.toFixed(2).replace('.', ',')}
                           )
                         </h3>
                         <h6 data-testid={ `${index}-product-total-value` }>
                           R$
                           {' '}
-                          {(productPrice * soldQuantity)
+                          {(price * quantity)
                             .toFixed(2)
                             .replace('.', ',')}
                         </h6>
@@ -89,19 +84,29 @@ function AdminOrderDetail({ match }) {
             <div className="card-footer">
               <h3 className="card-text" data-testid="order-total-value">
                 {`Total: R$ ${
-                  order.orderValue ? formatPrice(order.orderValue) : '0,00'
+                  order.total_price ? formatPrice(order.total_price) : '0,00'
                 }`}
               </h3>
             </div>
-            {order.status === 'Pendente' ? (
+            {order.status !== 'Entregue' ? (
+              <div id="buttons-div">
+                <button
+                type="button"
+                onClick={ () => alterStatus(order.id, 'Preparando') }
+                data-testid="mark-as-prepared-btn"
+                className="btn btn-lg delivery-button"
+              >
+                Preparar pedido
+              </button>
               <button
                 type="button"
-                onClick={ () => alterStatus(id) }
+                onClick={ () => alterStatus(order.id, 'Entregue') }
                 data-testid="mark-as-delivered-btn"
                 className="btn btn-lg delivery-button"
               >
                 Marcar como entregue
               </button>
+              </div>
             ) : (
               ''
             )}
