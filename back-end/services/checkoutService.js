@@ -19,7 +19,7 @@ const checkoutService = async (req, res) => {
   const finalStore = store.reduce((acc, e) => {
     if (acc.find((el) => el.name === e.name)) {
       return [...acc.filter((el) => el.name !== e.name),
-      { name: e.name, quantity: acc.filter((el) => el.name === e.name)[0].quantity + 1 }];
+        { name: e.name, quantity: acc.filter((el) => el.name === e.name)[0].quantity + 1 }];
     }
     return [...acc, { name: e.name, quantity: 1 }];
   }, []);

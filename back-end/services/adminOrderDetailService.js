@@ -1,13 +1,14 @@
 const productService = require('./products');
-const { sales, salesProducts } =  require('../models');
+const { sales, salesProducts } = require('../models');
 
 const adminOrderDetailService = async (req, res) => {
   const { id } = req.params;
-  const saleFound = (await salesProducts.findAll({ where: { sale_id: id }}));
+  const saleFound = (await salesProducts.findAll({ where: { sale_id: id } }));
   const result = saleFound.map((e) => e.dataValues);
   if (result) {
     const products = await productService.getAllProducts();
-    const { status: orderStatus = dataValues } = (await sales.findAll({ where: { id }}))[0];
+    const { dataValues } = (await sales.findAll({ where: { id } }))[0];
+    const { status: orderStatus } = dataValues;
     let orderProducts = [];
     result.map((e) => {
       orderProducts = [

@@ -32,5 +32,5 @@ module.exports = {
     return salesProductsTabe;
   },
 
-  down: async (queryInterface, Sequelize) => queryInterface.dropTable('salesProducts'),
+  down: async (queryInterface) => queryInterface.dropTable('salesProducts'),
 };

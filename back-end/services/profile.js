@@ -1,7 +1,8 @@
-const model = require('../models/index');
+const { users } = require('../models');
 
-const setNewName = (body) => {
-  model.profile.setNewName(body);
+const setNewName = async (body) => {
+  const { name, email } = body;
+  return users.update({ name }, { where: { email } });
 };
 
 module.exports = {

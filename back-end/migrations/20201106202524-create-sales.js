@@ -31,11 +31,11 @@ module.exports = {
       },
       delivery_city: {
         allowNull: false,
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING,
       },
       delivery_district: {
         allowNull: false,
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING,
       },
       sale_date: {
         allowNull: false,
@@ -50,5 +50,5 @@ module.exports = {
     return salesTabe;
   },
 
-  down: async (queryInterface, Sequelize) => queryInterface.dropTable('sales'),
+  down: async (queryInterface) => queryInterface.dropTable('sales'),
 };

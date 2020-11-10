@@ -1,4 +1,4 @@
-const { sales } =  require('../models');
+const { sales } = require('../models');
 
 const adminOrderDetailService = async (req, res) => {
   const { id } = req.params;
