@@ -4,8 +4,8 @@ import './CSS/AdminOrderDetail.css';
 
 const adminOrderDetail = ({Children, OrderNumber, StatusChanged}) => {
   let disableBtn = false;
-  const changeOrderStatus = async () => {
-    const response = await AdminChangeStatusOrderAPI(OrderNumber);
+  const changeOrderStatus = async (newStatus) => {
+    const response = await AdminChangeStatusOrderAPI(OrderNumber, newStatus);
     if (response) {
       if (response.status === 202)
         StatusChanged(true);
@@ -53,7 +53,7 @@ const adminOrderDetail = ({Children, OrderNumber, StatusChanged}) => {
           { !disableBtn &&
             <button
               className="btn"
-              data-testid="mark-as-delivered-btn" onClick={() => changeOrderStatus()}
+              data-testid="mark-as-delivered-btn" onClick={() => changeOrderStatus('Entregue')}
             >Marcar como entregue</button>
           }
         </div>
