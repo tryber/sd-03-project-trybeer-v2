@@ -9,13 +9,9 @@ const Cards = ({ index, addressNumber, endereco, preco, id }) => {
   const history = useHistory();
   const socket = useSelector(state => state.socketReducer.socket);
 
-  const findAndSetStatus = (orders) => {
-    const order = orders.find((order) => order.id === id);
-    setStatus(order.status);
-  }
+  socket.emit('Status-id', id);
+  socket.on('Status', ({ status }) => setStatus(status));
 
-  socket.on('Status', (orders) => findAndSetStatus(orders));
-  
   return (
     <div className="card-geral" onClick={() => history.push(`/admin/orders/${id}`)}>
       <span data-testid={`${index}-order-number`} className="numero-pedido">
