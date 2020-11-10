@@ -1,10 +1,4 @@
 const createToken = require('../token/createToken');
-// const { users } = require('../models');
-
-const getUserByEmail = (users) => async (email) => {
-  const [result] = await users.findAll({ where: { email } });
-  return result;
-};
 
 const createUser = (users) => async (userInfo) => {
   const { name, email, password, role } = userInfo;
@@ -37,7 +31,7 @@ const updateUser = (users) => async (name, email) => {
 const loginService = (users) => async (email, password) => {
   const [user] = await users.findAll({ where: { email } });
 
-  if (!user.dataValues) return { error: 'invalid_user' };
+  if (!user) return { error: 'invalid_user' };
 
   const { name, email: mail, role, id } = user;
 
@@ -52,5 +46,4 @@ module.exports = (users) => ({
   updateUser: updateUser(users),
   loginService: loginService(users),
   createUser: createUser(users),
-  getUserByEmail: getUserByEmail(users),
 });

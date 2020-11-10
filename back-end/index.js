@@ -18,10 +18,16 @@ const routers = require('./routers/index');
 const { errorHandler } = require('./middlewares');
 
 app.use(cors());
-
-app.use('/images', express.static(`${process.cwd()}/images`));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  console.log(req.method);
+  console.log(req.body);
+  next();
+});
+
+app.use('/images', express.static(`${process.cwd()}/images`));
 
 app.use('/login', routers.login(userController.loginController));
 
