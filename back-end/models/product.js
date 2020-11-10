@@ -1,5 +1,11 @@
 const Product = (sequelize, DataTypes) => {
    const product = sequelize.define('product', {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,

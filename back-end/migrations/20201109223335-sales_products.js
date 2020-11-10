@@ -1,9 +1,10 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => queryInterface.createTable('sales_products', {
-    sales_id: {
+    sale_id: {
       type: Sequelize.INTEGER,
-      foreignKey: true,
       allowNull: false,
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
       references: {
         model: 'sales',
         key: 'id',
@@ -12,7 +13,8 @@ module.exports = {
     product_id: {
       type: Sequelize.INTEGER,
       allowNull: false,
-      foreignKey: true,
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
       references: {
         model: 'products',
         key: 'id',

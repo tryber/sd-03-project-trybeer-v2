@@ -1,4 +1,10 @@
 const user = (sequelize, DataTypes) => sequelize.define('user', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
