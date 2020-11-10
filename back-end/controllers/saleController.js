@@ -2,7 +2,7 @@ const {
   getAllSales,
   insertSale,
   // getSalesByUserId,
-  // getSaleInfo,
+  getSaleInfo,
   // // endSale,
 } = require('../services/saleService');
 
@@ -25,11 +25,11 @@ const createSale = async (req, res) => {
   return res.status(sale.status).json(sale.response);
 };
 
-// const saleDetails = async (req, res) => {
-//   const sales = await getSaleInfo(req.params.id);
-//   const { code } = sales;
-//   return res.status(code).json(sales);
-// };
+const saleDetails = async (req, res) => {
+  const sales = await getSaleInfo(req.params.id);
+  const { status } = sales;
+  return res.status(status).json(sales);
+};
 
 // const setAsDelivered = async (req, res) => {
 //   const { id } = req.params;
@@ -51,6 +51,6 @@ module.exports = {
   listSales,
   createSale,
   // getSalesById,
-  // saleDetails,
+  saleDetails,
   // setAsDelivered,
 };

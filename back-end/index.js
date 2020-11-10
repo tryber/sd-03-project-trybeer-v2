@@ -15,7 +15,7 @@ const {
   listSales,
   createSale,
   // getSales,
-  // saleDetails,
+  saleDetails,
   // setAsDelivered,
 } = require('./controllers/saleController');
 
@@ -33,7 +33,7 @@ app.get('/', (_req, res) => res.send());
 
 app.get('/products', auth(true), getAllProducts);
 app.get('/admin/orders', listSales);
-// app.get('/admin/orders/:id', saleDetails);
+app.get('/admin/orders/:id', auth(true), saleDetails);
 // app.get('/orders', (req, res) => getSales(req, res));
 
 // app.post('/admin/orders/:id', setAsDelivered);
