@@ -13,14 +13,16 @@ const Details = ({
 
   const socket = useSelector((state) => state.socketReducer.socket);
 
+  const [statusOrder, setStatusOrder] = React.useState('Pendente');
+
   const changeOrderStatus = (preparar) => {
     setInfo({ ...info, status: 'Entregue' });
 
     socket.emit('Status-id', id);
-    socket.on('Status', ({ status }) => setStatus(status));
+    socket.on('Status', ({ status }) => setStatusOrder(status));
 
     axios.put(`http://localhost:3001/sales/${id}`, {
-      status: preparar ? 'Preparando' : 'Entregue',
+      status: statusOrder,
     },
     { headers: { Authorization: token } });
   };
