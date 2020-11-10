@@ -21,7 +21,7 @@ function Orders(props) {
         .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
       .then((data) => setOrdersList(data))
       .catch(() => setLoggedIn(false));
-    return () => (console.log(''));
+    return () => null;
   }, [currentUser, props]);
 
   if (!loggedIn) return <Redirect to="/login" />;
@@ -35,8 +35,6 @@ function Orders(props) {
 
   const dateFormat = { day: '2-digit', month: '2-digit' };
 
-  const two = 2;
-
   return (
     <div>
       <Header title="Meus Pedidos" />
@@ -49,11 +47,11 @@ function Orders(props) {
                 {order.id}
               </p>
               <p data-testid={ `${index}-order-date` }>
-                {setTime(order.saleDate).toLocaleDateString('pt-BR', dateFormat)}
+                {setTime(order.sale_date).toLocaleDateString('pt-BR', dateFormat)}
               </p>
               <p data-testid={ `${index}-order-total-value` }>
                 R$
-                {order.totalPrice.toFixed(two).toString().replace('.', ',')}
+                {order.total_price.replace('.', ',')}
               </p>
             </div>
           </Link>

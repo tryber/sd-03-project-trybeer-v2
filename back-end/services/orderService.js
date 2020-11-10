@@ -1,28 +1,29 @@
-const orderModel = require('../models/models/orderModel');
+const { sales, sales_products: salesProducts } = require('../models');
 
 const newSale = async (uId, price, address, number, products) => {
-  const date = new Date().toISOString()
-    .slice(0, 10);
-  const saleId = await orderModel.registerSale(uId, price, address, number, date);
+  const sale = await sales.create({
+    user_id: uId,
+    total_price: price,
+    delivery_address: address,
+    delivery_number: number,
+    status: 'Pendente',
+  });
 
   products.forEach(async (product) => {
     const { id, qty } = product;
 
-    await orderModel.registerSaleProduct(saleId, id, qty);
+    await salesProducts.create({ sale_id: sale.id, product_id: id, quantity: qty });
   });
 
-  return saleId;
+  return sale.id;
 };
 
-const getOrderDetail = async (id) => orderModel.getOrderDetail(id);
+const updateOrder = async (id) => sales.update({ status: 'Entregue' }, { where: { id } });
 
-const getOrderById = async (id) => orderModel.getOrderById(id);
-
-const updateOrder = async (id) => orderModel.updateOrder(id);
+const inProgressOrder = async (id) => sales.update({ status: 'Preparando' }, { where: { id } });
 
 module.exports = {
   newSale,
-  getOrderDetail,
-  getOrderById,
   updateOrder,
+  inProgressOrder,
 };

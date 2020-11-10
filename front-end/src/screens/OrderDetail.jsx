@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/jsx-closing-tag-location */
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -24,8 +26,8 @@ function OrderDetail(props) {
         if (err.message === 'Order not found') return setOrderInfo({ message: err.message });
         return setLoggedIn(false);
       });
-    return () => (console.log(''));
-  }, [currentUser, props]);
+    return () => null;
+  }, []);
 
   if (!loggedIn) return <Redirect to="/login" />;
 
@@ -49,29 +51,28 @@ function OrderDetail(props) {
 
   const two = 2;
   const aHundred = 100;
-
-  return (orderInfo && orderInfo.orderById
+  return (orderInfo
     ? <div>
       <Header title="Detalhes de Pedido" />
       <section className="DetailsContainer">
         <div className="DetailsTitle">
           <h2 data-testid="order-number">
             Pedido
-            {orderInfo.orderById.id}
+            {orderInfo.id}
           </h2>
-          <h2 data-testid="order-date">{setTime(orderInfo.orderById.saleDate).toLocaleDateString('pt-BR', dateFormat)}</h2>
+          <h2 data-testid="order-date">{setTime(orderInfo.sale_date).toLocaleDateString('pt-BR', dateFormat)}</h2>
         </div>
         <div className="InfoDetails">
-          {orderInfo.orderDetail.map(({ quantity, name, price }, index) => (
+          {orderInfo.products.map(({ name, price, sales_products: sp }, index) => (
             <div className="CardDetails" key="name">
-              <p data-testid={ `${index}-product-qtd` } className="DetailsItem">{quantity}</p>
+              <p data-testid={ `${index}-product-qtd` } className="DetailsItem">{sp.quantity}</p>
               <p data-testid={ `${index}-product-name` } className="DetailsItem">{name}</p>
-              <p data-testid={ `${index}-product-total-value` } className="DetailsItem">{`R$ ${(Math.round((price * quantity) * aHundred) / aHundred).toFixed(two).toString().replace('.', ',')}`}</p>
+              <p data-testid={ `${index}-product-total-value` } className="DetailsItem">{`R$ ${(Math.round(((price) * Number(sp.quantity)) * aHundred) / aHundred).toFixed(two).toString().replace('.', ',')}`}</p>
             </div>
           ))}
           <h3 data-testid="order-total-value">
             Total
-            {`R$ ${(Math.round((orderInfo.orderById.totalPrice) * aHundred) / aHundred).toFixed(two).toString().replace('.', ',')}`}
+            {`R$ ${(Math.round((orderInfo.total_price) * aHundred) / aHundred).toFixed(two).toString().replace('.', ',')}`}
           </h3>
         </div>
       </section>

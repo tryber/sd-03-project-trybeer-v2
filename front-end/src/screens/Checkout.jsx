@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
@@ -25,8 +26,9 @@ const Checkout = (props) => {
     if (!user) return history.push('/login');
     const cart = carts.find((e) => e.user === user.email);
     setList(cart.list);
-    return setTotalPrice(cart.list.reduce((acc, e) => acc + Number(e.price) * Number(e.qty), zero));
-  }, [user, carts, props]);
+    setTotalPrice(cart.list.reduce((acc, e) => acc + Number(e.price) * Number(e.qty), zero));
+    return () => null;
+  }, []);
 
   useEffect(() => {
     setTotalPrice(list.reduce((acc, e) => acc + Number(e.price) * Number(e.qty), zero));

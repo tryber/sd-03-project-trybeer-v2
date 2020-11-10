@@ -14,7 +14,7 @@ module.exports = {
         onDelete: 'CASCADE',
         references: { model: 'users', key: 'id' },
       },
-      total_price: { allowNull: false, type: Sequelize.FLOAT },
+      total_price: { allowNull: false, type: Sequelize.DECIMAL(9, 2) },
       delivery_address: { allowNull: false, type: Sequelize.STRING },
       delivery_number: { allowNull: false, type: Sequelize.STRING },
       sale_date: { allowNull: false, type: Sequelize.DATE },

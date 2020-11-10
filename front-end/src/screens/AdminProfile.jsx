@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Redirect } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -9,8 +10,8 @@ const AdminProfile = (props) => {
   useEffect(() => {
     const { history } = props;
     if (!user) return history.push('/login');
-    return null;
-  }, [user, props]);
+    return () => undefined;
+  }, []);
 
   if (!user) return <Redirect to="/login" />;
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -8,19 +9,19 @@ function OrdersAdmin(props) {
   const [ordersAdminList, setOrdersAdminList] = useState([]);
   const [loggedIn, setLoggedIn] = useState(true);
   const currentUser = JSON.parse(localStorage.getItem('user'));
-  const two = 2;
   useEffect(() => {
     if (!currentUser) return props.history.push('/login');
     const headers = new Headers({
       Authorization: currentUser.token,
     });
 
-    return fetch('http://localhost:3001/admin/orders', { headers })
+    fetch('http://localhost:3001/admin/orders', { headers })
       .then((response) => response.json()
         .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))))
       .then((data) => setOrdersAdminList(data))
       .catch(() => setLoggedIn(false));
-  }, [currentUser, props]);
+    return () => undefined;
+  }, []);
 
   if (!loggedIn) return <Redirect to="/login" />;
 
@@ -29,19 +30,19 @@ function OrdersAdmin(props) {
       <AdminHeader title="Pedidos" />
       <section className="OrdersContainer">
         {ordersAdminList.map((order, index) => (
-          <Link to={ `/admin/orders/${order.id}` } key="index">
+          <Link to={ `/admin/orders/${order.id}` } key={ order.id }>
             <div data-testid={ `${index}-order-card-container` } className="OrdersCard">
               <p data-testid={ `${index}-order-number` }>
                 Pedido
                 {order.id}
               </p>
               <p data-testid={ `${index}-order-address` }>
-                {order.deliveryAddress}
-                {order.deliveryNumber}
+                {order.delivery_address}
+                {order.delivery_number}
               </p>
               <p data-testid={ `${index}-order-total-value` }>
                 R$
-                { order.totalPrice.toFixed(two).toString().replace('.', ',') }
+                { order.total_price.replace('.', ',') }
               </p>
               <p data-testid={ `${index}-order-status` }>
                 {order.status}

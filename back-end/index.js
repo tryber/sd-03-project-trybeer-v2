@@ -30,9 +30,11 @@ app.get('/admin/orders', auth, orderController.listAllOrders);
 app.get('/orders/:id', auth, orderController.getOrderDetail);
 app.put('/orders/:id', auth, orderController.updateOrder);
 
-// app.get('/testroute', async (req, res) => {
-//   const list = await products.findAll();
+app.put('/inprogress/:id', auth, orderController.updateInProgressOrder);
 
+// app.get('/testroute', async (req, res) => {
+//   const list = await sales.update({ status: 'Preparando' }, { where: { id: 1 } });
+//   await sales.update({ status: 'Entregue' }, { where: { id: 2 } });
 //   return res.status(200).json(list);
 // });
 
