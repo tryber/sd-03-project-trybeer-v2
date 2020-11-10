@@ -14,6 +14,10 @@ const createProducts = (sequelize, DataTypes) => {
     },
   }, { timestamps: false });
 
+  // Products.associate = (models) => {
+  //   Products.hasMany(models.sales_products, { as: 'salesProducts', foreignKey: 'product_id' });
+  // };
+
   return Products;
 };
 

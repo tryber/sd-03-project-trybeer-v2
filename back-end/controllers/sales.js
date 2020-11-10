@@ -17,21 +17,23 @@ const createSale = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badData(error));
 
-  const { id } = await salesServices.addSale({
-    userId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status: 'Pendente',
-  });
-
-  await Promise.all(
-    products.map(async ({ id: productId, sellingQnt }) => {
-      await salesServices.addToIntermediate({ id, productId, sellingQnt });
-    }),
+  await salesServices.addSale(
+    {
+      user_id: userId,
+      total_price: totalPrice,
+      delivery_address: deliveryAddress,
+      delivery_number: deliveryNumber,
+      sale_date: saleDate,
+      status: 'Pendente'
+    },
+    products,
   );
 
   return res.status(201).json({ message: 'Venda processada!' });
 });
 
 const getAllSales = rescue(async (req, res, _next) => {
-  const id = (req.user.role === 'administrator' ? undefined : req.user.id);
+  const id = (req.user.role === 'administrator' ? null : req.user.id);
   const sales = await salesServices.getAll(id);
   return res.status(200).json({ sales });
 });
@@ -43,10 +45,7 @@ const getSaleDetails = rescue(async (req, res, next) => {
 
   if (error) return next(Boom.badRequest(error.message));
 
-  const [sale, products] = await Promise.all([
-    salesServices.getById(id),
-    salesServices.getProducts(id),
-  ]);
+  const sale = await salesServices.getSale(id);
 
   if (sale.error) return next(Boom.notFound(sale.message));
 
@@ -54,7 +53,7 @@ const getSaleDetails = rescue(async (req, res, next) => {
     return next(Boom.unauthorized('Você nao tem permissão para ver essa compra'));
   }
 
-  return res.status(200).json({ ...sale, products });
+  return res.status(200).json(sale);
 });
 
 const updateSale = rescue(async (req, res, next) => {

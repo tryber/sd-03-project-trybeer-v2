@@ -27,7 +27,8 @@ const createSales = (sequelize, DataTypes) => {
   }, { createdAt: 'sale_date', updatedAt: false });
 
   Sales.associate = (models) => {
-    Sales.belongsTo(models.users, { foreignKey: 'users_id', as: 'user' });
+    Sales.belongsTo(models.users, { foreignKey: 'user_id', as: 'user' });
+    // Sales.hasMany(models.sales_products, { as: 'salesProducts', foreignKey: 'sale_id' });
   };
 
   return Sales;
