@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const { usersService } = require('../services');
 const middlewares = require('../middlewares');
+const { users } = require('../models');
 
 const { schemas, validateSchema } = middlewares.validation;
 const user = Router();
@@ -11,7 +12,7 @@ user.route('/register').post(
   async (req, _res, next) => {
     try {
       const { name, email, password, role } = req.body;
-      const userData = await usersService.addUser(name, email, password, role);
+      const userData = await users.create({ name, email, password, role });
 
       if (!userData) throw new Error();
 

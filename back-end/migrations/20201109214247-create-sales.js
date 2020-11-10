@@ -13,7 +13,6 @@ module.exports = {
       },
       total_price: {
         allowNull: false,
-        unique: true,
         type: Sequelize.DECIMAL(9, 2),
       },
       password: {
