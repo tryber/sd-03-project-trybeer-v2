@@ -25,7 +25,7 @@ function OrderDetails() {
       .catch(() => { setRedirectToLogin(true); });
   }, [orderNumber, setTitle, token]);
   return (
-    <div>
+    <div>{console.log(orderDetails)}
       <MenuTop />
       {!orderNumber && <Redirect to="/orders" />}
       {redirectToLogin && <Redirect to="/login" />}
