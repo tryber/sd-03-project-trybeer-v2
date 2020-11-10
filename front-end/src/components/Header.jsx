@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import burgerMenuIcon from '../images/icons/burgerMenuIcon.svg';
-import "../styles/Header.css";
+import '../styles/Header.css';
 
 const toggleMenu = (sideMenu, setsideMenu) => {
   if (sideMenu === 'hide-side-menu') return setsideMenu('');
@@ -9,38 +10,45 @@ const toggleMenu = (sideMenu, setsideMenu) => {
 };
 
 function Header({ title }) {
-
   const history = useHistory();
   const handleLogout = () => {
     localStorage.removeItem('user');
-    history.push("/login");
+    history.push('/login');
   };
 
   const [sideMenu, setsideMenu] = React.useState('hide-side-menu');
 
   return (
     <header className="Header">
-      <img data-testid="top-hamburguer" className="BurgerBtn"
-        alt="Menu button" src={burgerMenuIcon}
-        onClick={() => toggleMenu(sideMenu, setsideMenu)}
-      />
+      <button type="button" onClick={ () => toggleMenu(sideMenu, setsideMenu) }>
+        <img
+          data-testid="top-hamburguer"
+          className="BurgerBtn"
+          alt="Menu button"
+          src={ burgerMenuIcon }
+        />
+      </button>
       <h1 data-testid="top-title" className="TopTitle">{title}</h1>
       <div className={ `side-menu-container ${sideMenu}` }>
         <Link to="/products">
-          <button data-testid="side-menu-item-products" className="MenuItem">Produtos</button>
+          <button data-testid="side-menu-item-products" className="MenuItem" type="button">Produtos</button>
         </Link>
         <Link to="/orders">
-          <button data-testid="side-menu-item-my-orders" className="MenuItem">Meus Pedidos</button>
+          <button data-testid="side-menu-item-my-orders" className="MenuItem" type="button">Meus Pedidos</button>
         </Link>
         <Link to="/profile">
-          <button data-testid="side-menu-item-my-profile" className="MenuItem">Meu Perfil</button>
+          <button data-testid="side-menu-item-my-profile" className="MenuItem" type="button">Meu Perfil</button>
         </Link>
-        <button data-testid="side-menu-item-logout" className="MenuItem LogoutBtn" type="button" onClick={() => handleLogout()}>
+        <button data-testid="side-menu-item-logout" className="MenuItem LogoutBtn" type="button" onClick={ () => handleLogout() }>
           Sair
         </button>
       </div>
     </header>
-  )
+  );
+}
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
 };
 
 export default Header;
