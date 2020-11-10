@@ -62,6 +62,8 @@ const Checkout = () => {
     .then((response) => setAddress(response.data));
   }, []);
 
+  console.log(address);
+
   useEffect(() => {
     // Se o localStorage existe
     const cart = localStorage.getItem('cart');
@@ -122,7 +124,7 @@ const Checkout = () => {
     const store = JSON.parse(localStorage.getItem('cart'));
 
     const orderJson = {
-      userId: address.id,
+      userId: address.userId,
       store,
       totalPrice,
       deliveryAddress,

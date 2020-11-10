@@ -48,7 +48,7 @@ const adminOrderDetail = ({Children, OrderNumber, StatusChanged}) => {
           `Total R$ ${(Children.orderProducts.reduce(((acc, e) =>
               acc = e.price * e.quantity), 0)).toFixed(2).replace('.',',')}`
           }
-        </div>{ (Children.orderStatus[0].status === 'Entregue') ? disableBtn = true : disableBtn = false }
+        </div>{ (Children.orderStatus === 'Entregue') ? disableBtn = true : disableBtn = false }
         <div>
           { !disableBtn &&
             <button

@@ -26,11 +26,11 @@ const login = async ({ email, password }) => {
 };
 
 const collectInfo = async (email) => {
-  const { code, message, delivry_address: street,
+  const { code, message, id: userId, delivery_address: street,
     delivery_number: number, delivery_city: city,
     delivery_district: district } = (await users.findAll({ where: { email } }))[0];
   if (message) return { code, message };
-  return { street, number, city, district };
+  return { userId, street, number, city, district };
 };
 
 module.exports = {
