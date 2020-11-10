@@ -38,7 +38,7 @@ function Profile() {
     <div className="profile-page">
       {redirectToLogin && <Redirect to="/login" />}
       <MenuTop />
-      <div>
+      <div >
         <section className="profile-edit">
           <img src={avatar} />
           <div className="column-input">

@@ -3,6 +3,7 @@ import { BeerContext } from '../context/context';
 import { useParams } from 'react-router-dom';
 import AdminOrderDetail from '../components/AdminOrderDetail';
 import AdminSideBar from '../components/AdminSideBar';
+import AdminTopBar from '../components/AdminTopBar';
 import AdminOrderDetailAPI from '../services/AdminOrderService'
 
 function AdminOrderDetailPage () {
@@ -35,11 +36,14 @@ function AdminOrderDetailPage () {
 
     if (received) {
       return (
-        <AdminSideBar Children=
+        <div>
+          <AdminTopBar />
+          <AdminSideBar Children=
           {
             <AdminOrderDetail Children={received} OrderNumber={id} StatusChanged={setStatusChanged} />
           }
         />
+        </div>
       );
     }
     else return (<div></div>);

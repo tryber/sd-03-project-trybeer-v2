@@ -5,13 +5,20 @@ a {
 .content {
   display: flex;
   padding-left: 3%;
-  width: 80%;
+  padding-top: 3%;
+  width: 75vw;
 }
 
 .divTitle {
-  color: white;
+  color:black;
+  height: 20vh;
 }
 
+.fontStyle {
+  font-family: "Indie Flower", cursive;
+  font-weight: 900;
+  font-size: 3vh;
+}
 .menu-logout {
   align-items: flex-end;
   align-self: stretch;
@@ -22,18 +29,18 @@ a {
 
 .menu {
   display: flex;
+  height: 100vh;
 }
 
 .side-bar {
   align-items: stretch;
-  background-color: black;
+  background-color: #12cc85;
   border-color: rgba(64, 194, 133, 0.693);
   border-radius: 0;
   border-right: 1px solid;
   display: flex;
   flex-direction: column;
-  height: 100vw;
-  width: 20%;
+  width: 20vw;
 }
 
 .white-border {

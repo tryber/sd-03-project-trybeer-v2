@@ -1,0 +1,184 @@
+.addressButton {
+  align-self: center;
+  background-color: #16F29E;
+  border-radius: 2px 2px 16px 16px;
+  color: white;
+  font-family: "Pacifico", cursive;
+  font-size: 24px;
+  height: 43px;
+  margin: 3px;
+  max-width: 400px;
+  width: 96%;
+}
+
+.addressForm {
+  align-items: flex-end;
+  align-self: stretch;
+  display: flex;
+  flex: 1 1;
+  flex-direction: row;
+  justify-content: center;
+  height: 30%;
+  width: 100%;
+}
+
+.fieldSet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fieldSet legend {
+  font-size: 1.2rem;
+  color: #096642;
+}
+
+.fieldSet input {
+  border: none;
+  border-bottom: 1px solid #096642;
+  margin-bottom: 10px;
+  width: 80%;
+  outline: none;
+}
+
+.fieldSet p {
+  margin: 0;
+}
+
+.beerContent {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+.beerCard {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  width: 25%;
+  justify-content: space-between;
+  border: 2px groove #0E9E67;
+  padding: 20px;
+  
+}
+
+.beerContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.beerContainer h2 {
+  margin: 0;
+}
+
+
+.checkout-botton {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+}
+
+.checkoutButton {
+  align-self: center;
+  background-color: #096642;
+  border-radius: 2px 2px 16px 16px;
+  color: white;
+  font-family: "Pacifico", cursive;
+  font-size: 24px;
+  height: 43px;
+  margin: 3px;
+  max-width: 400px;
+  width: 96%;
+}
+
+.checkoutCard {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-height: 95vh;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.checkoutPage {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  height: 100vh;
+}
+
+.deleteButton {
+  background-color: white;
+  color: #0E9E67;
+}
+
+.description {
+  width: 60%;
+}
+
+.h2 {
+  height: 5vh;
+  margin: 0;
+}
+
+.imgWidth {
+  height: 15vh;
+  width: auto;
+}
+
+.input {
+  align-self: center;
+  width: 96%;
+}
+
+.label {
+  align-self: flex-start;
+}
+
+.deleteButton  {
+  height: auto;
+  max-width: 25px;
+  width: 5vw;
+  border-style: none;
+}
+
+.deleteButton img{
+  width: 22px;
+}
+
+.imgDiv {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  /* width: 45vw; */
+}
+
+.total {
+  color: #096642;
+  font-size: 2rem;
+  text-align: center;
+}
+
+@media only screen and (max-width: 900px) {
+  .beerContent {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    height: 35vh;
+    overflow-y: scroll;
+  }
+  .beerCard {
+    width: 80%;
+    height: 50px;
+    margin: 5px;
+  }
+  .imgDiv img {
+    height: 50px;
+  }
+}

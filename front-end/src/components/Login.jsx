@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './CSS/Login.css';
-import trybe from '../img/trybe.png';
-import beer from '../img/green-beer.png';
+import logo from '../img/irish.png'
+import beer from '../img/green-beer.png'
 
 const doLogin = (password, email, setMessage, setRedirectToHome, setRedirectToAdminHome) => {
   axios.post('http://localhost:3001/login', { password, email })
@@ -37,13 +37,8 @@ function Login() {
   return (
     <div className="login-page">
       <div className="visible-area">
-        <div className="logo">
-          {' '}
-          <span>TR</span>
-          <img src={trybe} width="50px" />
-          <span>BEER</span>
-        </div>
-        <img className="beer" src={beer} width="300px" />
+        <div className="logo"><img src={logo} width="150px" /></div>
+        <img className="beer" src={beer} width="200px" />
         <div className="login-form">
           <div>
             <p>Email</p>

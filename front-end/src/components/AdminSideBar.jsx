@@ -1,6 +1,6 @@
 import React, { useState, Children } from 'react';
 import { Redirect } from 'react-router-dom';
-import ASideBar from './CSS/ASideBar.css';
+import './CSS/ASideBar.css';
 
 const AdminSideBar = ({ Children }) => {
   const [redirectToLogin, setRedirectToLogin] = useState(false);
@@ -14,12 +14,12 @@ const AdminSideBar = ({ Children }) => {
     <div className="menu">{ redirectToLogin && <Redirect to="/login" /> }
       <div className="side-bar">
         <div>
-          <div className="divTitle">Trybeer</div>
-          <div className="white-border"><a data-testid="side-menu-item-orders" href="/admin/orders">Pedidos</a></div>
-          <div className="white-border"><a data-testid="side-menu-item-profile" href="/admin/profile">Perfil</a></div>
+          <div className="divTitle fontStyle">Trybeer</div>
+          <div className="white-border fontStyle"><a data-testid="side-menu-item-orders" href="/admin/orders">Pedidos</a></div>
+          <div className="white-border fontStyle"><a data-testid="side-menu-item-profile" href="/admin/profile">Perfil</a></div>
         </div>   
         <div className="menu-logout">
-          <div className="white-border"><a
+          <div className="white-border fontStyle"><a
             data-testid="side-menu-item-logout" href="#"
             onClick={() => unlogging()}
           >Sair</a></div>

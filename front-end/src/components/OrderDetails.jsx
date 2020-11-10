@@ -31,7 +31,7 @@ function OrderDetails() {
       {redirectToLogin && <Redirect to="/login" />}
       <div className="order-details">
         <div>
-          <h3 data-testid="order-number">{`Número do Pedido: ${orderNumber}`}</h3>
+          <h3 data-testid="order-number">{`Pedido ${orderNumber}`}</h3>
           <h3 data-testid="order-date">Data do Pedido {orderInfo.date}</h3>
         </div>
         <table>

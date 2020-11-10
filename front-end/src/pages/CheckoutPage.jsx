@@ -4,6 +4,7 @@ import axios from 'axios';
 import MenuTop from '../components/MenuTop';
 import { BeerContext } from '../context/context';
 import Checkout from '../components/Checkout';
+import '../components/CSS/Checkout.css';
 
 let validate;
 
@@ -34,7 +35,7 @@ function CheckoutPage() {
   });
 
   return (
-    <div>
+    <div className="checkoutPage">
       {
         redirectToLogin && <Redirect to="/login" />
       }

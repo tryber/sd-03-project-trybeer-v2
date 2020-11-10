@@ -45,8 +45,6 @@
   outline: none;
 }
 
-
-
 .fieldsetandspan fieldset button {
   height: 50px;
   width: 50%;
@@ -66,7 +64,6 @@
 .fieldsetandspan {
   margin-bottom: 20px
 }
-
 
 .center {
   position: relative;
