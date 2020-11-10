@@ -62,9 +62,13 @@ const update = async (name, paramsEmail, email) => {
 
   await users.update({ name }, { where: { email } });
 
-  const { password, ...data } = await users.findOne({ where: { email } });
+  const data = await users.findOne({ where: { email } });
 
-  return data;
+  const { dataValues } = data;
+
+  const { password, ...user } = dataValues;
+
+  return user;
 };
 
 module.exports = {

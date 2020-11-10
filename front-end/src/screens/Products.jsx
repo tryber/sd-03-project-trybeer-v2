@@ -99,7 +99,7 @@ const Products = () => {
                 <div className="CardTitle">
                   <h3 data-testid={ `${ind}-product-name` }>{product.name}</h3>
                 </div>
-                <img data-testid={ `${ind}-product-img` } src={ product.urlImage } alt="Product" />
+                <img data-testid={ `${ind}-product-img` } src={ product.url_image } alt="Product" />
                 <h4 data-testid={ `${ind}-product-price` }>{`R$ ${product.price.toFixed(two).toString().replace('.', ',')}`}</h4>
                 <div className="BtnCard">
                   <button className="BtnMinus" type="button" data-testid={ `${ind}-product-minus` } onClick={ () => removeProduct(product) }>-</button>
