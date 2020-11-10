@@ -8,10 +8,10 @@ const createProducts = (sequelize, DataTypes) => {
   {
     timestamps: false,
   });
-  products.associate = (models) => {
-    products.hasMany(models.salesProducts,
-      { foreignKey: 'id', as: 'product' });
-  };
+  // products.associate = (models) => {
+  //   products.hasMany(models.salesProducts,
+  //     { foreignKey: 'id', as: 'products' });
+  // };
   return products;
 };
 

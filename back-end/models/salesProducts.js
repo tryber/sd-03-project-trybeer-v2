@@ -5,6 +5,7 @@ const createSalesProducts = (sequelize, DataTypes) => {
   {
     timestamps: false,
   });
+
   salesProducts.associate = (models) => {
     models.sales.belongsToMany(models.products, {
       as: 'products',
