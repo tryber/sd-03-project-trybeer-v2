@@ -6,12 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       price: DataTypes.FLOAT,
       url_image: DataTypes.STRING,
     },
-    { timestamps: true },
+    { timestamps: false },
   );
 
   Product.associate = (models) => {
     Product.belongsToMany(models.sales, { as: 'product',
-      foreignKey: 'product_id',
       through: models.salesProducts });
   };
 

@@ -1,10 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+// const path = require('path');
 
 const app = express();
 const httpServer = require('http').createServer(app);
 const io = require('socket.io')(httpServer);
+
+const getUserController = require('./controllers/userController');
+const getUserService = require('./services/userService');
+const { users } = require('./models');
+
+const userService = getUserService(users);
+const userController = getUserController(userService);
 
 const routers = require('./routers/index');
 const { errorHandler } = require('./middlewares');
@@ -12,23 +20,31 @@ const { errorHandler } = require('./middlewares');
 app.use(cors());
 app.io = io;
 
-// app.use('/images', express.static(`${process.cwd()}/images`));
+app.use('/images', express.static(`${process.cwd()}/images`));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/login', routers.login);
+app.use((req, res, next) => {
+  console.log(req.method);
+  console.log(req.body);
+  next();
+});
 
-// app.use('/register', routers.register);
+app.use('/images', express.static(`${process.cwd()}/images`));
 
-// app.use('/profile', routers.profile);
+app.use('/login', routers.login(userController.loginController));
 
-// app.use('/products', routers.products);
+app.use('/register', routers.register(userController.createUser));
 
-// app.use('/admin', routers.admin);
+app.use('/profile', routers.profile(userController.updateUser));
 
-// app.use('/orders', routers.orders);
+app.use('/products', routers.products);
 
-// app.use('/checkout', routers.checkout);
+app.use('/admin', routers.admin);
+
+app.use('/orders', routers.orders);
+
+app.use('/checkout', routers.checkout);
 
 app.use('/chat', (_req, res) => {
   res.status(200);

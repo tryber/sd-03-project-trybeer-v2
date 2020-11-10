@@ -9,12 +9,15 @@ module.exports = (sequelize, DataTypes) => {
       sale_date: DataTypes.DATE,
       status: DataTypes.STRING,
     },
-    { timestamps: true },
+    { timestamps: false },
   );
 
   Sale.associate = (models) => {
-    Sale.belongsTo(models.users, { as: 'user', foreignKey: 'user_id', through: models.salesProducts });
-    Sale.hasMany(models.salesProducts, { as: 'sales_products' });
+    Sale.belongsTo(models.users, {
+      as: 'user',
+      foreignKey: 'user_id',
+    });
+  // Sale.hasMany(models.salesProducts, { as: 'sales_products', foreignKey: 'sale_id' });
   };
 
   return Sale;
