@@ -1,7 +1,8 @@
 const { sales } = require('../models');
 
 const adminOrderDetailService = async (req, res) => {
-  const { id, status } = req.params;
+  const { id } = req.params;
+  const { status } = req.body;
   // const status = 'Entregue';
   const result = await sales.update({ status }, { where: { id } });
   if (result.length) {

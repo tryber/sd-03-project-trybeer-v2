@@ -50,6 +50,14 @@ const adminOrderDetail = ({Children, OrderNumber, StatusChanged}) => {
           }
         </div>{ (Children.orderStatus === 'Entregue') ? disableBtn = true : disableBtn = false }
         <div>
+          { ((Children.orderStatus === 'Pendente') ? false : true) &&
+            <button
+              className="btn"
+              data-testid="mark-as-prepared-btn" onClick={() => changeOrderStatus('Preparando')}
+            >Preparar pedido</button>
+          }
+        </div>
+        <div>
           { !disableBtn &&
             <button
               className="btn"
