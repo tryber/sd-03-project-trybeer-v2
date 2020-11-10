@@ -31,11 +31,11 @@ app.use('/profile', routers.profile(userController.updateUser));
 
 app.use('/products', routers.products);
 
-// app.use('/admin', routers.admin);z
+app.use('/admin', routers.admin);
 
-// app.use('/orders', routers.orders);
+app.use('/orders', routers.orders);
 
-// app.use('/checkout', routers.checkout);
+app.use('/checkout', routers.checkout);
 
 app.use('/chat', (_req, res) => {
   res.send(200);
