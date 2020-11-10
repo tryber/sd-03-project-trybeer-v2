@@ -1,0 +1,14 @@
+.admin-sidebar {
+  background-color: #343a40 !important;
+  color: #212529;
+  min-height: 100vh;
+  padding: 2vh;
+}
+
+.admin-sidebar a {
+  color: #999999;
+}
+
+.admin-sidebar a:hover {
+  color: #666666;
+}

@@ -1,0 +1,43 @@
+.address-content {
+  margin: 4rem 0;
+}
+
+.checkout-item {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+}
+
+.checkout-text {
+  margin: 20px;
+}
+
+.checkout-title {
+  margin: 20px 0;
+}
+
+#checkoutFinalizeButton {
+  z-index: 50 !important;
+}
+
+.checkoutOrdersList {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.price {
+  margin: 20px 0 0;
+}
+
+.checkout-button {
+  width: 25rem;
+  margin: 20px 0;
+  color: white;
+  border-color: #8a3033;
+  background-color: #8a3033;
+}
+
+.checkout-button:hover {
+  color: white;
+}

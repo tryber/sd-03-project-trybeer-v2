@@ -1,0 +1,11 @@
+.orders-list {
+  align-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.order-card {
+  margin: 20px;
+  width: 18rem;
+}

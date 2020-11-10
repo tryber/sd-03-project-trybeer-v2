@@ -1,0 +1,9 @@
+.admin-order-details-page {
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.message-detail {
+  margin-top: 4rem;
+}

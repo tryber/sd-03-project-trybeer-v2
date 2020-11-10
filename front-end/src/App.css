@@ -1,38 +1,120 @@
-.App {
-  text-align: center;
+/* Toggle Styles */
+
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#wrapper.toggled {
+  padding-left: 250px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+#cartButton {
+  z-index: 50;
+}
+
+#cartButton.cart-toggled {
+  margin-left: 250px !important;
+}
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #d17a22;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px;
+}
+
+/* #page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+} */
+
+/* #page-content-wrapper */
+
+#wrapper.toggled  {
+  position: absolute;
+  margin-right: 250px;
+}
+
+@media (min-width: 768px) {
+  #wrapper {
+    padding-left: 0;
+  }
+
+  #wrapper.toggled {
+    padding-left: 250px;
+  }
+
+  #sidebar-wrapper {
+    width: 250px;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 0;
+  }
+
+  /* #page-content-wrapper {
+    padding: 20px;
+    position: relative;
+  } */
+
+  /* #page-content-wrapper */
+
+  #wrapper.toggled {
+    position: relative;
+    margin-right: 0;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* All Pages */
+
+.main-page {
+  margin: 6vh 12vh 0;
+  padding: 2vh;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.message-geral {
+  margin-top: 4rem;
+}
+
+/* Buttons */
+
+.btn-custom {
+  color: white;
+  border-color: #8a3033;
+  background-color: #8a3033;
+}
+
+.btn-custom:hover {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Forms */
+
+.form-button {
+  margin: 20px 0;
+  color: white;
+  border-color: #8a3033;
+  background-color: #8a3033;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-button:hover {
+  color: white;
 }

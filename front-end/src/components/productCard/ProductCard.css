@@ -1,0 +1,12 @@
+.product-card {
+  margin: 20px;
+  width: 18rem;
+}
+
+.img-card {
+  max-height: 12rem;
+}
+
+.product-qtd {
+  margin: 0 10px;
+}

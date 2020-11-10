@@ -1,0 +1,33 @@
+.product-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
+}
+
+.cards-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.product-card {
+  margin: 20px;
+  width: 18rem;
+}
+
+.img-card {
+  max-height: 12rem;
+}
+
+.product-qtd {
+  margin: 0 10px;
+}
+
+.cart-content {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
