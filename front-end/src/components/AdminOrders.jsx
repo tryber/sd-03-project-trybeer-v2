@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const cardOrders = (orders) => (
-  orders.map(({ id, numberDelivery, addressDelivery, totalPrice, status }, i) => (
+  orders.map(({ id, delivery_number, delivery_address, total_price, status }, i) => (
     <Link key={id} to={`/admin/orders/${id}`}>
       <div style={{ border: '1px solid black', color: 'blue' }} >
         <p data-testid={`${i}-order-number`}>{`Pedido ${id}`}</p>
-        <p data-testid={`${i}-order-address`}>{addressDelivery}, {numberDelivery}</p>
-        <p data-testid={`${i}-order-total-value`}>R$ {totalPrice.toFixed(2).replace('.', ',')}</p>
+        <p data-testid={`${i}-order-address`}>{delivery_address}, {delivery_number}</p>
+        <p data-testid={`${i}-order-total-value`}>R$ {total_price.toFixed(2).replace('.', ',')}</p>
         <label data-testid={`${i}-order-status`}>{status}</label>
       </div>
     </Link>

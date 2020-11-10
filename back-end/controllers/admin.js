@@ -5,6 +5,6 @@ const adminOrderDetailChangeStatusService = require('../services/adminOrderDetai
 const admin = Router();
 
 admin.get('/orders/:id', adminOrderDetailService);
-// admin.put('/orders/:id', adminOrderDetailChangeStatusService);
+admin.put('/orders/:id', adminOrderDetailChangeStatusService);
 
 module.exports = admin;

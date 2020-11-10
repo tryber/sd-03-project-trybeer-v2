@@ -1,5 +1,5 @@
-// const model = require('../models/adminOrders');
+const { sales } = require('../models');
 
-// const getOrdersAdmin = async () => model.getOrdersAdmin();
+const getOrdersAdmin = async () => sales.findAll();
 
-// module.exports = { getOrdersAdmin };
+module.exports = { getOrdersAdmin };
