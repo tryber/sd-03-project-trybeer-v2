@@ -1,15 +1,5 @@
 const Sale = (sequelize, DataTypes) => {
   const sale = sequelize.define('sale', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
-    user_id: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     total_price: {
       type: DataTypes.DECIMAL(9, 2),
       allowNull: false,

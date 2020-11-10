@@ -1,35 +1,32 @@
-const jwt = require('jsonwebtoken');
 const {
   getAllSales,
-  // insertSale,
-  // getSaleInfo,
-  // getSalesByUser,
+  insertSale,
+  getSaleInfo,
+  getSalesByUserId,
   // endSale,
 } = require('../services/saleService');
 
 const listSales = async (_req, res) => {
   const sales = await getAllSales();
-  return res.status(sales.status).json(sales);
+  return res.status(sales.status).json(sales.response);
 };
 
-// const createSale = async (req, res) => {
-//   const data = req.body;
-//   const { nameAdress, numberAdress } = data;
-//   const { cart, user, justNumberPrice } = req.body;
-//   const { id } = user;
+const getSalesById = async (req, res) => {
+  const { id } = req.params;
+  const sales = await getSalesByUserId(id);
+  return res.status(sales.status).json(sales.response);
+};
 
-//   const sale = await insertSale(id, nameAdress, numberAdress, justNumberPrice, cart);
+const createSale = async (req, res) => {
+  // const data = req.body;
+  // const { nameAdress, numberAdress } = data;
+  const { cart, user: { id }, justNumberPrice, nameAdress, numberAdress } = req.body;
 
-//   return res.status(200).json(sale);
-// };
+  const sale = await insertSale(id, nameAdress, numberAdress, justNumberPrice, cart);
 
-// const getSales = async (req, res) => {
-//   const { authorization } = req.headers;
-//   const JWT_SECRET = 'tentecerveja';
-//   const { id } = jwt.verify(authorization, JWT_SECRET);
-//   const sales = await getSalesByUser(id);
-//   return res.status(200).json(sales);
-// };
+  return res.status(200).json(sale);
+};
+
 
 // const saleDetails = async (req, res) => {
 //   const sales = await getSaleInfo(req.params.id);
@@ -56,7 +53,7 @@ const listSales = async (_req, res) => {
 module.exports = {
   listSales,
   // createSale,
-  // getSales,
+  getSalesById,
   // saleDetails,
   // setAsDelivered,
 };

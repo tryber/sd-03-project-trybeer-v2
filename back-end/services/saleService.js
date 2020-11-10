@@ -4,15 +4,28 @@ const { sale } = require('../models');
 const getAllSales = async () => {
   const sales = await sale.findAll({}, { include: 'user' });
   if (sales.length === 0) return { status: 404, message: 'Nenhuma venda encontrada.' }
-
-  return sales;
-
+  return { status: 200, response: sales };
   // return sales.map(
   //   ([id, userId, totalPrice, deliveryAddress, deliveryNumber, date, status]) => (
   //     { id, userId, totalPrice, deliveryAddress, deliveryNumber, date, status }
   //   ),
   // );
 };
+
+const getSalesByUser = async (uId) => {
+  const sales = await sale.findAll({ where: { userId: uId } });
+  if (sales.length === 0) return { status: 404, message: 'Nenhuma venda encontrada para este usuário.' }
+  return { status: 200, response: sales };
+};
+
+const getSaleInfo = async (id) => {
+  const saleInfo = await getSaleById(id);
+  const saleItems = await getSaleItems(id);
+  return saleItems.length
+    ? { code: 200, saleItems, saleInfo }
+    : { code: 404, message: 'Sale not found' };
+};
+
 
 // const insertSale = async (id, addressName, addressNumber, totalPrice, cart) => {
 //   // moment.locale('pt-BR');
@@ -39,25 +52,12 @@ const getAllSales = async () => {
 //   return { message: 'Compra realizada com sucesso!' };
 // };
 
-// const getSalesByUser = async (uId) => {
-//   const sales = await getSalesById(uId);
-//   return sales;
-// };
-
-// const getSaleInfo = async (id) => {
-//   const saleInfo = await getSaleById(id);
-//   const saleItems = await getSaleItems(id);
-//   return saleItems.length
-//     ? { code: 200, saleItems, saleInfo }
-//     : { code: 404, message: 'Sale not found' };
-// };
-
 // const endSale = async (id) => finishSale(id);
 
 module.exports = {
   getAllSales,
+  getSalesByUser,
   // insertSale,
-  // getSalesByUser,
   // getSaleInfo,
   // endSale,
 };
