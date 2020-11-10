@@ -25,7 +25,7 @@ function OrderDetails() {
       .catch(() => { setRedirectToLogin(true); });
   }, [orderNumber, setTitle, token]);
   return (
-    <div>{console.log(orderDetails)}
+    <div>
       <MenuTop />
       {!orderNumber && <Redirect to="/orders" />}
       {redirectToLogin && <Redirect to="/login" />}
@@ -33,6 +33,7 @@ function OrderDetails() {
         <div>
           <h3 data-testid="order-number">{`Pedido ${orderNumber}`}</h3>
           <h3 data-testid="order-date">Data do Pedido {orderInfo.date}</h3>
+          <h3 data-testid="order-status">{orderDetails.length && orderDetails[0].status}</h3>
         </div>
         <table>
           <thead>
