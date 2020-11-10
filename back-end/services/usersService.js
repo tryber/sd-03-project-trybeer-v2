@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { user } = require('../models');
 const { generateJwt } = require('../middlewares/auth');
 
 // Referência regex para validação de email:
@@ -24,7 +24,7 @@ const registerUser = async (name, email, password, role = 'client') => {
 
   if (typeof isEntriesValid === 'object') return isEntriesValid;
 
-  const { dataValues: { id } } = await User.create({ name, email, password, role });
+  const { dataValues: { id } } = await user.create({ name, email, password, role });
 
   const { token } = generateJwt({ id, name, email, password, role });
 
@@ -35,29 +35,29 @@ const registerUser = async (name, email, password, role = 'client') => {
 const userLogin = async (email, password) => {
   if (!email || !password) return { message: 'All fields must be filled' };
 
-  const user = await User.findAll({ where: { email }, raw: true });
+  const userData = await user.findAll({ where: { email }, raw: true });
 
-  const { email: userEmail, password: userPassword } = user[0];
+  const { email: userEmail, password: userPassword } = userData[0];
 
   if (
     !userEmail || userPassword !== password
   ) return { message: 'Incorrect username or password' };
 
-  const { token } = generateJwt(user[0]);
+  const { token } = generateJwt(userData[0]);
 
-  const { role, name } = user[0];
+  const { role, name } = userData[0];
 
   return { name, email, role, token };
 };
 
 const editUser = async (name, email) => {
-  const user = await User.findAll({ where: { email }, raw: true });
+  const userData = await user.findAll({ where: { email }, raw: true });
 
-  if (user[0].email !== email) return { message: 'Invalid email', code: '409' };
+  if (userData[0].email !== email) return { message: 'Invalid email', code: '409' };
 
-  await User.update({ name, email }, { where: { email } });
+  await user.update({ name, email }, { where: { email } });
 
-  const updatedUser = await User.findAll({ where: { email }, raw: true });
+  const updatedUser = await user.findAll({ where: { email }, raw: true });
 
   const { email: userEmail, name: userName } = updatedUser[0];
 

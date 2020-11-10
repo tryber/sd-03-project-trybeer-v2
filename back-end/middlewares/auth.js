@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig, secret } = require('./jwtConfiguration');
-const { User } = require('../models');
+const { user } = require('../models');
 
 const generateJwt = (data) => {
   const token = jwt.sign({ data }, secret, jwtConfig);
@@ -15,15 +15,15 @@ const validateJWT = async (req, res, next) => {
   try {
     const { data: { email } } = jwt.verify(token, secret);
 
-    const user = await User.findAll({ where: { email }, raw: true });
+    const userData = await user.findAll({ where: { email }, raw: true });
 
-    if (!user[0]) {
+    if (!userData[0]) {
       return res.status(401).json({ message: 'invalid token' });
     }
 
-    const { password, ...userData } = user;
+    const { password, ...userDataValues } = userData;
 
-    req.user = userData;
+    req.user = userDataValues;
 
     return next();
   } catch (err) {
