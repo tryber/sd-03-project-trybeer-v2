@@ -1,30 +1,32 @@
 module.exports = (sequelize, DataTypes) => {
-  const Products = sequelize.define('Products', {
+  const SalesProducts = sequelize.define('SalesProducts', {
     id: {
       primaryKey: true,
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    name: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-    },
-    price: {
+    sale_id: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    url_image: {
+    product_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    quantity: {
       type: DataTypes.INTEGER,
-      unique: true,
       allowNull: false,
     },
   }, { createdAt: 'published', updatedAt: 'updated' });
 
-  Products.associate = (models) => {
-    Products.hasMany(models.SalesProducts, { as: 'sales_products', foreignKey: 'product_id' });
+  SalesProducts.associate = (models) => {
+    SalesProducts.belongsTo(models.Sales, { foreignKey: 'sale_id', as: 'sales_products' });
   };
 
-  return Products;
+  SalesProducts.associate = (models) => {
+    SalesProducts.belongsTo(models.Products, { foreignKey: 'product_id', as: 'sales_products' });
+  };
+
+  return SalesProducts;
 };
