@@ -1,0 +1,9 @@
+.chat-div {
+  border: 2px solid black;
+  height: 80vh;
+}
+
+#message-input {
+  height: 50px;
+  width: 80vw;
+}

@@ -10,6 +10,7 @@ const routers = require('./routers/index');
 const { errorHandler } = require('./middlewares');
 
 app.use(cors());
+app.io = io;
 
 // app.use('/images', express.static(`${process.cwd()}/images`));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,11 +31,14 @@ app.use('/login', routers.login);
 // app.use('/checkout', routers.checkout);
 
 app.use('/chat', (_req, res) => {
-  res.send(200);
+  res.status(200);
 });
 
 io.on('connection', async (socket) => {
-  socket.emit('message', { message: 'Hello, you\'re on!' });
+  socket.on('message', ({ message }) => {
+    console.log('mensagem chegou');
+    io.emit('message', { message });
+  });
 });
 
 app.use(errorHandler);

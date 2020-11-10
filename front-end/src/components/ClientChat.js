@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import socketIOClient from "socket.io-client";
+import React, { useState } from 'react';
+import './ClientChat.css';
+const io = require('socket.io-client');
+const socket = io('http://localhost:3001', { transports: ['websocket'] });
 
 function ClientChat() {
-  const [message, setMessage] = useState('');
+  const [chat, setChat] = useState([]);
 
-  useEffect(() => {
-    const socket = socketIOClient('http://localhost:3001/socket.io/socket.io.js');
-    socket.on('message', (data) => {
-      setMessage(data);
-    });
-  }, []);
+  socket.on('message', ({ message }) => setChat([...chat, message]));
 
+  const displayMessage = () => {
+    const message = document.getElementById('message-input').value;
+    socket.emit('message', { message });
+  }
   return (
     <div>
-      <p>Message:</p>
-      <p>{ message }</p>
+      <div className="chat-div">
+        {chat.length > 0 && chat.map((message) =>
+          <p>{message}</p>
+        )}
+      </div>
+      <input id="message-input" />
+      <button onClick={() => displayMessage()}>Enviar Mensagem</button>
     </div>
   )
 };
