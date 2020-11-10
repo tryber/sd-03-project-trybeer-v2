@@ -62,8 +62,6 @@ const Checkout = () => {
     .then((response) => setAddress(response.data));
   }, []);
 
-  console.log(address);
-
   useEffect(() => {
     // Se o localStorage existe
     const cart = localStorage.getItem('cart');
@@ -196,7 +194,6 @@ const Checkout = () => {
   return (
     <div className="checkoutCard">
       <div className="beerContainer">
-      {console.log(address)}
         <h2 class=".h2">Produtos</h2>
         <br />
         <div>
