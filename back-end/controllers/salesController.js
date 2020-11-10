@@ -43,8 +43,6 @@ const updateOrderStatus = rescue(async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
-  console.log(id, status);
-
   await salesService.updateOrderStatus(id, status);
   const updatedOrder = await salesService.salesDetailsById(id);
   return res.status(200).json(updatedOrder);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { saveToLocalStorage } from '../../utils/localStorageFunctions';
 import { register } from '../../services/userService';
+import './SignupPage.css';
 
 function SignupPage() {
   const [name, setName] = useState({ text: '', able: false });
@@ -76,9 +77,9 @@ function SignupPage() {
   return (
     <div className="main-page card">
       <h1 className="text-center">Trybeer - Signup</h1>
-      <div className="d-flex justify-content-center align-items-center">
+      <div id="form-div" className="d-flex justify-content-center align-items-center">
         <form method="POST" onSubmit={ handleSubmit }>
-          <div className="form-group">
+          <div className="mb-3">
             <label htmlFor="name">
               Nome
               <input
@@ -94,7 +95,7 @@ function SignupPage() {
               />
             </label>
           </div>
-          <div className="form-group">
+          <div className="mb-3">
             <label htmlFor="email">
               Email
               <input
@@ -110,7 +111,7 @@ function SignupPage() {
               />
             </label>
           </div>
-          <div className="form-group">
+          <div className="mb-3">
             <label htmlFor="password">
               Password
               <input
@@ -126,7 +127,7 @@ function SignupPage() {
               />
             </label>
           </div>
-          <div className="form-check">
+          <div id="form-check" className="form-check">
             <label className="form-check-label" htmlFor="seller">
               <input
                 data-testid="signup-seller"

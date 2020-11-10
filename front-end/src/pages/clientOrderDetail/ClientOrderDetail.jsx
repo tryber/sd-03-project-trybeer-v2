@@ -33,7 +33,6 @@ function ClientOrderDetail({ match }) {
       <div id="wrapper" className="order-details-page container">
         {order && order.products ?(
           <div className="card">
-            {console.log(order.products)}
             <div className="card-header">
               <h3
                 className="card-text"

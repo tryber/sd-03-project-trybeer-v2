@@ -14,24 +14,21 @@ function OrderCard({ order, index }) {
   return (
     <div
       className="card order-card"
-      data-testid={ `${index}-order-card-container` }
+      data-testid={`${index}-order-card-container`}
     >
-      <div className="card-body" onClick={ () => onCardClick() }>
-        <h5
-          className="card-title"
-          data-testid={ `${index}-order-number` }
-        >
-          {`Pedido ${id} - ${status}`}
+      <div className="card-body" onClick={() => onCardClick()}>
+        <h5 className="card-title" data-testid={`${index}-order-number`}>
+          {`Pedido ${id}`}
         </h5>
-        <h6 className="card-text" data-testid={ `${index}-order-date` }>
+        <h6 className="card-text" data-testid={`${index}-order-date`}>
           {formatDate(saleDate)}
         </h6>
-        <h5
-          className="card-text"
-          data-testid={ `${index}-order-total-value` }
-        >
+        <h5 className="card-text" data-testid={`${index}-order-total-value`}>
           {`R$ ${formatPrice(totalPrice)}`}
         </h5>
+        <h6 className="card-text" data-testid={`${index}-order-status`}>
+          {status}
+        </h6>
       </div>
     </div>
   );
