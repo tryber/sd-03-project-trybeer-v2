@@ -6,8 +6,9 @@ const getDetails = async (orderNumber) => {
   const details = orderDetails.map(async ({ quantity, product_id: productId }) => {
     // console.log(await products.findByPk(productId));
     const { name, price } = await products.findByPk(productId);
-    const totalPrice = price * quantity;
-    return { quantity, name, price: totalPrice };
+    // const totalPrice = Number(price) * quantity;
+    // return { quantity, name, price: totalPrice };
+    return { quantity, name, price };
   });
   const promise = await Promise.all(details);
   return promise;

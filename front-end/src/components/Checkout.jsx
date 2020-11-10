@@ -85,12 +85,12 @@ const Checkout = () => {
       {
         quantity: values[i],
         name: keys[i],
-        price: localStorageCart[i].price,
+        price: (localStorageCart.find((e) => e.name ===keys[i])).price,
       },
     );
   }
   // Calcula o valor total do pedido
-  const totalPrice = listCart.reduce(((accum, { quantity, price }) => accum + quantity * price), 0);
+  const totalPrice = listCart.reduce(((accum, { quantity, price }) => accum += quantity * price), 0);
 
   // O quê será exibido
   let showDisplay = false;

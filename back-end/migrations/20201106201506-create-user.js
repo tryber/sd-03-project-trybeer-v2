@@ -29,11 +29,11 @@ module.exports = {
         type: Sequelize.STRING,
       },
       delivery_district: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
       },
       delivery_city: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
       },
       role: {
