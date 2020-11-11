@@ -33,7 +33,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.get('/', (_req, res) => res.send());
 
 app.get('/products', auth(true), getAllProducts);
-
 app.get('/admin/chats', getAllConvos);
 app.get('/admin/orders', listSales);
 app.get('/admin/orders/:id', auth(true), saleDetails);
