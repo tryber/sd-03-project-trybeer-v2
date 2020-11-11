@@ -13,7 +13,7 @@ const getAllSales = async () => {
 };
 
 const getSalesByUser = async (uId) => {
-  const sales = await sale.findAll({ where: { user_id: uId } });
+  const sales = await sale.findAll({ where: { user_id: uId }, include: 'products' });
   if (sales.length === 0) return { status: 404, message: 'Nenhuma venda encontrada para este usuário.' };
   return { status: 200, response: sales };
 };
