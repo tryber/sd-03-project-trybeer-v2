@@ -97,10 +97,16 @@ export const getOrderData = async (id, token) => {
   return response;
 };
 
-export const markOrderAsDelivered = async (id) => {
+export const markOrderStatus = async (token, id, status) => {
   await axios({
     baseURL: `${url}admin/orders/${id}`,
     method: 'post',
+    headers: {
+      authorization: token,
+    },
+    data: {
+      status,
+    },
   });
 };
 

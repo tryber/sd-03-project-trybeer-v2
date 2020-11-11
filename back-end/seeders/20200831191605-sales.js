@@ -7,7 +7,7 @@ module.exports = {
         delivery_address: 'Rua Trybe',
         delivery_number: '2020',
         sale_date: '2020-11-10 04:00:02',
-        status: 'pendente',
+        status: 'Pendente',
       },
       {
         user_id: 2,
@@ -15,7 +15,7 @@ module.exports = {
         delivery_address: 'Rua Famosa',
         delivery_number: '2021',
         sale_date: '2020-11-10 04:00:05',
-        status: 'pendente',
+        status: 'Pendente',
       },
     ], {});
   },
