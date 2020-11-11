@@ -16,7 +16,7 @@ const {
   createSale,
   getSalesByUserId,
   saleDetails,
-  // setAsDelivered,
+  setOrderStatus,
 } = require('./controllers/saleController');
 
 const auth = require('./middlewares/auth');
@@ -36,7 +36,7 @@ app.get('/admin/orders', listSales);
 app.get('/admin/orders/:id', auth(true), saleDetails);
 app.get('/orders', auth(true), getSalesByUserId);
 
-// app.post('/admin/orders/:id', setAsDelivered);
+app.post('/admin/orders/:id', auth(true), setOrderStatus);
 app.post('/login', loginController);
 app.post('/register', registerController);
 app.post('/profile', updateNameController);

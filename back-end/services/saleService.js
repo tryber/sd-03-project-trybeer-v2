@@ -47,12 +47,15 @@ const getSaleInfo = async (id) => {
     : { status: 404, message: 'Sale not found' };
 };
 
-// const endSale = async (id) => sale(id);
+const setStatus = async (id, status) => {
+  const response = await sale.update({ status }, { where: { id } });
+  return { status: 200, response };
+};
 
 module.exports = {
   getAllSales,
   getSalesByUser,
   insertSale,
   getSaleInfo,
-  // endSale,
+  setStatus,
 };

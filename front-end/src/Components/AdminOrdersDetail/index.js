@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductsLocalStorage } from '../../utils/localStorage';
-import { getOrderData, markOrderAsDelivered } from '../../services/api_endpoints';
+import { getOrderData, markOrderStatus } from '../../services/api_endpoints';
 import AdminSideBar from '../AdminSideBar/index';
 import realFormat from '../../utils/realFormat';
 import './styles.css';
 
 const AdminOrdersDetail = () => {
-  const [saleInfo, setSaleInfo] = useState({ total: 0 });
+  const { token } = getProductsLocalStorage('user');
+  const [saleInfo, setSaleInfo] = useState({});
   const [saleItems, setSaleItems] = useState([]);
-  const [saleStatus, setSaleStatus] = useState();
+  const [saleStatus, setSaleStatus] = useState('Status');
+  const [disableButton, setDisableButton] = useState('');
   const { id: saleId, total_price: total } = saleInfo;
   const { id } = useParams();
+  const orderStatus = [
+    { name: 'Preparar pedido', status: 'Preparando', testId: 'mark-as-prepared-btn' },
+    { name: 'Marcar como entregue', status: 'Entregue', testId: 'mark-as-delivered-btn' },
+  ];
 
-  const markAsDelivered = async () => {
-    setSaleStatus('Entregue');
-    await markOrderAsDelivered(saleId);
+  const markStatus = async (status) => {
+    setSaleStatus(status);
+    setDisableButton(status);
+    await markOrderStatus(token, saleId, status);
   };
 
   useEffect(() => {
-    const { token } = getProductsLocalStorage('user');
     const fetchSale = async () => await getOrderData(id, token) || [];
     fetchSale().then(({ saleInfo: saleData }) => {
       setSaleInfo(saleData);
       setSaleItems(saleData.products);
       setSaleStatus(saleData.status);
+      setDisableButton(saleData.status);
       return null;
     });
-  }, [id]);
+  }, [id, token]);
 
   return (
     <div className="admin-order-items">
@@ -64,8 +71,7 @@ const AdminOrdersDetail = () => {
                   className="product-unit-price"
                   data-testid={ `${index}-order-unit-price` }
                 >
-                  {`(R$ ${realFormat(price)}`}
-                  )
+                  {`(R$ ${realFormat(price)})`}
                 </span>
               </li>
             ))}
@@ -77,14 +83,17 @@ const AdminOrdersDetail = () => {
             {`Total: R$ ${realFormat(total)}`}
           </h2>
         </div>
-        <button
-          type="button"
-          className={ `sale-${saleStatus}-btn` }
-          data-testid="mark-as-delivered-btn"
-          onClick={ () => markAsDelivered() }
-        >
-          Marcar como entregue
-        </button>
+        {orderStatus.map(({ name, status, testId }) => (
+          <button
+            data-testid={ testId }
+            type="button"
+            key={ name + status }
+            className={ disableButton }
+            onClick={ () => markStatus(status) }
+          >
+            {name}
+          </button>
+        ))}
       </div>
     </div>
   );

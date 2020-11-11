@@ -37,17 +37,19 @@ const Orders = () => {
     <>
       <MenuBar titleName="Cliente - Meus Pedidos" />
       <section className="orders-list">
-        {orders.sort().map(({ id: orderId, sale_date: date, total_price: total }, index) => (
+        {orders.sort().map(({
+          id: ordId, sale_date: date, total_price: total, status,
+        }, index) => (
           <Link
             data-testid={ `${index}-order-card-container` }
-            key={ orderId }
+            key={ ordId }
             className="order-card"
-            to={ `orders/${orderId}` }
+            to={ `orders/${ordId}` }
           >
             <div className="order-info">
-              <span className="info-label">Pedido:</span>
+              <span className="info-label">Status</span>
               <span data-testid={ `${index}-order-number` }>
-                { `Pedido ${orderId}` }
+                {status}
               </span>
             </div>
             <div className="order-info">

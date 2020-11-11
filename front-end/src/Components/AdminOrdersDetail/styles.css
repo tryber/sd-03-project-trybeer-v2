@@ -4,7 +4,7 @@
 
 .sale-number {
   position: relative;
-  right: 25%;
+  margin: 5px;
 }
 
 .sale-Pendente {
@@ -34,12 +34,14 @@
 
 .sale-items {
   border: 1px solid black;
-  height: 80%;
   margin: 20px 50px;
   width: 100%;
 }
 
-.sale-total {
-  bottom: 5%;
-  position: absolute;
+.Entregue {
+  display: none;
 }
+
+/* .sale-total {
+
+} */

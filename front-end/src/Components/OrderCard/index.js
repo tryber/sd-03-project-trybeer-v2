@@ -30,7 +30,6 @@ const OrderCard = ({
       </span>
       <span
         data-testid={ `${dtttId}-order-status` }
-        className={ status === 'Entregue' ? 'order-delivered' : 'order-pending' }
       >
         {status}
       </span>
