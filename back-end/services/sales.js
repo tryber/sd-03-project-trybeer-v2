@@ -47,38 +47,63 @@ const checkoutSchema = Joi.object({
   products: productsSchema,
 });
 
-const addSale = async (saleObj) => Models.sales.create(saleObj);
+const addSale = async (saleObj, sellProducts) => Models.sales
+  .create(saleObj)
+  .then((sale) => {
+    Promise.all(sellProducts.map(({ id, sellingQnt }) =>
+      Models.sales_products.create(
+        { sale_id: sale.id, product_id: id, quantity: sellingQnt }
+      )));
+  });
 
-const addToIntermediate = async (saleIntermediateInfo) => Models.sales
-  .addToIntermediate(saleIntermediateInfo);
+const getAllSales = async () => Models.sales.findAll();
 
-const getAll = async (id) => (id
-  ? Models.sales.getAll(id)
-  : Models.sales.getAllAdmin());
+const formatProduct = ({
+  dataValues: { urlImage, name, id, price, sales_products: { dataValues: { quantity } } }
+}) => (
+    { urlImage, name, id, price: parseFloat(price), quantity: parseInt(quantity) }
+  );
 
-const getById = async (id) => Models.sales
-  .getById(id)
-  .then((sale) => sale
-    || { error: true, message: 'Compra não encontrada' });
+const getAllUserSales = async (userId) => Models.sales.findAll({ where: { userId } })
+  .then((sales) => sales);
 
-const getProducts = async (id) => Models.sales.getProducts(id);
+const getSale = async (id) => {
+  const sale = await Models.sales.findByPk(
+    id,
+    {
+      include: {
+        model: Models.products,
+        as: 'products',
+        through: {
+          attributes: ['quantity']
+        },
+      }
+    }
+  );
+  if (!sale) return { error: true, message: 'Compra não encontrada' };
+  return { ...sale.dataValues, products: sale.dataValues.products.map(formatProduct), };
+};
 
-const deliverySale = async (id, status) => Models.sales.updateStatus(id, status);
+const deliverySale = async (id, status) => {
+  const [updated] = await Models.sales.update({ status }, { where: { id } });
+  if (!updated) return { error: true, message: 'não foi possível atualizar o produto' };
+  return { error: false };
+};
 
 const confirmOwnerShip = async (userRequestId, saleId) => {
-  const { userId } = await Models.sales.getById(saleId);
-  if (userRequestId !== userId) return { error: true, message: 'Essa compra não é sua' };
-  return { ok: true };
+  const sale = await Models.sales.findByPk(saleId);
+  if (!sale) return null;
+  if (userRequestId !== sale.user_id) return { error: true, message: 'Essa compra não é sua' };
+  return sale;
 };
 
 module.exports = {
   idSchema,
   checkoutSchema,
   addSale,
-  addToIntermediate,
-  getAll,
-  getById,
-  getProducts,
+  getAllUserSales,
+  getAllSales,
+  getSale,
   deliverySale,
   confirmOwnerShip,
 };
