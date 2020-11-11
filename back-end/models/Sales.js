@@ -20,14 +20,14 @@ const createSales = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    saleDate: {
+    date: {
       type: DataTypes.DATE,
       field: 'sale_date',
     },
-  }, { createdAt: 'sale_date', updatedAt: false, underscored: true });
+  }, { createdAt: 'date', updatedAt: false, underscored: true });
 
   Sales.associate = (models) => {
-    Sales.belongsTo(models.users, { foreignKey: 'user_id', as: 'user' });
+    Sales.belongsTo(models.users, { foreignKey: 'userId', as: 'user' });
   };
 
   return Sales;
