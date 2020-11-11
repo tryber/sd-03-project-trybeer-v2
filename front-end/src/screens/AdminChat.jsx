@@ -6,7 +6,7 @@ import React, {
   useEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import Header from '../components/Header';
+import AdminHeader from '../components/AdminHeader';
 
 const { io } = window;
 
@@ -47,7 +47,7 @@ const AdminChat = (props) => {
   if (!user) return <Redirect to="/login" />;
   return (
     <div>
-      <Header title="Chat" />
+      <AdminHeader title="Chat" />
       <div className="chatContainer">
         <ul>
           {messages.map((msg, index) => (
