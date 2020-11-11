@@ -17,6 +17,7 @@ import OrderDetails from './components/OrderDetails';
 import AdminOrders from './pages/AdminOrders';
 import AdminProfilePage from './pages/AdminProfilePage';
 import AdminOrderDetailPage from './pages/AdminOrderDetailPage';
+import AdminChat from './components/AdminChat';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route exact path="/orders" component={ Orders } />
         <Route exact path="/orders/:id" component={ OrderDetails } />
         <Route path="/admin/profile" component={ AdminProfilePage } />
+        <Route path="/admin/chat" component={ AdminChat } />
         <Route exact path="/" component={ Home } />
       </Switch>
     </BeerProvider>
