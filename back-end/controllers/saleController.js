@@ -40,7 +40,7 @@ const setOrderStatus = async (req, res) => {
       return res.status(404).json({ message: 'Nenhum pedido encontrado' });
     case saleInfo.status === 'Entregue':
       return res.status(304).json({ message: 'Pedido jé foi entregue' });
-    case saleInfo.status === 'Preparando':
+    case saleInfo.status === 'Preparando' || saleInfo.status === 'Pendente':
       return setStatus(id, status).then(() => res.status(200));
     default:
       return res.status(400).json({ message: 'Desculpe, tente novamente!' });

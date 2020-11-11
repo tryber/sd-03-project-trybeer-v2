@@ -49,7 +49,6 @@ const getSaleInfo = async (id) => {
 
 const setStatus = async (id, status) => {
   const response = await sale.update({ status }, { where: { id } });
-  console.log(response);
   return { status: 200, response };
 };
 

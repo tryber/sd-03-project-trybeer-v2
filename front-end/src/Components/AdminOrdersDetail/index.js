@@ -85,7 +85,7 @@ const AdminOrdersDetail = () => {
         </div>
         {orderStatus.map(({ name, status, testId }) => (
           <button
-            data-testid={testId}
+            data-testid={ testId }
             type="button"
             key={ name + status }
             className={ disableButton }
