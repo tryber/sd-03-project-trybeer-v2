@@ -35,4 +35,20 @@ app.use('/adminOrders', adminOrders);
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
+// socket
+const socketIo = require('socket.io');
+const { saveMessage } = require('./dbMongo/modelSaveMessage');
+const server = app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
+
+const io = socketIo(server);
+
+io.on('connect', (socket) => {
+  console.log(`Socket ${socket.id}`);
+
+  socket.on('message', ({ message, email, time }) => {
+    io.emit('message', { message });
+    saveMessage(message, email, time);
+  });
+});
+
+// console.log();
