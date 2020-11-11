@@ -18,6 +18,8 @@ const userController = getUserController(userService);
 const routers = require('./routers/index');
 const { errorHandler } = require('./middlewares');
 
+const { saveMessage } = require('./models/messageModel');
+
 app.use(cors());
 app.io = io;
 
@@ -50,6 +52,8 @@ io.on('connection', async (socket) => {
     const dateTime = new Date();
     const time = moment(dateTime).format('hh:mm:ss');
     io.emit('message', { message, user, time });
+
+    return saveMessage(chatMessage, nickname, timeEdited);
   });
 });
 

@@ -1,20 +1,26 @@
 const connect = require('./connection');
 
-const saveMessage = async (chatMessage, nickname, timestamp) =>
-  connect()
-    .then((db) =>
-      db.collection('messages').insertOne({ chatMessage, nickname, timestamp }))
-    .then(({ insertedId }) => ({
-      _id: insertedId,
-      chatMessage,
-      nickname,
-      timestamp,
-    }))
-    .catch((error) => error);
+const insert = async (message, email) => {
+  const db = await connect();
+  const chat = await db.collection('messages').findOne({ email });
 
-const getAllMessage = async () =>
-  connect()
-    .then((db) => db
-      .collection('messages').find({}).toArray());
+  if (!chat) {
+    db.collection('messages').insertOne({
+      email,
+      messages: [message],
+    });
+  }
 
-module.exports = { saveMessage, getAllMessage };
+  db.collection('messages').updateOne(
+    { email },
+    {
+      messages: { $push: message },
+    },
+  );
+};
+
+const getHistory = async (email) => connect().then(
+  (db) => db.collection('messages').findOne({ email }),
+);
+
+module.exports = { getHistory, insert };
