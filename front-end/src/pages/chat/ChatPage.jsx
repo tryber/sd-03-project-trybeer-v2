@@ -41,7 +41,9 @@ function ChatPage() {
         <ul>
           {messages.map(({chatMessage, from, timestamp}, index) => (
             <li key={`${index}`}>
-              {from} : {chatMessage} às {timestamp}
+              <span data-testid="nickname">{from}</span> - 
+              <span data-testid="message-time">{timestamp}</span> <br/> 
+              <span data-testid="text-message">{chatMessage}</span>
             </li>
           ))}
         </ul>
