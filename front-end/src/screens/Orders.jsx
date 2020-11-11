@@ -53,6 +53,7 @@ function Orders(props) {
                 R$
                 {order.total_price.replace('.', ',')}
               </p>
+              <p>{order.status}</p>
             </div>
           </Link>
         ))}

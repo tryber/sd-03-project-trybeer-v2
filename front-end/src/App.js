@@ -17,8 +17,6 @@ import AdminChatList from './screens/AdminChatList';
 import Chat from './screens/Chat';
 import AdminChat from './screens/AdminChat';
 
-// Finalizado
-
 function App() {
   return (
     <MainProvider>
