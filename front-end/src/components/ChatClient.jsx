@@ -12,9 +12,7 @@ function ChatClient() {
 
   const socket = useRef();
 
-  useEffect(() => {
-    socket.current = io('http://localhost:3001');
-  }, []);
+  useEffect(() => socket.current = io('http://localhost:3001'), []);
 
   let renderMessage;
 
@@ -26,18 +24,16 @@ function ChatClient() {
     });
   }, [renderMessage]);
 
-  console.log(allMessages, socket)
-
   return (
     <div>
       {allMessages.map((elem) => (
         <div>
           <p data-testid="nickname">{email}</p>
-          <span data-testid="message-time"><span>{time}</span></span>
+          <div data-testid="message-time"><span>{time}</span></div>
           <p data-testid="text-message"> {elem} </p>
         </div>
       ))}
-      <input data-testid="message-input" onChange={(e) => setMessage(e.target.value)} value={message} />
+      <input data-testid="message-input" onChange={(e) => setMessage(e.target.value)} />
       <button
         onClick={() => socket.current.emit('message', { message, email, time })}
         data-testid="send-message">&gt;</button>
