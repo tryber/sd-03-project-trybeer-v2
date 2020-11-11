@@ -1,14 +1,14 @@
 const { sale, sales_products, product } = require('../models');
 
-const newSale = async (data, user_id, sale_date, status = 'Pendente') => sale
-  .create({ ...data, user_id, sale_date, status });
+const newSale = async (data, userId, saleDate, status = 'Pendente') => sale
+  .create({ ...data, user_id: userId, sale_date: saleDate, status });
 
-const newSaleProduct = async ({ productId: product_id, quantity }, sale_id) => sales_products
-  .create({ product_id, sale_id, quantity });
+const newSaleProduct = async ({ productId, quantity }, saleId) => sales_products
+  .create({ product_id: productId, sale_id: saleId, quantity });
 
 const getAllSales = async () => sale.findAll({}, { raw: true });
 
-const getSaleById = async (id) => sale.findByPk(id, { include: { model: product, as: 'products' }});
+const getSaleById = async (id) => sale.findByPk(id, { include: { model: product, as: 'products' } });
 
 const markAsDelivered = async (id) => sale.update({ status: 'Entregue' }, { where: { id } });
 

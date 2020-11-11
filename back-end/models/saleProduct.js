@@ -17,8 +17,7 @@ const createdSalesProducts = (sequelize, DataTypes) => {
       foreignKey: 'sale_id',
       otherKey: 'product_id',
     });
-
-  }
+  };
 
   return SaleProduct;
 };

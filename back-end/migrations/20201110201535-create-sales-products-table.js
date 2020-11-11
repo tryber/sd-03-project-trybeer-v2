@@ -27,7 +27,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-  }),
+    }),
 
-  down: async (queryInterface, Sequelize) => queryInterface.dropTable('sales_products'),
+  down: async (queryInterface, _Sequelize) => queryInterface.dropTable('sales_products'),
 };
