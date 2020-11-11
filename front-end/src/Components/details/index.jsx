@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import convertBRL from '../../Services/BRLFunction';
@@ -10,17 +10,21 @@ const Details = ({
 }) => {
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
+  const [statusOrder, setStatusOrder] = useState('Pendente');
 
   const socket = useSelector((state) => state.socketReducer.socket);
 
-  const changeOrderStatus = (preparar) => {
-    setInfo({ ...info, status: 'Entregue' });
+  useEffect(() => {
+    socket.emit('Status', { id, statusOrder });
+  }, [statusOrder])
 
-    socket.emit('Status-id', id);
-    socket.on('Status', ({ status }) => setStatus(status));
+  const changeOrderStatus = (preparar) => {
+    setInfo({ ...info, status: preparar });
+
+    setStatusOrder(preparar);
 
     axios.put(`http://localhost:3001/sales/${id}`, {
-      status: preparar ? 'Preparando' : 'Entregue',
+      status: preparar,
     },
     { headers: { Authorization: token } });
   };
@@ -50,14 +54,14 @@ const Details = ({
         && <>
           <button
             className="marcar-entregue"
-            onClick={ () => changeOrderStatus(true) }
+            onClick={ () => changeOrderStatus('Preparando') }
             data-testid="mark-as-prepared-btn"
           >
             Preparar pedido
           </button>
           <button
             className="marcar-entregue"
-            onClick={ changeOrderStatus }
+            onClick={ () => changeOrderStatus('Entregue') }
             data-testid="mark-as-delivered-btn"
           >
             Marcar como entregue

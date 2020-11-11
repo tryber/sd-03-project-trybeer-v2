@@ -9,7 +9,6 @@ const AdminDetails = () => {
   const [info, setInfo] = useState(null);
   const { id } = useParams();
   const socket = useSelector(state => state.socketReducer.socket);
-  
 
   async function chamarApi() {
     const data = await takeSalesId(id);
@@ -19,10 +18,9 @@ const AdminDetails = () => {
   useEffect(() => {
     chamarApi();
   },[id]);
-
-
+  
   socket.emit('Status-id', id);
-  socket.on('Status', ({ status }) => setStatus(status));
+  socket.on('Status', ({ id:orderId, status }) => orderId === id ? setStatus(status) : null);
 
   return (
     <div>

@@ -10,7 +10,7 @@ const SaleCard = ({ id, date, total, index }) => {
   const socket = useSelector(state => state.socketReducer.socket);
 
   socket.emit('Status-id', id);
-  socket.on('Status', ({ status }) => setStatus(status));
+  socket.on('Status', ({ id:orderId, status }) => orderId === id ? setStatus(status) : null);
   
   return (
     <Link to={`/orders/${id}`} className="sale-card">

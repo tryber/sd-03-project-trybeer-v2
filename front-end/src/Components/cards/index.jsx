@@ -10,7 +10,7 @@ const Cards = ({ index, addressNumber, endereco, preco, id }) => {
   const socket = useSelector(state => state.socketReducer.socket);
 
   socket.emit('Status-id', id);
-  socket.on('Status', ({ status }) => setStatus(status));
+  socket.on('Status', ({ id:orderId, status }) => orderId === id ? setStatus(status) : null);
 
   return (
     <div className="card-geral" onClick={() => history.push(`/admin/orders/${id}`)}>

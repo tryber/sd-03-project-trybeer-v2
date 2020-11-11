@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import { Loading, TopMenu } from "../../Components";
 import { useParams } from 'react-router-dom';
 import SaleCard from "./InnerPage";
