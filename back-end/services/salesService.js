@@ -12,7 +12,6 @@ const getSaleById = async (id) => sale.findByPk(id, { include: { model: product,
 
 const markAsDelivered = async (id, value) => sale.update({ status: value }, { where: { id } });
 
-
 module.exports = {
   newSale,
   newSaleProduct,
