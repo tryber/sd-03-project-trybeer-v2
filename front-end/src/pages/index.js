@@ -7,4 +7,5 @@ export { default as ordersDetails } from './ordersDetails';
 export { default as checkout } from './checkout';
 export { default as adminProfile } from './adminProfile';
 export { default as adminOrders } from './adminOrders';
+export { default as adminChatList } from './adminChatList';
 export { default as adminOrdersDetail } from './adminOrdersDetail';

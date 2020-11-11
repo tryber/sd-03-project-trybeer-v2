@@ -11,6 +11,7 @@ import {
   checkout,
   adminProfile,
   adminOrders,
+  adminChatList,
   adminOrdersDetail,
 } from '../pages';
 
@@ -26,6 +27,7 @@ const Routes = () => (
         <Route exact path="/orders" component={ orders } />
         <Route exact path="/checkout" component={ checkout } />
         <Route exact path="/orders/:id" component={ ordersDetails } />
+        <Route exact path="/admin/chats" component={ adminChatList } />
         <Route exact path="/admin/orders" component={ adminOrders } />
         <Route exact path="/admin/orders/:id" component={ adminOrdersDetail } />
         <Route exact path="/admin/profile" component={ adminProfile } />

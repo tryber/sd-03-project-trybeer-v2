@@ -72,10 +72,22 @@ export const getOrdersFromAPI = async (token) => {
       authorization: token,
     },
   })
-    .then((res) => res.data);
-
-  console.log(response);
+    .then((res) => res.data)
+    .catch((e) => console.log('Orders List error', e));
   return response;
+};
+
+export const getChatsList = async (token) => {
+  const convos = await axios({
+    baseURL: `${url}admin/chats`,
+    method: 'get',
+    headers: {
+      authorization: token,
+    },
+  })
+    .then((result) => result.data)
+    .catch((e) => console.log('Error fetching message logs', e));
+  return convos;
 };
 
 export const getOrderList = async (token) => {

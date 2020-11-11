@@ -7,4 +7,5 @@ export { default as Checkout } from './Checkout';
 export { default as AdminSideBar } from './AdminSideBar';
 export { default as AdminProfile } from './AdminProfile';
 export { default as AdminOrders } from './AdminOrders';
+export { default as AdminChatsPage } from './AdminChatList';
 export { default as AdminOrdersDetail } from './AdminOrdersDetail';
