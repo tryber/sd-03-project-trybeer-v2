@@ -4,7 +4,7 @@ const createProducts = (sequelize, DataTypes) => {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    url_image: {
+    urlImage: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -12,11 +12,7 @@ const createProducts = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(4, 2),
       allowNull: false,
     },
-  }, { timestamps: false });
-
-  // Products.associate = (models) => {
-  //   Products.hasMany(models.sales_products, { as: 'salesProducts', foreignKey: 'product_id' });
-  // };
+  }, { timestamps: false, underscored: true });
 
   return Products;
 };

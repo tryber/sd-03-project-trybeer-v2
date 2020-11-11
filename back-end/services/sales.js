@@ -47,46 +47,41 @@ const checkoutSchema = Joi.object({
   products: productsSchema,
 });
 
-const addSale = async (saleObj, sellProducts) => {
-  const products = sellProducts.map(({ sellingQnt, id }) => ({
-    id,
-    name: 'cocacola',
-    url_image: 'um link qualquer',
-    price: 12.99,
-    sales_products: { quantity: sellingQnt },
-  }));
+const addSale = async (saleObj, sellProducts) => Models.sales
+  .create(saleObj)
+  .then((sale) => {
+    Promise.all(sellProducts.map(({ id, sellingQnt }) =>
+      Models.sales_products.create(
+        { sale_id: sale.id, product_id: id, quantity: sellingQnt }
+      )));
+  });
 
-  // const venda = {
-  //   ...saleObj,
-  //   products,
-  // };
-  // console.log('services add sale 1', venda);
+const getAllSales = async () => Models.sales.findAll();
 
-  // return Models.sales
-  //   .create({ ...saleObj, products }, { include: { model: Models.products, as: 'products' } })
-  //   .then((sale) => {
-  //     console.log('end sale', sale);
-  //   });
-  return Models.sales
-    .create(saleObj)
-    .then((sale) => {
-      Promise.all(sellProducts.map(({ id, sellingQnt }) =>
-        Models.sales_products.create(
-          { sale_id: sale.id, product_id: id, quantity: sellingQnt }
-        )));
-    }).then((res) => console.log('res', res));
-};
+const formatProduct = ({
+  dataValues: { urlImage, name, id, price, sales_products: { dataValues: { quantity } } }
+}) => (
+    { urlImage, name, id, price: parseFloat(price), quantity: parseInt(quantity) }
+  );
 
-const getAll = async (id) => id
-  ? Models.sales.findAll({ where: { id } })
-  : Models.sales.findAll();
+const getAllUserSales = async (userId) => Models.sales.findAll({ where: { userId } })
+  .then((sales) => sales);
 
 const getSale = async (id) => {
   const sale = await Models.sales.findByPk(
-    id, { include: { model: Models.products, as: 'products' } }
+    id,
+    {
+      include: {
+        model: Models.products,
+        as: 'products',
+        through: {
+          attributes: ['quantity']
+        },
+      }
+    }
   );
   if (!sale) return { error: true, message: 'Compra não encontrada' };
-  return sale.dataValues;
+  return { ...sale.dataValues, products: sale.dataValues.products.map(formatProduct), };
 };
 
 const deliverySale = async (id, status) => {
@@ -96,17 +91,18 @@ const deliverySale = async (id, status) => {
 };
 
 const confirmOwnerShip = async (userRequestId, saleId) => {
-  const { user_id } = await Models.sales.findByPk(saleId);
-  console.log(userRequestId, user_id);
-  if (userRequestId !== user_id) return { error: true, message: 'Essa compra não é sua' };
-  return { ok: true };
+  const sale = await Models.sales.findByPk(saleId);
+  if (!sale) return null;
+  if (userRequestId !== sale.user_id) return { error: true, message: 'Essa compra não é sua' };
+  return sale;
 };
 
 module.exports = {
   idSchema,
   checkoutSchema,
   addSale,
-  getAll,
+  getAllUserSales,
+  getAllSales,
   getSale,
   deliverySale,
   confirmOwnerShip,

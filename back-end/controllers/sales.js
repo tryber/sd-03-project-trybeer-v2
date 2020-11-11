@@ -33,8 +33,12 @@ const createSale = rescue(async (req, res, next) => {
 });
 
 const getAllSales = rescue(async (req, res, _next) => {
-  const id = (req.user.role === 'administrator' ? null : req.user.id);
-  const sales = await salesServices.getAll(id);
+  if (req.user.role === 'administrator') {
+    const sales = await salesServices.getAllSales();
+    res.status(200).json(sales);
+  }
+
+  const sales = await salesServices.getAllUserSales(req.user.id);
   return res.status(200).json({ sales });
 });
 
@@ -46,8 +50,8 @@ const getSaleDetails = rescue(async (req, res, next) => {
   if (error) return next(Boom.badRequest(error.message));
 
   const sale = await salesServices.getSale(id);
-
-  if (sale.error) return next(Boom.notFound(sale.message));
+  if (!sale) return next(Boom.notFound('não foi possível pegar essa compra'));
+  if (sale.error) return next(Boom.internal(sale.message));
 
   if (req.user.role !== 'administrator' && req.user.id !== sale.userId) {
     return next(Boom.unauthorized('Você nao tem permissão para ver essa compra'));
@@ -62,7 +66,7 @@ const updateSale = rescue(async (req, res, next) => {
 
   const { id: userId } = req.user;
 
-  const { error } = salesServices.confirmOwnerShip(userId, id);
+  const { error } = await salesServices.confirmOwnerShip(userId, id);
 
   if (error) return next(Boom.unauthorized(error.message));
 
