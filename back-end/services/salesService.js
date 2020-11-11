@@ -33,7 +33,6 @@ const updateSale = async (id, status) => {
 
 const getSaleById = async (id) => {
   if (!parseInt(id, 10)) return { error: 'invalid_id' };
-
   const sale = await sales.findByPk(id, {
     include: {
       model: products,
