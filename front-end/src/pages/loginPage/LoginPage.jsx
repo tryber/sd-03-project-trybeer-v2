@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useForm from '../../hooks/useForm';
 import { saveToLocalStorage } from '../../utils/localStorageFunctions';
 import { login } from '../../services/userService';
+import './LoginPage.css';
 
 export default function Login() {
   const [isValid, setIsValid] = useState(true);
@@ -48,7 +49,7 @@ export default function Login() {
   return (
     <div className="main-page card">
       <h1 className="text-center">Trybeer - Login</h1>
-      <div className="d-flex justify-content-center align-items-center">
+      <div id="form-div" className="d-flex justify-content-center align-items-center">
         <form>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">

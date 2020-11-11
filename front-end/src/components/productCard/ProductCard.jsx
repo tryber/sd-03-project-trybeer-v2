@@ -5,7 +5,7 @@ import { saveToLocalStorage, getCartFromLocalStorage } from '../../utils/localSt
 import './ProductCard.css';
 
 function ProductCard({ product, index, getTotalPrice }) {
-  const { name, urlImage, price } = product;
+  const { name, url_image: urlImage, price } = product;
   const [amount, setAmount] = useState(0);
 
   const existsInCart = () => {
@@ -64,13 +64,14 @@ function ProductCard({ product, index, getTotalPrice }) {
 
   return (
     <div className="card product-card" style={ { background: '#FCE694', border: 'none' } }>
+      {console.log(urlImage)}
       <img
         className="card-img-top img-card"
         data-testid={ `${index}-product-img` }
         src={ urlImage }
         alt={ name }
       />
-      <div className="card-body">
+      <div id="card-body" className="card-body">
         <h5 className="card-title" data-testid={ `${index}-product-name` }>
           {name}
         </h5>

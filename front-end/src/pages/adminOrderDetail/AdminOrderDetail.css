@@ -1,9 +1,27 @@
 .admin-order-details-page {
   align-items: center;
   flex-direction: column;
-  margin-top: 1rem;
+  margin: 1rem 0;
 }
 
 .message-detail {
   margin-top: 4rem;
+}
+
+#buttons-div {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.delivery-button {
+  width: 25rem;
+  margin: 20px 0;
+  color: white;
+  border-color: #8a3033;
+  background-color: #8a3033;
+  margin: 10px 5px;
+}
+
+.delivery-button:hover {
+  color: white;
 }
