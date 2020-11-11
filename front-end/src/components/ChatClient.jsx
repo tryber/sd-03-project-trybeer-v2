@@ -33,7 +33,7 @@ function ChatClient() {
       {allMessages.map((elem) => (
         <div>
           <p data-testid="nickname">{email}</p>
-          <p data-testid="message-time">{time}</p>
+          <span data-testid="message-time">{time}</span>
           <p data-testid="text-message"> {elem} </p>
         </div>
       ))}
