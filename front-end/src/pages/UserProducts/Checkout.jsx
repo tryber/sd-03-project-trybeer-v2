@@ -27,10 +27,10 @@ const productLine = ({ quantity, name, price, id }, index, deleteProduct) => (
 );
 
 const postCheckout = async (
-  { deliveryAddress, deliveryNumber },
+  { delivery_address, delivery_number },
   products,
   { token },
-  totalPrice,
+  total_price,
   setMessage,
   setRedirectTo,
 ) => {
@@ -39,13 +39,14 @@ const postCheckout = async (
       if (quantity !== 0) acc.push({ productId: id, quantity });
       return acc;
     }, []);
+    console.log(delivery_address, delivery_number)
     const { status } = await axios({
       method: 'POST',
       url: 'http://localhost:3001/sales',
       data: {
-        totalPrice,
-        deliveryAddress,
-        deliveryNumber,
+        total_price,
+        delivery_address,
+        delivery_number,
         products: productsCart,
       },
       headers: { Authorization: token },
@@ -65,8 +66,8 @@ const Checkout = () => {
   const [redirectTo, setRedirectTo] = useState('');
 
   const [address, setAddress] = useState({
-    street: '',
-    number: '',
+    delivery_address: '',
+    delivery_number: '',
   });
 
   const user = JSON.parse(localStorage.getItem('user'));
@@ -100,7 +101,7 @@ const Checkout = () => {
           <input
             type="text"
             data-testid="checkout-street-input"
-            name="deliveryAddress"
+            name="delivery_address"
             className="ipt_form"
             onChange={(e) => onChange(e.target)}
           />
@@ -110,7 +111,7 @@ const Checkout = () => {
           type="text"
           data-testid="checkout-house-number-input"
           className="ipt_form"
-          name="deliveryNumber"
+          name="delivery_number"
           onChange={(e) => onChange(e.target)}
         />
         <button
@@ -120,7 +121,7 @@ const Checkout = () => {
           onClick={() =>
             postCheckout(address, products, user, cartTotalPrice, setMessage, setRedirectTo)
           }
-          disabled={cart.length === 0 || !address.deliveryAddress || !address.deliveryNumber}
+          disabled={cart.length === 0 || !address.delivery_address || !address.delivery_number}
         >
           Finalizar Pedido
         </button>
