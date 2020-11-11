@@ -20,10 +20,10 @@ const AdminOrders = () => {
       {loading ? <Loading /> :
         <div className="admin-orders">
           {info &&
-            info.map(({ id, number, total, address, status }, index) => (
+            info.map(({ id, deliveryNumber, total, deliveryAddress, status }, index) => (
               <Cards
-                endereco={ address }
-                addressNumber={ number }
+                endereco={ deliveryAddress }
+                addressNumber={ deliveryNumber }
                 index={ index }
                 key={ id }
                 preco={ total }

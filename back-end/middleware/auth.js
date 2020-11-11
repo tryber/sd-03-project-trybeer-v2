@@ -13,7 +13,6 @@ module.exports = (isNecessary = true) => rescue(async (req, _res, next) => {
     const user = jwt.verify(token, SECRET);
 
     const DBUser = await usersServices.getUserByEmail(user.email);
-
     if (!DBUser && isNecessary) {
       return next(Boom.unauthorized('email ou senha inválido'));
     }

@@ -11,7 +11,7 @@ const makeHeaders = () => {
 const takeSales = async () => {
   const headers = makeHeaders();
   return axios.get(`${URL_BASE}/sales`, { headers })
-    .then(({ data }) => (data ? data.sales : Promise.reject(NO_CONNECTIO)))
+    .then(({ data }) => (data || Promise.reject(NO_CONNECTIO)))
     .catch(catchRequestErr);
 };
 

@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import convertBRL from '../../Services/BRLFunction';
 import "./styles.css";
 
-const Cards = ({ index, addressNumber, endereco, preco, status, id }) => {
+const Cards = ({ index, addressNumber, status, endereco, preco, id }) => {
+  // const [status, setStatus] = useState('Pendente');
   const history = useHistory();
+  // const socket = useSelector(state => state.socketReducer.socket);
+
+  // socket.emit('Status-id', id);
+
+  // socket.on('Status', ({ id:orderId, status }) => orderId === id ? setStatus(status) : null);
+
 
   return (
     <div className="card-geral" onClick={() => history.push(`/admin/orders/${id}`)}>

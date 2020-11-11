@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi');
-const { salesModel } = require('../models');
+const Models = require('../models');
 
 const idSchema = Joi.number()
   .integer()
@@ -47,45 +47,65 @@ const checkoutSchema = Joi.object({
   products: productsSchema,
 });
 
-const addSale = async (saleObj) => {
-  const sale = await salesModel.addSale(saleObj);
-  return sale;
-};
+const addSale = async (saleObj, sellProducts) => Models.sales
+  .create(saleObj)
+  .then((sale) => {
+    Promise.all(sellProducts.map(({ id, sellingQnt }) =>
+      Models.sales_products.create(
+        { sale_id: sale.id, product_id: id, quantity: sellingQnt },
+      )));
+  });
 
-const addToIntermediate = async (saleIntermediateInfo) => {
-  const intermediateInfo = await salesModel.addToIntermediate(
-    saleIntermediateInfo,
+const getAllSales = async () => Models.sales.findAll();
+
+const formatProduct = ({
+  dataValues: { urlImage, name, id, price, sales_products: { dataValues: { quantity } } },
+}) => (
+  { urlImage, name, id, price: parseFloat(price), quantity: parseInt(quantity) }
+);
+
+const getAllUserSales = async (userId) => Models.sales.findAll({ where: { userId } })
+  .then((sales) => sales);
+
+const getSale = async (id) => {
+  const sale = await Models.sales.findByPk(
+    id,
+    {
+      include: {
+        model: Models.products,
+        as: 'products',
+        through: {
+          attributes: ['quantity'],
+        },
+      },
+    },
   );
-  return intermediateInfo;
+  if (!sale) return { error: true, message: 'Compra não encontrada' };
+  return { ...sale.dataValues, products: sale.dataValues.products.map(formatProduct) };
 };
 
-const getAll = async (id) => (id
-  ? salesModel.getAll(id)
-  : salesModel.getAllAdmin());
+const deliverySale = async (id, status) => {
+  const [updated] = await Models.sales.update({ status }, { where: { id } });
+  if (!updated) return { error: true, message: 'não foi possível atualizar o produto' };
+  return { error: false };
+};
 
-const getById = async (id) => salesModel
-  .getById(id)
-  .then((sale) => sale
-      || { error: true, message: 'Compra não encontrada' });
-
-const getProducts = async (id) => salesModel.getProducts(id);
-
-const deliverySale = async (id, status) => salesModel.updateStatus(id, status);
-
-const confirmOwnerShip = async (userRequestId, saleId) => {
-  const { userId } = await salesModel.getById(saleId);
-  if (userRequestId !== userId) return { error: true, message: 'Essa compra não é sua' };
-  return { ok: true };
+const confirmOwnerShip = async (userRequestId, saleId, role) => {
+  const sale = await Models.sales.findByPk(saleId);
+  if (!sale) return null;
+  if (userRequestId !== sale.userId && role !== 'administrator') {
+    return { error: true, message: 'Essa compra não é sua' };
+  }
+  return sale;
 };
 
 module.exports = {
   idSchema,
   checkoutSchema,
   addSale,
-  addToIntermediate,
-  getAll,
-  getById,
-  getProducts,
+  getAllUserSales,
+  getAllSales,
+  getSale,
   deliverySale,
   confirmOwnerShip,
 };
