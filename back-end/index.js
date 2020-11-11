@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const socketIo = require('socket.io');
 
 // https://stackoverflow.com/questions/50968152/cross-origin-request-blocked-with-react-and-express
 const cors = require('cors');
@@ -14,6 +15,7 @@ const orderDetails = require('./controllers/orderDetails');
 const userInfo = require('./controllers/userInfo');
 const admin = require('./controllers/admin');
 const adminOrders = require('./controllers/adminOrders');
+const { saveMessage } = require('./dbMongo/modelSaveMessage');
 
 const app = express();
 app.use(cors(), bodyParser.json());
@@ -35,5 +37,16 @@ app.use('/adminOrders', adminOrders);
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
-// Novo commit
+// socket
+const server = app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
+
+const io = socketIo(server);
+
+io.on('connect', (socket) => {
+  console.log(`Socket ${socket.id}`);
+
+  socket.on('message', ({ message, email, time }) => {
+    io.emit('message', { message });
+    saveMessage(message, email, time);
+  });
+});
