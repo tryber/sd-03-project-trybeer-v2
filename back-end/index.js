@@ -11,10 +11,11 @@ const {
 
 const { getAllProducts } = require('./controllers/productController');
 const { getAllConvos } = require('./controllers/chatController');
+
 const {
   listSales,
   createSale,
-  // getSales,
+  getSalesByUserId,
   saleDetails,
   // setAsDelivered,
 } = require('./controllers/saleController');
@@ -32,10 +33,11 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.get('/', (_req, res) => res.send());
 
 app.get('/products', auth(true), getAllProducts);
+
 app.get('/admin/chats', getAllConvos);
 app.get('/admin/orders', listSales);
 app.get('/admin/orders/:id', auth(true), saleDetails);
-// app.get('/orders', (req, res) => getSales(req, res));
+app.get('/orders', auth(true), getSalesByUserId);
 
 // app.post('/admin/orders/:id', setAsDelivered);
 app.post('/login', loginController);

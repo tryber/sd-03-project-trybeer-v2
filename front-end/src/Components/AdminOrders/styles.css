@@ -1,0 +1,32 @@
+section {
+  border-radius: 5px;
+  margin: 100px auto;
+  padding: 70px 0;
+  text-align: center;
+  width: 60%;
+}
+
+.shadow {
+  box-shadow: 0px 0px 5px 3px rgba(41,41,41,.25);
+}
+
+.default-color {
+  background-color: #0E260A;
+  color: #f2f2f2;
+  font-weight: 700;
+}
+
+.confirm-btn {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 3px;
+  color: #0E260A;
+  cursor: pointer;
+  font-weight: 700;
+  margin: 5px;
+  padding: 8px;
+}
+
+.admin-orders {
+  display: flex;
+}

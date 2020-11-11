@@ -1,0 +1,73 @@
+.login-page {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.login-container {
+  animation: rightBorder 0.5s forwards ease-in-out;
+  animation-play-state: paused;
+  border-radius: 10% 2px;
+  border-right: 0 solid #f2f2f2;
+  margin: 100px auto;
+  max-width: 300px;
+  padding: 150px 50px;
+  text-align: center;
+  width: 50%;
+}
+
+.login-container:hover {
+  animation-play-state: running;
+}
+
+@keyframes rightBorder {
+
+  from {
+    border-right: 0;
+  }
+
+  to {
+    border-right: 60px solid #f2f2f2;
+  }
+}
+
+.login-img {
+
+  width: 500px;
+}
+
+.form input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #f2f2f2;
+  color: white;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.default-color {
+  background-color: #0E260A;
+  color: #f2f2f2;
+  font-weight: 700;
+}
+
+.confirm-btn {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 3px;
+  color: #0E260A;
+  cursor: pointer;
+  font-weight: 700;
+  margin: 5px;
+  padding: 8px;
+}
+
+.confirm-btn:disabled {
+  color: white;
+}
+
+footer {
+  bottom: 0;
+}

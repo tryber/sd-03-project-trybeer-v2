@@ -74,7 +74,6 @@ export const getOrdersFromAPI = async (token) => {
   })
     .then((res) => res.data)
     .catch((e) => console.log('Orders List error', e));
-
   return response;
 };
 
