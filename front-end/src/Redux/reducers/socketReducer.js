@@ -8,10 +8,10 @@ const socketReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SOCKET_REDUX: return {
       ...state,
-      socket: action.socket
-    }
-    default: return state
+      socket: action.socket,
+    };
+    default: return state;
   }
-}
+};
 
 export default socketReducer;
