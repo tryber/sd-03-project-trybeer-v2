@@ -35,11 +35,4 @@ app.use('/adminOrders', adminOrders);
 
 const PORT = process.env.PORT || 3001;
 
-const server = app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
-
-const socketIo = require('socket.io');
-const io = socketIo(server);
-
-io.on('connect', (socket) => {
-  console.log(`Socket ${socket.id}`);
-});
+app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
