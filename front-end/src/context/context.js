@@ -9,7 +9,6 @@ const MainProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [carts, setCarts] = useState([]);
   const [okMessage, setOkMessage] = useState('');
-  const [adminChatRoom, setAdminChatRoom] = useState('');
 
   const context = {
     products,
@@ -18,8 +17,6 @@ const MainProvider = ({ children }) => {
     setCarts,
     okMessage,
     setOkMessage,
-    adminChatRoom,
-    setAdminChatRoom,
   };
 
   return <MainContext.Provider value={ context }>{ children }</MainContext.Provider>;
