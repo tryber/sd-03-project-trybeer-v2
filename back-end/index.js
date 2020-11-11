@@ -41,7 +41,8 @@ app.put('/orders/:id', auth, orderController.updateOrder);
 app.put('/inprogress/:id', auth, orderController.updateInProgressOrder);
 
 // app.get('/testroute', async (req, res) => {
-//   const test = await chatModel.addMessage('zebirita@gmail.com', { time: '19:11', nick: 'Zé Birita', message: 'Teste' });
+//   const test = await chatModel
+//    .addMessage('zebirita@gmail.com', { time: '19:11', nick: 'Zé Birita', message: 'Teste' });
 //   const list = await chatModel.listRoomMessages('zebirita@gmail.com');
 //   res.status(200).json(list);
 // });
