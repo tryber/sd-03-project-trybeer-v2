@@ -28,7 +28,7 @@ const Chat = () => {
           <button data-testid="send-message" >Enviar</button>
         </div>
       </div>
-    <div/>
+    </ div>
   )
 }
 
