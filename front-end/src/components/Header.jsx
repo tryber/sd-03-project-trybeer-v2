@@ -20,10 +20,9 @@ function Header({ title }) {
 
   return (
     <header className="Header">
-      <button type="button" onClick={ () => toggleMenu(sideMenu, setsideMenu) }>
+      <button className="BurgerBtn" type="button" onClick={ () => toggleMenu(sideMenu, setsideMenu) }>
         <img
           data-testid="top-hamburguer"
-          className="BurgerBtn"
           alt="Menu button"
           src={ burgerMenuIcon }
         />
