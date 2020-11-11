@@ -5,7 +5,7 @@ import './styles.css';
 const Chat = () => {
 
   return (
-    <>
+    <div>
       <TopMenu />
       <div id="container-chat">
         <div className="eles">
@@ -28,7 +28,7 @@ const Chat = () => {
           <button data-testid="send-message" >Enviar</button>
         </div>
       </div>
-    </>
+    <div/>
   )
 }
 
