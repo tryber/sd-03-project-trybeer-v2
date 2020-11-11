@@ -10,18 +10,18 @@ const Details = ({
 }) => {
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('role');
-  const [statusOrder, setStatusOrder] = useState('Pendente');
+  // const [statusOrder, setStatusOrder] = useState('Pendente');
 
   const socket = useSelector((state) => state.socketReducer.socket);
 
-  useEffect(() => {
-    socket.emit('Status', { id, statusOrder });
-  }, [statusOrder])
+  // useEffect(() => {
+  //   socket.emit('Status', { id, statusOrder });
+  // }, [statusOrder]);
 
   const changeOrderStatus = (preparar) => {
     setInfo({ ...info, status: preparar });
 
-    setStatusOrder(preparar);
+    // setStatusOrder(preparar);
 
     axios.put(`http://localhost:3001/sales/${id}`, {
       status: preparar,

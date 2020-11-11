@@ -10,7 +10,7 @@ import './style.css';
 const MySales = () => {
   const [{ loading, error, info }, { setLoading }] = useRequisition(takeSales);
 
-  const { id } = useParams();
+  // const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
@@ -18,14 +18,14 @@ const MySales = () => {
 
   if (loading) return <Loading />;
   if (error) return <h3>{error}</h3>;
-
+  console.log(info)
   return (
     <>
       <TopMenu />
       <div className="sales-cards-container all" data-testid="0-order-card-container">
         {info &&
-          info.map(({ id, date, total }, index) => (
-            <SaleCard date={date} id={id} index={index} key={id} total={total} />
+          info.map(({ id, date, total, status }, index) => (
+            <SaleCard date={date} id={id} status={status} index={index} key={id} total={total} />
           ))}
       </div>
     </>

@@ -19,27 +19,27 @@ const createSale = rescue(async (req, res, next) => {
 
   await salesServices.addSale(
     {
-      user_id: userId,
-      total_price: totalPrice,
-      delivery_address: deliveryAddress,
-      delivery_number: deliveryNumber,
-      sale_date: saleDate,
+      userId,
+      totalPrice,
+      deliveryAddress,
+      deliveryNumber,
+      date: saleDate,
       status: 'Pendente'
     },
     products,
   );
-
+  
   return res.status(201).json({ message: 'Venda processada!' });
 });
 
 const getAllSales = rescue(async (req, res, _next) => {
   if (req.user.role === 'administrator') {
     const sales = await salesServices.getAllSales();
-    res.status(200).json(sales);
+    return res.status(200).json(sales);
   }
 
   const sales = await salesServices.getAllUserSales(req.user.id);
-  return res.status(200).json({ sales });
+  return res.status(200).json(sales);
 });
 
 const getSaleDetails = rescue(async (req, res, next) => {
@@ -63,14 +63,17 @@ const getSaleDetails = rescue(async (req, res, next) => {
 const updateSale = rescue(async (req, res, next) => {
   const { id } = req.params;
   const { status } = req.body;
+  const io = req.io;
 
-  const { id: userId } = req.user;
+  const { id: userId, role } = req.user;
 
-  const { error } = await salesServices.confirmOwnerShip(userId, id);
-
+  const { error } = await salesServices.confirmOwnerShip(userId, id, role);
+  
   if (error) return next(Boom.unauthorized(error.message));
 
   await salesServices.deliverySale(id, status);
+
+  io.emit('Status', { id, status });
 
   return res.status(200).json({ message: 'Entregue!' });
 });

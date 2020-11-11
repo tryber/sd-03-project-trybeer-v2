@@ -90,10 +90,12 @@ const deliverySale = async (id, status) => {
   return { error: false };
 };
 
-const confirmOwnerShip = async (userRequestId, saleId) => {
+const confirmOwnerShip = async (userRequestId, saleId, role) => {
   const sale = await Models.sales.findByPk(saleId);
   if (!sale) return null;
-  if (userRequestId !== sale.user_id) return { error: true, message: 'Essa compra não é sua' };
+  if (userRequestId !== sale.userId && role !== 'administrator') {
+    return { error: true, message: 'Essa compra não é sua' };
+  }
   return sale;
 };
 

@@ -5,11 +5,11 @@ import { Details, TopMenu, ListDetails } from '../../../Components';
 import takeSalesId from '../../../Services/apiSalesRequestId';
 
 const AdminDetails = () => {
-  const [status, setStatus] = useState('Pendente');
+  // const [status, setStatus] = useState('Pendente');
   const [info, setInfo] = useState(null);
   const { id } = useParams();
-  const socket = useSelector(state => state.socketReducer.socket);
-
+  // const socket = useSelector(state => state.socketReducer.socket);
+  
   async function chamarApi() {
     const data = await takeSalesId(id);
     return setInfo(data);
@@ -18,9 +18,6 @@ const AdminDetails = () => {
   useEffect(() => {
     chamarApi();
   },[id]);
-  
-  socket.emit('Status-id', id);
-  socket.on('Status', ({ id:orderId, status }) => orderId === id ? setStatus(status) : null);
 
   return (
     <div>
@@ -31,7 +28,7 @@ const AdminDetails = () => {
           id={ info.id }
           total={ info.totalPrice }
           numeroPedido={ info.id }
-          status={ status }
+          status={ info.status }
           data={ info.date }
           setInfo={ setInfo }
         >

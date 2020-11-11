@@ -1,20 +1,13 @@
 const socketIo = require('socket.io');
+const { salesServices } = require('../services/index');
 
-let orders = {};
-
-const changeStatusOrder = ({ id, statusOrder }, io) => {
-  orders[id] = statusOrder;
-  io.emit('Status', { id, statusOrder });
-};
-
-const findOrder = (id, io) => {
-  const order = orders.find((order) => order.id === id);
-  return io.emit('Status', order);
-};
+// const findOrder = async (id, io) => {
+//   const order = await salesServices.getSale(id)
+//   return io.emit('Status', order);
+// };
 
 const onConnection = (socket, io) => {
-  socket.on('Status', (orderStatus) => changeStatusOrder(orderStatus, io));
-  socket.on('Status-id', (id) => findOrder(id, io));
+  // socket.on('Status-id', (id) => findOrder(id, io));
 };
 
 module.exports = (httpServer) => {
