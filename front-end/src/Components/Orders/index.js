@@ -29,7 +29,7 @@ const Orders = () => {
     if (day < dateDigit) return `0${day}/${month}`;
     return `${day}/${month}`;
   };
- 
+
   const formatTotal = (total) => `R$ ${parseFloat(total).toFixed(quantityOfDigits).replace('.', ',')}`;
 
   if (redirect) return <Redirect to="/login" />;

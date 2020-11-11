@@ -19,12 +19,12 @@ const AdminOrdersDetail = () => {
   };
 
   useEffect(() => {
-    const  { token } = getProductsLocalStorage('user');
+    const { token } = getProductsLocalStorage('user');
     const fetchSale = async () => await getOrderData(id, token) || [];
-    fetchSale().then(({ saleInfo }) => {
-      setSaleInfo(saleInfo);
-      setSaleItems(saleInfo.products);
-      setSaleStatus(saleInfo.status);
+    fetchSale().then(({ saleInfo: saleData }) => {
+      setSaleInfo(saleData);
+      setSaleItems(saleData.products);
+      setSaleStatus(saleData.status);
       return null;
     });
   }, [id]);
@@ -49,7 +49,7 @@ const AdminOrdersDetail = () => {
         </h1>
         <div className="sale-items">
           <ul>
-            {saleItems.map(({ name, sales_products: { quantity } , price }, index) => (
+            {saleItems.map(({ name, sales_products: { quantity }, price }, index) => (
               <li key={ name }>
                 <span data-testid={ `${index}-product-qtd` }>
                   {`${quantity} - `}

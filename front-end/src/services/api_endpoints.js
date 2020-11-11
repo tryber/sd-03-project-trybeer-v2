@@ -11,8 +11,7 @@ export const getUserFromAPI = async (email, password) => {
       password,
     },
   })
-    .then((resp) => resp.data)
-    .catch((e) => console.log('Login error', e));
+    .then((resp) => resp.data);
   return response;
 };
 
@@ -27,8 +26,7 @@ export const postNewUserAPI = async (name, email, password, seller) => {
       seller,
     },
   })
-    .then((resp) => resp.data)
-    .catch((e) => console.log('Register error', e));
+    .then((resp) => resp.data);
 
   return response;
 };
@@ -45,8 +43,7 @@ export const postUpdateName = async (name, email, token) => {
       email,
     },
   })
-    .then((resp) => resp.data)
-    .catch((e) => console.log('Update User error', e));
+    .then((resp) => resp.data);
 
   return response;
 };
@@ -59,8 +56,7 @@ export const getProductsFromAPI = async (token) => {
       authorization: token,
     },
   })
-    .then((resp) => resp.data)
-    .catch((e) => console.log('List Products error', e));
+    .then((resp) => resp.data);
   return response;
 };
 
@@ -74,7 +70,6 @@ export const getOrdersFromAPI = async (token) => {
   })
     .then((res) => res.data);
 
-  console.log(response);
   return response;
 };
 
@@ -86,8 +81,7 @@ export const getOrderList = async (token) => {
       authorization: token,
     },
   })
-    .then((result) => result.data)
-    .catch((e) => console.log('Order error', e));
+    .then((result) => result.data);
   return orders;
 };
 
@@ -99,8 +93,7 @@ export const getOrderData = async (id, token) => {
     },
     method: 'get',
   })
-    .then((resp) => resp.data)
-    .catch((e) => console.log('Order data Error', e));
+    .then((resp) => resp.data);
   return response;
 };
 
@@ -111,7 +104,7 @@ export const markOrderAsDelivered = async (id) => {
   });
 };
 
-export const postNewOrder = async (nameAdress, numberAdress, cart, user, justNumberPrice, token) => {
+export const postNewOrd = async (nameAdress, numberAdress, cart, user, justNumberPrice, token) => {
   const response = await axios({
     baseURL: `${url}checkout`,
     method: 'post',
@@ -126,8 +119,7 @@ export const postNewOrder = async (nameAdress, numberAdress, cart, user, justNum
       justNumberPrice,
     },
   })
-    .then((resp) => resp.data)
-    .catch((e) => console.log('Create Order error', e));
+    .then((resp) => resp.data);
 
   return response;
 };

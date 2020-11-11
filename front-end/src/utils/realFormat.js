@@ -1,4 +1,4 @@
-const realFomat = (number = 0) => number.toLocaleString('pt-BR', {
+const realFomat = (number) => number.toLocaleString('pt-BR', {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });

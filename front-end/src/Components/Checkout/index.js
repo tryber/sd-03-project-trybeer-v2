@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import MenuBar from '../MenuBar';
 import { getProductsLocalStorage } from '../../utils/localStorage';
-import { postNewOrder } from '../../services/api_endpoints';
+import { postNewOrd } from '../../services/api_endpoints';
 import './styles.css';
 
 const Checkout = () => {
@@ -42,7 +42,7 @@ const Checkout = () => {
   const sendNewOrder = async (name, number, productCart, userParam, price, token) => {
     setNameAdress('');
     setNumberAdress('');
-    const response = await postNewOrder(name, number, productCart, userParam, price, token);
+    const response = await postNewOrd(name, number, productCart, userParam, price, token);
     localStorage.removeItem('cart');
     return setMessage(response.message);
   };
@@ -119,7 +119,9 @@ const Checkout = () => {
         type="button"
         data-testid="checkout-finish-btn"
         disabled={ disableButtton(justNumberPrice, nameAdress, numberAdress) }
-        onClick={ () => sendNewOrder(nameAdress, numberAdress, cart, user, justNumberPrice, user.token) }
+        onClick={
+          () => sendNewOrder(nameAdress, numberAdress, cart, user, justNumberPrice, user.token)
+        }
       >
         Finalizar Pedido
       </button>

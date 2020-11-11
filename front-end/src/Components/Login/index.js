@@ -25,7 +25,6 @@ function LoginPage() {
   const getUserData = async () => {
     const response = await getUserFromAPI(email, password);
     if (response.message) {
-      alert(response.message);
       return;
     }
     const { token, role } = response;
@@ -33,7 +32,6 @@ function LoginPage() {
       localStorage.setItem('user', JSON.stringify(response));
       setUserRole(role);
     }
-    return true;
   };
 
   if (userRole === 'administrator') return <Redirect to="/admin/orders" />;
