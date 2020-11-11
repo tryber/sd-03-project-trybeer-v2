@@ -3,20 +3,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Redirect } from 'react-router-dom';
 import React, {
-  useEffect, useRef, useState, useContext,
+  useEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import { MainContext } from '../context/context';
 import Header from '../components/Header';
 
 const { io } = window;
 
 const AdminChat = (props) => {
-  const { adminChatRoom } = useContext(MainContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [chat, setChat] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
+  const chatRoom = localStorage.getItem('chatRoom');
 
   const socket = useRef();
 
@@ -29,7 +28,7 @@ const AdminChat = (props) => {
 
   useEffect(() => {
     if (socket.current) {
-      socket.current.emit('join', adminChatRoom);
+      socket.current.emit('join', chatRoom);
 
       socket.current.on('history', (msgHistory) => {
         setMessages([...msgHistory]);
@@ -69,7 +68,7 @@ const AdminChat = (props) => {
             const date = new Date();
             const time = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             socket.current.emit('message', {
-              email: adminChatRoom, message: chat, nick: 'Loja', time,
+              email: chatRoom, message: chat, nick: 'Loja', time,
             });
             setChat('');
           } }

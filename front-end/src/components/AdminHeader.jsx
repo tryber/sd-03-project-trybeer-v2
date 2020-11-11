@@ -19,6 +19,9 @@ function AdminHeader({ title }) {
         <Link to="/admin/profile">
           <button data-testid="side-menu-item-profile" className="MenuItem" type="button">Meu Perfil</button>
         </Link>
+        <Link to="/admin/chats">
+          <button data-testid="side-menu-item-chat" className="MenuItem" type="button">Conversas</button>
+        </Link>
         <button data-testid="side-menu-item-logout" className="MenuItem LogoutBtn" type="button" onClick={ () => handleLogout() }>
           Sair
         </button>

@@ -39,6 +39,9 @@ function Header({ title }) {
         <Link to="/profile">
           <button data-testid="side-menu-item-my-profile" className="MenuItem" type="button">Meu Perfil</button>
         </Link>
+        <Link to="/chat">
+          <button data-testid="side-menu-chat" className="MenuItem" type="button">Conversar com a loja</button>
+        </Link>
         <button data-testid="side-menu-item-logout" className="MenuItem LogoutBtn" type="button" onClick={ () => handleLogout() }>
           Sair
         </button>
