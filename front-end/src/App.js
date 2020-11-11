@@ -14,8 +14,6 @@ import AdminDetail from './screens/AdminDetail';
 import OrdersAdmin from './screens/OrdersAdmin';
 import AdminProfile from './screens/AdminProfile';
 
-// Finalizado
-
 function App() {
   return (
     <MainProvider>

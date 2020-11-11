@@ -10,7 +10,6 @@ function OrderDetail(props) {
   const [loggedIn, setLoggedIn] = useState(true);
   const { orderInfo, setOrderInfo } = useContext(MainContext);
   const currentUser = JSON.parse(localStorage.getItem('user'));
-  console.log(orderInfo);
 
   useEffect(() => {
     const { history, match } = props;
@@ -84,7 +83,7 @@ function OrderDetail(props) {
                 type="button"
                 onClick={ async () => {
                   const headers = new Headers({ Authorization: currentUser.token });
-                  await fetch(`http://localhost:3001/orders/${orderInfo.id}`, { method: 'PUT', headers })
+                  await fetch(`http://localhost:3001/inprogress/${orderInfo.id}`, { method: 'PUT', headers })
                     .catch((err) => console.log(err));
                   setOrderInfo({ ...orderInfo, status: 'Preparando' });
                 } }
