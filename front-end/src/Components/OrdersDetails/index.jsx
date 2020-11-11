@@ -39,7 +39,6 @@ const OrdersDetails = () => {
       const orders = await getOrdersFromAPI(token);
       const orderDetail = orders.find((or) => (or.id.toString() === id));
       // quantity buga e da undefined
-      console.log(orderDetail.products[0].sales_products.quantity);
       setOrders(orderDetail);
     }
     getData(id);
@@ -55,11 +54,12 @@ const OrdersDetails = () => {
           <div className="order-head">
             <h3 data-testid="order-number" >{`Pedido ${order.id}`}</h3>
             <h3 data-testid="order-date" >{`Data: ${order.sale_date}`}</h3>
+            <h3>{order.status}</h3>
           </div>
-          {order.products.map(({ name, price, quantity }, i) => (
+          {order.products.map(({ name, price, quantity, url_image: imageURL }, i) => (
             <div key={name} className="order-product">
               <div className="name-order-container">
-                {/* <img src={require(`../../mockImages/${product.name}.jpg`)} alt={product.name} className="logo-img-order" /> */}
+                <img src={imageURL} alt={name} className="logo-img-order" />
                 <h4 data-testid={`${i}-product-name`} >{name}</h4>
               </div>
               <div className="values-box">
