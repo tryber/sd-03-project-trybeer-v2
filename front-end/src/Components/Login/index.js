@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import validateInput from '../../utils/validate';
 import { getUserFromAPI } from '../../services/api_endpoints';
@@ -12,6 +12,9 @@ function LoginPage() {
   const [userRole, setUserRole] = useState('');
   const { email, password } = form;
 
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   const handleInput = (e) => {
     const { name, value } = e.target;
     return validateInput(name, value)

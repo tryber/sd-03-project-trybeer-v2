@@ -1,5 +1,5 @@
 const moment = require('moment');
-const { sale, sales_products: saleProducts } = require('../models');
+const { sale, sales_products: saleProducts, product } = require('../models');
 
 const getAllSales = async () => {
   const sales = await sale.findAll({}, { include: 'user' });
@@ -41,10 +41,9 @@ const insertSale = async (id, addressName, addressNumber, totalPrice, cart) => {
 };
 
 const getSaleInfo = async (id) => {
-  const saleInfo = await sale.findByPk(id);
-  const saleItems = await saleProducts.findAll({ where: { sale_id: id } });
-  return saleItems.length
-    ? { status: 200, response: { saleItems, saleInfo } }
+  const saleInfo = await sale.findByPk(id, { include: { model: product, as: 'products' } });
+  return saleInfo
+    ? { status: 200, response: { saleInfo } }
     : { status: 404, message: 'Sale not found' };
 };
 

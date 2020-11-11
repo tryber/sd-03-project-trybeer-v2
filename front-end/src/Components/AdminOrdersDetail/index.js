@@ -10,7 +10,7 @@ const AdminOrdersDetail = () => {
   const [saleInfo, setSaleInfo] = useState({ total: 0 });
   const [saleItems, setSaleItems] = useState([]);
   const [saleStatus, setSaleStatus] = useState();
-  const { saleId, total } = saleInfo;
+  const { id: saleId, total_price: total } = saleInfo;
   const { id } = useParams();
 
   const markAsDelivered = async () => {
@@ -21,9 +21,9 @@ const AdminOrdersDetail = () => {
   useEffect(() => {
     const  { token } = getProductsLocalStorage('user');
     const fetchSale = async () => await getOrderData(id, token) || [];
-    fetchSale().then(({ saleInfo, saleItems }) => {
+    fetchSale().then(({ saleInfo }) => {
       setSaleInfo(saleInfo);
-      setSaleItems(saleItems);
+      setSaleItems(saleInfo.products);
       setSaleStatus(saleInfo.status);
       return null;
     });
@@ -49,22 +49,22 @@ const AdminOrdersDetail = () => {
         </h1>
         <div className="sale-items">
           <ul>
-            {saleItems.map(({ productName, quantity, unitPrice }, index) => (
-              <li key={ productName }>
+            {saleItems.map(({ name, sales_products: { quantity } , price }, index) => (
+              <li key={ name }>
                 <span data-testid={ `${index}-product-qtd` }>
                   {`${quantity} - `}
                 </span>
                 <span data-testid={ `${index}-product-name` }>
-                  {`${productName} - `}
+                  {`${name} - `}
                 </span>
                 <span data-testid={ `${index}-product-total-value` }>
-                  {`R$ ${realFormat(unitPrice * quantity)}`}
+                  {`R$ ${realFormat(price * quantity)}`}
                 </span>
                 <span
                   className="product-unit-price"
                   data-testid={ `${index}-order-unit-price` }
                 >
-                  {`(R$ ${realFormat(unitPrice)}`}
+                  {`(R$ ${realFormat(price)}`}
                   )
                 </span>
               </li>

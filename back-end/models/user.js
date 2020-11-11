@@ -13,10 +13,24 @@ const user = (sequelize, DataTypes) => sequelize.define('user', {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
+    validate: {
+      isEmail: {
+        msg: 'O formato deste "email" é inválido',
+      },
+    },
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: {
+      len: {
+        min: 6,
+        msg: '"password" precisa ter mais do que 6 caracteres',
+      },
+      notNull: {
+        msg: '"password" não pode ser nulo',
+      },
+    },
   },
   role: {
     type: DataTypes.STRING,
