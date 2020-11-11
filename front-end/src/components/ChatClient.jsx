@@ -8,7 +8,7 @@ function ChatClient() {
 
 
   const { email } = JSON.parse(localStorage.getItem('user')) || [];
-  const time = new Date().toLocaleTimeString().substring(5, '');
+  const time = new Date().toLocaleTimeString('pt-br').substring(5, '');
 
   const socket = useRef();
 
@@ -17,26 +17,25 @@ function ChatClient() {
   }, []);
 
   let renderMessage;
-
   let returnedTime;
 
   useEffect(() => {
     socket.current.on('message', ({ message, time }) => {
       renderMessage = message;
       returnedTime = time;
+      console.log(returnedTime)
       console.log('dentro', socket)
       setAllMessages((current) => [...current, { renderMessage, returnedTime }]);
     });
   }, [renderMessage]);
 
-  console.log(allMessages, socket)
 
   return (
     <div>
       {allMessages.map(({ renderMessage, returnedTime }) => (
         <div>
           <p data-testid="nickname">{email}</p>
-          <span data-testid="message-time"><span>{returnedTime}</span></span>
+          <p data-testid="message-time">{returnedTime}</p>
           <p data-testid="text-message"> {renderMessage} </p>
         </div>
       ))}

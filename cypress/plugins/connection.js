@@ -3,6 +3,9 @@ require('dotenv').config();
 
 let schema = null;
 
+console.log(process.env.DB_URL)
+console.log(process.env.NAME)
+
 const connection = async () => {
   if (schema) return Promise.resolve(schema);
 
