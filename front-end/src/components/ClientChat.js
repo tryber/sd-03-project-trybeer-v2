@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ClientChat.css';
+import { ClientMenu } from './Menu/index';
 const io = require('socket.io-client');
 const socket = io('http://localhost:3001', { transports: ['websocket'] });
 
@@ -11,9 +12,11 @@ function ClientChat() {
   const displayMessage = () => {
     const message = document.getElementById('message-input').value;
     socket.emit('message', { message });
+    document.getElementById('message-input').value = '';
   }
   return (
     <div>
+      <ClientMenu />
       <div className="chat-div">
         {chat.length > 0 && chat.map((message) =>
           <p>{message}</p>
