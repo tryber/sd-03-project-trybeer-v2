@@ -21,13 +21,14 @@ const getSaleById = async (id) => {
       as: 'products',
     },
   });
+  console.log(sale);
   if (!sale) {
     return { error: 'no_sales' };
   }
-  const saleProducts = await sales.findByPk(id);
-  const fullSale = { ...sale, saleProducts };
+  // const saleProducts = await sales.findByPk(id);
+  // const fullSale = sale;
 
-  return fullSale;
+  return sale;
 };
 
 function cartTotal(cart) {
