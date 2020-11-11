@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-closing-tag-location */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { MainContext } from '../context/context';
 import AdminHeader from '../components/AdminHeader';
 
 function OrderDetail(props) {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [orderInfo, setOrderInfo] = useState();
+  const { orderInfo, setOrderInfo } = useContext(MainContext);
   const currentUser = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
@@ -75,8 +76,21 @@ function OrderDetail(props) {
             Total
             { `R$ ${(Math.round((orderInfo.total_price) * aHundred) / aHundred).toFixed(two).toString().replace('.', ',')}` }
           </h3>
-          {orderInfo.status === 'Pendente'
-            ? <button
+          {orderInfo.status === 'Pendente' || orderInfo.status === 'Preparando'
+            ? <div>
+              <button
+                data-testid="mark-as-prepared-btn"
+                type="button"
+                onClick={ async () => {
+                  const headers = new Headers({ Authorization: currentUser.token });
+                  await fetch(`http://localhost:3001/inprogress/${orderInfo.id}`, { method: 'PUT', headers })
+                    .catch((err) => console.log(err));
+                  setOrderInfo({ ...orderInfo, status: 'Preparando' });
+                } }
+              >
+                Preparar pedido
+              </button>
+              <button
                 data-testid="mark-as-delivered-btn"
                 type="button"
                 onClick={ async () => {
@@ -85,9 +99,10 @@ function OrderDetail(props) {
                     .catch((err) => console.log(err));
                   setOrderInfo({ ...orderInfo, status: 'Entregue' });
                 } }
-            >
-              Marcar como entregue
-            </button>
+              >
+                Marcar como entregue
+              </button>
+            </div>
             : null }
         </div>
       </section>
