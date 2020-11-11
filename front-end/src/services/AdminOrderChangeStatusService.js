@@ -6,8 +6,7 @@ const headers = {
 
 const AdminChangeStatusOrderAPI = (id, status) => axios.put(`http://localhost:3001/admin/orders/${id}`,
   {
-    id,
-    status,
+    id, status,
   },
   headers)
   .then((res) => res)

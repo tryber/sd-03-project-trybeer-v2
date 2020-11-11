@@ -5,15 +5,14 @@ import './CSS/AdminOrderDetail.css';
 const adminOrderDetail = ({ Children, OrderNumber, StatusChanged }) => {
   let disableBtn = false;
   const changeOrderStatus = async (status) => {
-    console.log(status)
+
     const response = await AdminChangeStatusOrderAPI(OrderNumber, status);
     if (response) {
       if (response.status === 202)
         StatusChanged(status);
-      console.log('Pedido atualizado!');
     }
   };
-  console.log(Children)
+
   if (!Children.orderProducts.length) {
     return (<div>Order Not Found!</div>);
   }

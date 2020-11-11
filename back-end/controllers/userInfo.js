@@ -15,7 +15,6 @@ userInfo.post('/', async (req, res) => {
     number,
   } = await service.login.collectInfo(email);
   if (message) return res.status(code).json({ message });
-  // console.log({ street, city, district, number });
   return res.status(200).json({ userId, street, city, district, number });
 });
 

@@ -8,7 +8,7 @@ function ChatClient() {
 
 
   const { email } = JSON.parse(localStorage.getItem('user')) || [];
-  const time = new Date().toLocaleTimeString().substring(5, '');
+  const time = new Date().toLocaleTimeString('pt-br').substring(5, '');
 
   const socket = useRef();
 
@@ -17,24 +17,26 @@ function ChatClient() {
   }, []);
 
   let renderMessage;
+  let returnedTime;
 
   useEffect(() => {
-    socket.current.on('message', ({ message }) => {
+    socket.current.on('message', ({ message, time }) => {
       renderMessage = message;
+      returnedTime = time;
+      console.log(returnedTime)
       console.log('dentro', socket)
-      setAllMessages((current) => [...current, renderMessage]);
+      setAllMessages((current) => [...current, { renderMessage, returnedTime }]);
     });
   }, [renderMessage]);
 
-  console.log(allMessages, socket)
 
   return (
     <div>
-      {allMessages.map((elem) => (
+      {allMessages.map(({ renderMessage, returnedTime }) => (
         <div>
           <p data-testid="nickname">{email}</p>
-          <p data-testid="message-time">{time}</p>
-          <p data-testid="text-message"> {elem} </p>
+          <p data-testid="message-time">{returnedTime}</p>
+          <p data-testid="text-message"> {renderMessage} </p>
         </div>
       ))}
       <input data-testid="message-input" onChange={(e) => setMessage(e.target.value)} value={message} />

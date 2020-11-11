@@ -22,7 +22,7 @@ app.use(cors(), bodyParser.json());
 
 app.use('/', bodyParser.json());
 
-app.use('/admin', admin); // Marco
+app.use('/admin', admin);
 app.use('/checkout', checkout);
 app.use('/login', login);
 app.use('/userInfo', userInfo);
@@ -46,7 +46,7 @@ io.on('connect', (socket) => {
   console.log(`Socket ${socket.id}`);
 
   socket.on('message', ({ message, email, time }) => {
-    io.emit('message', { message });
+    io.emit('message', { message, time });
     saveMessage(message, email, time);
   });
 });
