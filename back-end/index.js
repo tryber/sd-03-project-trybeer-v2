@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const path = require('path');
+const moment = require('moment');
 
 const app = express();
 const httpServer = require('http').createServer(app);
 const io = require('socket.io')(httpServer);
+const validateToken = require('./middlewares/validateToken');
 
 const getUserController = require('./controllers/userController');
 const getUserService = require('./services/userService');
@@ -24,12 +25,6 @@ app.use('/images', express.static(`${process.cwd()}/images`));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  console.log(req.method);
-  console.log(req.body);
-  next();
-});
-
 app.use('/images', express.static(`${process.cwd()}/images`));
 
 app.use('/login', routers.login(userController.loginController));
@@ -46,14 +41,15 @@ app.use('/orders', routers.orders);
 
 app.use('/checkout', routers.checkout);
 
-app.use('/chat', (_req, res) => {
+app.use('/chat', validateToken, (_req, res) => {
   res.status(200);
 });
 
 io.on('connection', async (socket) => {
-  socket.on('message', ({ message }) => {
-    console.log('mensagem chegou');
-    io.emit('message', { message });
+  socket.on('message', ({ message, user }) => {
+    const dateTime = new Date();
+    const time = moment(dateTime).format('hh:mm:ss');
+    io.emit('message', { message, user, time });
   });
 });
 
