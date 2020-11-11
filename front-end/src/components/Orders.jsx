@@ -23,6 +23,7 @@ function Orders() {
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [purchasedProducts, setPurchasedProducts] = useState([]);
   const { token } = JSON.parse(localStorage.getItem('user')) || [];
+
   useEffect(() => {
     axios.get('http://localhost:3001/productList', {
       headers: {
@@ -39,10 +40,11 @@ function Orders() {
       <MenuTop />
       {redirectToLogin && <Redirect to="/login" />}
       <div className="purchases-container">
-        {purchasedProducts.map(({ saleDate, totalPrice, id }, index) => (
+        {purchasedProducts.map(({ saleDate, totalPrice, id, status }, index) => (
           <Link key={ id } onClick={ () => { setOrderNumber(id); setOrderInfo({ date: getDate(saleDate), total: totalPrice }); } } to={ `/orders/${id}` }>
             <div className="purchases-card" data-testid={ `${index}-order-card-container` }>
               <p data-testid={ `${index}-order-number` }>{`Pedido ${id}`}</p>
+              <p>Status: {status}</p>
               <p data-testid={ `${index}-order-total-value` }>{`R$ ${Number(totalPrice).toFixed(decimalNumbers).replace('.', ',')}`}</p>
               <p data-testid={ `${index}-order-date` }>{`${getDate(saleDate)}`}</p>
             </div>

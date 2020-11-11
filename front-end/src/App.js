@@ -18,6 +18,7 @@ import AdminOrders from './pages/AdminOrders';
 import AdminProfilePage from './pages/AdminProfilePage';
 import AdminOrderDetailPage from './pages/AdminOrderDetailPage';
 import AdminChat from './components/AdminChat';
+import ChatClient from './components/ChatClient';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route exact path="/orders/:id" component={ OrderDetails } />
         <Route path="/admin/profile" component={ AdminProfilePage } />
         <Route path="/admin/chat" component={ AdminChat } />
+        <Route path="/chat" component={ ChatClient } />
         <Route exact path="/" component={ Home } />
       </Switch>
     </BeerProvider>
