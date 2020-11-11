@@ -56,9 +56,7 @@ const MenuTop = styled.section`
     padding-top: 20px;
   }
 
-  .hamburguer-input {
-    display: none;
-  }
+  .hamburguer-input {}
 
   .menuChecked {
     box-shadow: 0 0 0 150vw white, 0 0 0 100vh white;

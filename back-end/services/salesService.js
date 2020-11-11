@@ -10,7 +10,8 @@ const getAllSales = async () => sale.findAll({}, { raw: true });
 
 const getSaleById = async (id) => sale.findByPk(id, { include: { model: product, as: 'products' } });
 
-const markAsDelivered = async (id) => sale.update({ status: 'Entregue' }, { where: { id } });
+const markAsDelivered = async (id, value) => sale.update({ status: value }, { where: { id } });
+
 
 module.exports = {
   newSale,

@@ -14,7 +14,6 @@ const getOrderProducts = async (id, setOrderDetails) => {
     });
     const statusOk = 200;
     if (status === statusOk) {
-      console.log(data)
       setOrderDetails(data);
     }
   } catch (err) {
@@ -22,18 +21,19 @@ const getOrderProducts = async (id, setOrderDetails) => {
   }
 };
 
-const postAsDelivered = async (id, orderDetails, setOrderDetails) => {
+const postAsDelivered = async (id, saleStatus, orderDetails, setOrderDetails) => {
   const { token } = JSON.parse(localStorage.getItem('user')) || {};
   try {
+    console.log(saleStatus)
     const { status } = await axios({
       method: 'PUT',
       url: `http://localhost:3001/sales/${id}/delivered`,
-      data: { id },
+      data: { id, saleStatus },
       headers: { Authorization: token },
     });
     const statusOk = 200;
     if (status === statusOk) {
-      setOrderDetails({ ...orderDetails, status: 'Entregue' });
+      setOrderDetails({ ...orderDetails, status: saleStatus });
     }
   } catch (err) {
     console.log(err.message);
@@ -74,7 +74,25 @@ const AdminOrderDetails = () => {
         ))}
       </ul>
       <span data-testid="order-total-value">{formatPrice(orderDetails.total_price)}</span>
-      {(orderDetails.status === 'Pendente') ? <button type="button" onClick={() => postAsDelivered(id, orderDetails, setOrderDetails)} data-testid="mark-as-delivered-btn">Marcar como entregue</button> : ''}
+      {(orderDetails.status !== 'Entregue')
+        ? <button type="button" name="Entregue" onClick={
+          ({ target: { name } }) => postAsDelivered(
+            id,
+            name,
+            orderDetails,
+            setOrderDetails)
+          } data-testid="mark-as-delivered-btn">Marcar como entregue</button>
+        : ''}
+      {console.log(orderDetails.status)}
+      {(orderDetails.status !== 'Preparando' && orderDetails.status !== 'Entregue')
+        ? <button type="button" name="Preparando" onClick={
+          ({ target: { name } }) => postAsDelivered(
+            id,
+            name,
+            orderDetails,
+            setOrderDetails)
+          } data-testid="mark-as-prepared-btn" >Preparar pedido</button>
+        : ''}
     </div>
   );
 };

@@ -31,7 +31,8 @@ const getSaleDetails = rescue(async (req, res, next) => {
 });
 
 const markAsDelivered = rescue(async (req, res) => {
-  await salesService.markAsDelivered(req.params.id);
+  const { id, saleStatus } = req.body;
+  await salesService.markAsDelivered(id, saleStatus);
   return res.status(200).json({ message: 'Success' });
 });
 
