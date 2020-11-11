@@ -2,7 +2,6 @@ require('dotenv/config');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
-const Http = require('http');
 const IO = require('socket.io');
 const path = require('path');
 const userController = require('./controllers/userController');
@@ -13,8 +12,6 @@ const chatModel = require('./models/models/chatModel');
 // const { sales, products, users } = require('./models');
 
 const app = express();
-const http = Http.createServer(app);
-const io = IO(http);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -32,7 +29,7 @@ app.put('/users/:email', auth, userController.userUpdate);
 app.get('/products', auth, productController.listAllProducts);
 app.get('/orders', auth, orderController.listAllOrders);
 app.get('/admin/orders', auth, orderController.listAllOrders);
-app.get('admin/chat', auth, async (_req, res) => {
+app.get('/admin/chat', auth, async (_req, res) => {
   const chatList = await chatModel.listAllRooms();
 
   res.status(200).json(chatList);
@@ -44,16 +41,22 @@ app.put('/orders/:id', auth, orderController.updateOrder);
 app.put('/inprogress/:id', auth, orderController.updateInProgressOrder);
 
 // app.get('/testroute', async (req, res) => {
-//   const list = await sales.update({ status: 'Preparando' }, { where: { id: 1 } });
-//   await sales.update({ status: 'Entregue' }, { where: { id: 2 } });
-//   return res.status(200).json(list);
+//   const test = await chatModel.addMessage('zebirita@gmail.com', { time: '19:11', nick: 'Zé Birita', message: 'Teste' });
+//   const list = await chatModel.listRoomMessages('zebirita@gmail.com');
+//   res.status(200).json(list);
 // });
+
+const PORT = process.env.PORT || 3001;
+
+const server = app.listen(PORT, () => { console.log(`Listening on ${PORT}`); });
+
+const io = IO.listen(server);
 
 io.on('connection', async (socket) => {
   socket.on('join', async (email) => {
     socket.join(`${email}`);
     const history = await chatModel.listRoomMessages(email);
-    io.to(`${email}`).emit('history', history);
+    socket.emit('history', history);
   });
 
   socket.on('message', async ({ email, message, nick, time }) => {
@@ -61,6 +64,3 @@ io.on('connection', async (socket) => {
     io.to(`${email}`).emit('message', { email, message, nick, time });
   });
 });
-
-const PORT = process.env.PORT || 3001;
-http.listen(PORT, () => { console.log(`Listening on ${PORT}`); });
