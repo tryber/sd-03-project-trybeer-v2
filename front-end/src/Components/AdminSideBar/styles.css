@@ -1,0 +1,21 @@
+.admin-side-bar-container {
+  border: 1px solid black;
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: black;
+  color: white;
+  align-items: center;
+}
+
+.btn-admin {
+  margin: 15px;
+  height: 35px;
+  width: 200px;
+  border: 2px solid white;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}

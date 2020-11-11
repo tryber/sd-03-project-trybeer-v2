@@ -1,0 +1,66 @@
+.orders-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 50px auto;
+  width: 90%;
+}
+
+.order-card {
+  animation: bg-card 3s infinite ease-in-out;
+  background-color: #262626;
+  background-image: url('../../images/bg-card-orders.png');
+  background-size: cover;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  margin: 10px auto;
+  max-width: 250px;
+  text-decoration: none;
+  transition: box-shadow 0.5s;
+  transition: background-image 1s;
+  width: 80%;
+  overflow: hidden;
+}
+
+@keyframes bg-card {
+  
+  0% {
+    background-size: 300px;
+  }
+
+  50% {
+    background-size: 340px;
+  }
+
+  100% {
+    background-size: 300px;
+  }
+}
+
+.order-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px,
+    rgba(0, 0, 0, 0.12) 0px 1px 18px 0px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px;
+}
+
+.order-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.order-info {
+  padding: 10px;
+}
+
+.order-info:nth-child(3) {
+  border-radius: 0 0 10px 10px;
+  border-top: 1px solid white;
+  color: #f2f2f2;
+  margin: 0;
+}
+
+.orders-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
