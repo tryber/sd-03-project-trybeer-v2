@@ -24,11 +24,10 @@ const createSale = rescue(async (req, res, next) => {
       deliveryAddress,
       deliveryNumber,
       date: saleDate,
-      status: 'Pendente'
+      status: 'Pendente',
     },
     products,
   );
-  
   return res.status(201).json({ message: 'Venda processada!' });
 });
 
@@ -63,12 +62,12 @@ const getSaleDetails = rescue(async (req, res, next) => {
 const updateSale = rescue(async (req, res, next) => {
   const { id } = req.params;
   const { status } = req.body;
-  const io = req.io;
+  const { io } = req;
 
   const { id: userId, role } = req.user;
 
   const { error } = await salesServices.confirmOwnerShip(userId, id, role);
-  
+
   if (error) return next(Boom.unauthorized(error.message));
 
   await salesServices.deliverySale(id, status);

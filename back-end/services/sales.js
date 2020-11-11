@@ -52,17 +52,17 @@ const addSale = async (saleObj, sellProducts) => Models.sales
   .then((sale) => {
     Promise.all(sellProducts.map(({ id, sellingQnt }) =>
       Models.sales_products.create(
-        { sale_id: sale.id, product_id: id, quantity: sellingQnt }
+        { sale_id: sale.id, product_id: id, quantity: sellingQnt },
       )));
   });
 
 const getAllSales = async () => Models.sales.findAll();
 
 const formatProduct = ({
-  dataValues: { urlImage, name, id, price, sales_products: { dataValues: { quantity } } }
+  dataValues: { urlImage, name, id, price, sales_products: { dataValues: { quantity } } },
 }) => (
-    { urlImage, name, id, price: parseFloat(price), quantity: parseInt(quantity) }
-  );
+  { urlImage, name, id, price: parseFloat(price), quantity: parseInt(quantity) }
+);
 
 const getAllUserSales = async (userId) => Models.sales.findAll({ where: { userId } })
   .then((sales) => sales);
@@ -75,13 +75,13 @@ const getSale = async (id) => {
         model: Models.products,
         as: 'products',
         through: {
-          attributes: ['quantity']
+          attributes: ['quantity'],
         },
-      }
-    }
+      },
+    },
   );
   if (!sale) return { error: true, message: 'Compra não encontrada' };
-  return { ...sale.dataValues, products: sale.dataValues.products.map(formatProduct), };
+  return { ...sale.dataValues, products: sale.dataValues.products.map(formatProduct) };
 };
 
 const deliverySale = async (id, status) => {
