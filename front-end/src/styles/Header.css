@@ -1,0 +1,56 @@
+.Header {
+  background-color: #0D0A0B;
+  color: white;
+}
+
+.BurgerBtn {
+  background-color: #0D0A0B;
+  float: left;
+  margin-left: 8px;
+  margin-top: 6px;
+}
+
+.TopTitle {
+  background-image: url('../images/FundoTitle.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  font-size: 32pt;
+  height: 60px;
+  margin: auto 30px;
+  margin-top: auto;
+  text-shadow: #000 2px 3px 2px;
+}
+
+.TitleAdmin {
+  width: 50%;
+}
+
+.side-menu-container {
+  background-color: #0D0A0B;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: auto 10px 0 0;
+  padding: 15px;
+  position: absolute;
+  transition: 0.6s;
+  width: 200px;
+}
+
+.hide-side-menu {
+  display: none;
+}
+
+.MenuItem {
+  background-color: rgba(24, 23, 23, 0.6);
+  border-color: white;
+  color: white;
+  font-size: large;
+  height: 50px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.LogoutBtn {
+  margin-top: 260px;
+}

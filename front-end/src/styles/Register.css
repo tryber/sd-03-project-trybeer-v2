@@ -1,0 +1,36 @@
+.ContainerRegister {
+  background-image: url(../images/FundoLogin.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ContainerRegister h1 {
+  padding: 15% 0 0;
+}
+
+@media screen and ( max-width: 760px) {
+  .ContainerRegister {
+    background-size: 115%;
+  }
+  .InputRegister {
+    max-width: 75%;
+  }
+  .SignupBtn {
+    max-width: 50%;
+  }
+}
+
+.FormRegister {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding-bottom: 15%;
+}
+
+.SignupBtn {
+  background-color: #72B01D;
+  border-color: #72B01D;
+  padding: 5px 10px;
+  width: 150px;
+}
