@@ -1,14 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-closing-tag-location */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { MainContext } from '../context/context';
 import AdminHeader from '../components/AdminHeader';
 
 function OrderDetail(props) {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [orderInfo, setOrderInfo] = useState();
+  const { orderInfo, setOrderInfo } = useContext(MainContext);
   const currentUser = JSON.parse(localStorage.getItem('user'));
+  console.log(orderInfo);
 
   useEffect(() => {
     const { history, match } = props;
