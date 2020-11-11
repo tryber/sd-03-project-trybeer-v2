@@ -12,7 +12,7 @@ const AdminOrdersDetail = () => {
   const [saleItems, setSaleItems] = useState([]);
   const [saleStatus, setSaleStatus] = useState('Status');
   const [disableButton, setDisableButton] = useState('');
-  const { id: saleId = 0, total_price: total = 0} = saleInfo;
+  const { id: saleId, total_price: total } = saleInfo;
   const { id } = useParams();
   const orderStatus = [
     { name: 'Preparar pedido', status: 'Preparando', testId: 'mark-as-prepared-btn' },
