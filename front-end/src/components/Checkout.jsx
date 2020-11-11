@@ -62,8 +62,6 @@ const Checkout = () => {
     .then((response) => setAddress(response.data));
   }, []);
 
-  console.log(address);
-
   useEffect(() => {
     // Se o localStorage existe
     const cart = localStorage.getItem('cart');
@@ -196,12 +194,11 @@ const Checkout = () => {
   return (
     <div className="checkoutCard">
       <div className="beerContainer">
-      {console.log(address)}
-        <h2 class=".h2">Produtos</h2>
+        <h2 className=".h2">Produtos</h2>
         <br />
         <div>
           {!showDisplay
-            && <h2 class=".img">Não há produtos no carrinho</h2>}
+            && <h2 className=".img">Não há produtos no carrinho</h2>}
         </div>
         {/* <div>
           {showDisplay
@@ -241,7 +238,7 @@ const Checkout = () => {
                 className="deleteButton"
                 data-testid={`${i}-removal-button`}
                 onClick={() => removeItem(e.name)}
-              ><img class=".img" src={trash} alt="delete-button"/>
+              ><img className=".img" src={trash} alt="delete-button"/>
               </button>
             </p>
               </div>
@@ -263,7 +260,7 @@ const Checkout = () => {
           <legend>Endereço para entrega</legend>
           <label htmlFor="delivery_address">Rua</label>
           <input
-            class=".input"
+            className=".input"
             type="text"
             name="delivery_address"
             data-testid="checkout-street-input"
@@ -272,7 +269,7 @@ const Checkout = () => {
           />
           <label htmlFor="delivery_number">Número da casa</label>
           <input
-            class=".input" 
+            className=".input" 
             type="text"
             name="delivery_number"
             data-testid="checkout-house-number-input"
@@ -281,7 +278,7 @@ const Checkout = () => {
           />
           <label htmlFor="delivery_district">Bairro</label>
           <input
-            class=".input"
+            className=".input"
             type="text"
             name="delivery_district"
             value={deliveryDistrict}
@@ -289,7 +286,7 @@ const Checkout = () => {
           />
           <label htmlFor="city">Cidade</label>
           <input
-            class=".input"
+            className=".input"
             type="text"
             name="delivery_city"
             value={deliveryCity}
