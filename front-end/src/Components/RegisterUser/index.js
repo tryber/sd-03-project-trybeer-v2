@@ -33,9 +33,10 @@ const RegisterUser = () => {
   };
 
   const createNewUser = async () => {
-    const unprocessableEntityCode = 422;
-    const { message, status, token } = await postNewUserAPI(name, email, password, seller);
-    if (status === unprocessableEntityCode) return setError({ message });
+    // const unprocessableEntityCode = 422;
+    const response = await postNewUserAPI(name, email, password, seller);
+    if (response.message) return setError({ message: response.message });
+    const { token } = response;
     if (token) {
       const data = { name, email, token };
       localStorage.setItem('user', JSON.stringify(data));

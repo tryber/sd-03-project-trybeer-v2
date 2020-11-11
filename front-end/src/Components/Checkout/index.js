@@ -39,11 +39,12 @@ const Checkout = () => {
     localStorage.setItem('cart', JSON.stringify(cart));
   };
 
-  const sendNewOrder = async (name, number, productCart, userParam, price) => {
+  const sendNewOrder = async (name, number, productCart, userParam, price, token) => {
     setNameAdress('');
     setNumberAdress('');
-    const response = await postNewOrder(name, number, productCart, userParam, price);
-    return setMessage(response.data.message);
+    const response = await postNewOrder(name, number, productCart, userParam, price, token);
+    localStorage.removeItem('cart');
+    return setMessage(response.message);
   };
 
   function goToProducts() {
@@ -118,7 +119,7 @@ const Checkout = () => {
         type="button"
         data-testid="checkout-finish-btn"
         disabled={ disableButtton(justNumberPrice, nameAdress, numberAdress) }
-        onClick={ () => sendNewOrder(nameAdress, numberAdress, cart, user, justNumberPrice) }
+        onClick={ () => sendNewOrder(nameAdress, numberAdress, cart, user, justNumberPrice, user.token) }
       >
         Finalizar Pedido
       </button>

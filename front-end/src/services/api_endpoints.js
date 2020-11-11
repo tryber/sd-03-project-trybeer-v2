@@ -61,7 +61,6 @@ export const getProductsFromAPI = async (token) => {
   })
     .then((resp) => resp.data)
     .catch((e) => console.log('List Products error', e));
-
   return response;
 };
 
@@ -92,12 +91,15 @@ export const getOrderList = async (token) => {
   return orders;
 };
 
-export const getOrderData = async (id) => {
+export const getOrderData = async (id, token) => {
   const response = await axios({
     baseURL: `${url}admin/orders/${id}`,
+    headers: {
+      authorization: token,
+    },
     method: 'get',
   })
-    .then((result) => result.data)
+    .then((resp) => resp.data)
     .catch((e) => console.log('Order data Error', e));
   return response;
 };
@@ -109,10 +111,13 @@ export const markOrderAsDelivered = async (id) => {
   });
 };
 
-export const postNewOrder = async (nameAdress, numberAdress, cart, user, justNumberPrice) => {
+export const postNewOrder = async (nameAdress, numberAdress, cart, user, justNumberPrice, token) => {
   const response = await axios({
-    baseURL: `${url}orders`,
+    baseURL: `${url}checkout`,
     method: 'post',
+    headers: {
+      authorization: token,
+    },
     data: {
       nameAdress,
       numberAdress,
@@ -121,6 +126,7 @@ export const postNewOrder = async (nameAdress, numberAdress, cart, user, justNum
       justNumberPrice,
     },
   })
+    .then((resp) => resp.data)
     .catch((e) => console.log('Create Order error', e));
 
   return response;

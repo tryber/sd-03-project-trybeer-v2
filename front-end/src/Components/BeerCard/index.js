@@ -123,7 +123,7 @@ BeerCard.propTypes = {
   id: PropTypes.number.isRequired,
   imageURL: PropTypes.string.isRequired,
   productName: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   initialQuantity: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
 };

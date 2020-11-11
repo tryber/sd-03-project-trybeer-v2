@@ -40,7 +40,7 @@ const OrderCard = ({
 
 OrderCard.propTypes = {
   id: PropTypes.number.isRequired,
-  totalPrice: PropTypes.number.isRequired,
+  totalPrice: PropTypes.string.isRequired,
   deliveryNumber: PropTypes.string.isRequired,
   deliveryAddress: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,

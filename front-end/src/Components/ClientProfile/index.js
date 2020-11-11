@@ -7,15 +7,18 @@ import Promocional from '../Promocional';
 import './styles.css';
 
 const ClientProfile = () => {
-  const { name, email, token } = JSON.parse(localStorage.getItem('user')) || '';
+  const { name, email, token } = JSON.parse(localStorage.getItem('user'));
   const [userEmail] = useState(email);
   const [newName, setNewName] = useState(name);
   const [message, setMessage] = useState(null);
 
   const handleChangeName = async () => {
-    const data = await postUpdateName(newName, email, token);
-    if (data.token) { localStorage.setItem('user', JSON.stringify(data)); setMessage(data.message); }
-    return setMessage(data.message);
+    const response = await postUpdateName(newName, email, token);
+    if (response.token) {
+      localStorage.setItem('user', JSON.stringify(response));
+      setMessage(response.message);
+    }
+    return setMessage(response.message);
   };
 
   useEffect(() => { }, [setNewName]);

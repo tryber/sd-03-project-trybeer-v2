@@ -12,7 +12,8 @@ const AdminOrdersPage = () => {
   useEffect(() => {
     const fetchOrders = async () => await getOrderList(token) || [];
 
-    fetchOrders().then((orders) => setProductList(orders));
+    fetchOrders()
+      .then((orders) => setProductList(orders));
   }, [token]);
 
   return (
@@ -21,9 +22,9 @@ const AdminOrdersPage = () => {
       <section className="admin-orders-aside">
         {productList.map(({
           id,
-          totalPrice,
-          deliveryAddress,
-          deliveryNumber,
+          total_price: totalPrice,
+          delivery_address: deliveryAddress,
+          delivery_number: deliveryNumber,
           status,
         }, index) => (
           <Link

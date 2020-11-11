@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { getProductsLocalStorage } from '../../utils/localStorage';
 import { getOrderData, markOrderAsDelivered } from '../../services/api_endpoints';
 import AdminSideBar from '../AdminSideBar/index';
 import realFormat from '../../utils/realFormat';
@@ -18,11 +19,13 @@ const AdminOrdersDetail = () => {
   };
 
   useEffect(() => {
-    const fetchSale = async () => await getOrderData(id) || [];
-    fetchSale().then((data) => {
-      setSaleInfo(data.saleInfo);
-      setSaleItems(data.saleItems);
-      setSaleStatus(data.saleInfo.status);
+    const  { token } = getProductsLocalStorage('user');
+    const fetchSale = async () => await getOrderData(id, token) || [];
+    fetchSale().then(({ saleInfo, saleItems }) => {
+      setSaleInfo(saleInfo);
+      setSaleItems(saleItems);
+      setSaleStatus(saleInfo.status);
+      return null;
     });
   }, [id]);
 

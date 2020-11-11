@@ -13,13 +13,13 @@ const ProductsPage = () => {
     <div className="products-list">
       <MenuBar titleName="TryBeer" />
       {products.map(({
-        id, name, price, urlImage, quantity,
+        id, name, price, url_image, quantity,
       }, index) => (
         <BeerCard
           id={ id }
           productName={ name }
           price={ price }
-          imageURL={ urlImage }
+          imageURL={ url_image }
           initialQuantity={ quantity }
           index={ index }
           key={ name }

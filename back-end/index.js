@@ -40,7 +40,7 @@ app.get('/admin/orders/:id', auth(true), saleDetails);
 app.post('/login', loginController);
 app.post('/register', registerController);
 app.post('/profile', updateNameController);
-app.post('/orders', auth(true), createSale);
+app.post('/checkout', auth(true), createSale);
 
 app.use(errorHandler);
 

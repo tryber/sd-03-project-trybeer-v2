@@ -21,14 +21,14 @@ const createSale = async (req, res) => {
   const { id } = req.user;
   const { cart, justNumberPrice, nameAdress, numberAdress } = req.body;
   const sale = await insertSale(id, nameAdress, numberAdress, justNumberPrice, cart);
-
-  return res.status(sale.status).json(sale.response);
+  console.log(sale);
+  return res.status(sale.status).json({ message: sale.response });
 };
 
 const saleDetails = async (req, res) => {
   const sales = await getSaleInfo(req.params.id);
-  const { status } = sales;
-  return res.status(status).json(sales);
+  const { status, response } = sales;
+  return res.status(status).json(response);
 };
 
 // const setAsDelivered = async (req, res) => {

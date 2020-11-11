@@ -32,7 +32,7 @@ const UpdateUserName = async (userName, userEmail) => {
   if (userName.length <= 1 || userName.length > 24) return { status: 400, message: 'Nome inválido.' };
   await user.update({ name: userName }, { where: { email: userEmail } });
   const dbUser = await user.findOne({ where: { email: userEmail } });
-  const { password, ...userData } = dbUser;
+  const { dataValues: { password, ...userData } } = dbUser;
   const token = jwt.sign(userData, JWT_SECRET || 'tentecerveja', jwtConfig);
   return { ...userData, token, message: 'Atualização concluída com sucesso' };
 };

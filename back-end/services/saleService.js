@@ -34,17 +34,15 @@ const insertSale = async (id, addressName, addressNumber, totalPrice, cart) => {
 
   // Para cada Produto do Carrinho, cria-se um registro do produto na tabela sales_products
   // passando Id da Venda + Id Produto + Quantidade
-  await Promise.all(cart.map(({ id: productId, quantity }) => 
-    saleProducts.create({ sale_id: created.id, product_id: productId, quantity })
-  ))
-  .catch((e) => console.log(e));
+  await Promise.all(cart.map(({ id: productId, quantity }) =>
+    saleProducts.create({ sale_id: created.id, product_id: productId, quantity })));
 
   return { status: 201, response: 'Compra realizada com sucesso!' };
 };
 
 const getSaleInfo = async (id) => {
   const saleInfo = await sale.findByPk(id);
-  const saleItems = await saleProducts.findAll({ where: { sale_id :id } });
+  const saleItems = await saleProducts.findAll({ where: { sale_id: id } });
   return saleItems.length
     ? { status: 200, response: { saleItems, saleInfo } }
     : { status: 404, message: 'Sale not found' };

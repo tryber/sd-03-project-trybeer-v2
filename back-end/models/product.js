@@ -1,11 +1,5 @@
 const Product = (sequelize, DataTypes) => {
   const product = sequelize.define('product', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -21,7 +15,6 @@ const Product = (sequelize, DataTypes) => {
       default: '',
     },
   }, { timestamps: false });
-  // product.belongsToMany('sale', { through: 'sale_products' });
   return product;
 };
 
