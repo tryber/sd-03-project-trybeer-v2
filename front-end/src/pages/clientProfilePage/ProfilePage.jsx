@@ -32,7 +32,7 @@ const ProfilePage = () => {
     <div>
       <MenuTop pageTitle="Meu perfil" datatest="top-title" />
       <Sidebar />
-      <div id="wrapper" className="main-page">
+      <div id="wrapper" id="profile-page">
         <form>
           <fieldset aria-label="Disabled fieldset example">
             <div className="mb-3">

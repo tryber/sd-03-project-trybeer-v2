@@ -19,6 +19,16 @@ function AdminOrders() {
     getAllAdminOrders(token).then((result) => setOrders(result));
   }, []);
 
+  if (!orders || orders.length === 0)
+    return (
+      <div className="d-flex">
+        <AdminMenuSideBar />
+        <div className="container text-center">
+          <h1 id="message">Nenhum pedido ainda...</h1>
+        </div>
+      </div>
+    );
+
   return (
     <div className="d-flex">
       <AdminMenuSideBar />
