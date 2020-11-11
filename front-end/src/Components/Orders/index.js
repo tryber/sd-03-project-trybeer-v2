@@ -13,14 +13,14 @@ const Orders = () => {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    const fetchData = async (token, id) => {
-      const sales = await getOrdersFromAPI(token, id);
+    const fetchData = async (token) => {
+      const sales = await getOrdersFromAPI(token);
       setOrders(sales);
       return sales;
     };
-    const { id, token } = getProductsLocalStorage('user');
+    const { token } = getProductsLocalStorage('user');
     if (!token) setRedirect(true);
-    fetchData(token, id);
+    fetchData(token);
   }, []);
 
   const formatDate = (date) => {
@@ -29,15 +29,15 @@ const Orders = () => {
     if (day < dateDigit) return `0${day}/${month}`;
     return `${day}/${month}`;
   };
-
-  const formatTotal = (total) => `R$ ${total.toFixed(quantityOfDigits).replace('.', ',')}`;
+ 
+  const formatTotal = (total) => `R$ ${parseFloat(total).toFixed(quantityOfDigits).replace('.', ',')}`;
 
   if (redirect) return <Redirect to="/login" />;
   return (
     <>
       <MenuBar titleName="Cliente - Meus Pedidos" />
       <section className="orders-list">
-        {orders.sort().map(({ id: orderId, saleDate: date, totalPrice: total }, index) => (
+        {orders.sort().map(({ id: orderId, sale_date: date, total_price: total }, index) => (
           <Link
             data-testid={ `${index}-order-card-container` }
             key={ orderId }

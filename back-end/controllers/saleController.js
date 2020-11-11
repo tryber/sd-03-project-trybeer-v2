@@ -1,7 +1,7 @@
 const {
   getAllSales,
   insertSale,
-  // getSalesByUserId,
+  getSalesByUser,
   getSaleInfo,
   // // endSale,
 } = require('../services/saleService');
@@ -11,11 +11,12 @@ const listSales = async (_req, res) => {
   return res.status(sales.status).json(sales.response);
 };
 
-// const getSalesById = async (req, res) => {
-//   const { id } = req.params;
-//   const sales = await getSalesByUserId(id);
-//   return res.status(sales.status).json(sales.response);
-// };
+const getSalesByUserId = async (req, res) => {
+  const { id } = req.user;
+  const sales = await getSalesByUser(id);
+  if (sales.message) return res.status(sales.status).json({ message: sales.message });
+  return res.status(sales.status).json(sales.response);
+};
 
 const createSale = async (req, res) => {
   const { id } = req.user;
@@ -50,7 +51,7 @@ const saleDetails = async (req, res) => {
 module.exports = {
   listSales,
   createSale,
-  // getSalesById,
+  getSalesByUserId,
   saleDetails,
   // setAsDelivered,
 };

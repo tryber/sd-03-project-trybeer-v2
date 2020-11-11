@@ -14,7 +14,7 @@ const { getAllProducts } = require('./controllers/productController');
 const {
   listSales,
   createSale,
-  // getSales,
+  getSalesByUserId,
   saleDetails,
   // setAsDelivered,
 } = require('./controllers/saleController');
@@ -34,7 +34,7 @@ app.get('/', (_req, res) => res.send());
 app.get('/products', auth(true), getAllProducts);
 app.get('/admin/orders', listSales);
 app.get('/admin/orders/:id', auth(true), saleDetails);
-// app.get('/orders', (req, res) => getSales(req, res));
+app.get('/orders', auth(true), getSalesByUserId);
 
 // app.post('/admin/orders/:id', setAsDelivered);
 app.post('/login', loginController);

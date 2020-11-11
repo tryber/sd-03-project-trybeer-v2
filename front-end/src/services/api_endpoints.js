@@ -72,9 +72,9 @@ export const getOrdersFromAPI = async (token) => {
       authorization: token,
     },
   })
-    .then((res) => res.data)
-    .catch((e) => console.log('Orders List error', e));
+    .then((res) => res.data);
 
+  console.log(response);
   return response;
 };
 
