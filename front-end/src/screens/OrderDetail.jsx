@@ -1,14 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-closing-tag-location */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { MainContext } from '../context/context';
 import Header from '../components/Header';
 import '../styles/Details.css';
 
 function OrderDetail(props) {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [orderInfo, setOrderInfo] = useState();
+  const { orderInfo, setOrderInfo } = useContext(MainContext);
   const currentUser = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
@@ -72,8 +73,9 @@ function OrderDetail(props) {
           ))}
           <h3 data-testid="order-total-value">
             Total
-            {`R$ ${(Math.round((orderInfo.total_price) * aHundred) / aHundred).toFixed(two).toString().replace('.', ',')}`}
+            {` R$ ${(Math.round((orderInfo.total_price) * aHundred) / aHundred).toFixed(two).toString().replace('.', ',')}`}
           </h3>
+          <p>{orderInfo.status}</p>
         </div>
       </section>
     </div>
