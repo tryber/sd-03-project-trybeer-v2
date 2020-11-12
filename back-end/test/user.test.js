@@ -8,7 +8,7 @@ const URL = 'http://localhost:3001';
 
 const users = [
   {
-    name: 'Usuario de test 1',
+    name: 'Usuario de test',
     email: 'email@email.com',
     password: '12345678',
   },
