@@ -1,0 +1,50 @@
+#container-chat {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid red;
+  margin: 10%;
+  height: 500px;
+  border-radius: 7px;
+}
+
+#container-chat .eles {
+  margin: 10px;
+}
+
+#container-chat .eles .nick {
+  display: flex;
+  flex-direction: row;
+}
+
+#container-chat .eles .nick h4 {
+  margin: 5px;
+  color: blue;
+}
+
+#container-chat .nos {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#container-chat .nos .nick {
+  display: flex;
+  flex-direction: row;
+}
+
+#container-chat .nos .nick h4 {
+  margin: 5px;
+  color: red;
+}
+
+#container-chat .inputButton {
+  width: 80%;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  margin-top: 470px;
+  flex-direction: row;
+}
