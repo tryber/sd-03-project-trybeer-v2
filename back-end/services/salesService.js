@@ -82,9 +82,8 @@ const salesDetailsById = async (saleID) => {
 
 const salesByUser = async (userId) => {
   try {
-    const sales = await salesModel.getSalesByUser(userId);
-
-    return [...sales];
+    const allSales = await sales.findAll({ where: { user_id: userId } });
+    return [...allSales];
   } catch (error) {
     throw new Error(error.message);
   }
@@ -93,7 +92,6 @@ const salesByUser = async (userId) => {
 const allSales = async () => {
   try {
     const AllSales = await sales.findAll({});
-    console.log('vendas', AllSales);
     return [...AllSales];
   } catch (error) {
     throw new Error(error.message);
