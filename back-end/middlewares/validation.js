@@ -77,7 +77,7 @@ const schemas = {
       .required(),
   }),
   updateSalesStatusSchema: Joi.object({
-    status: Joi.string().valid('Pendente', 'Entregue')
+    status: Joi.string().valid('Pendente', 'Entregue','Preparando')
       .required(),
   }),
 };
