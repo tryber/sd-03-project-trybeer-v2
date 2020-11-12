@@ -1,15 +1,15 @@
 import React from 'react';
 
-const Messages = ({ user = 'jafetguerra6@gmail.com', time = 'kkkk', message = 'React' }) => {
-  const email = localStorage.getItem('email');
+const Messages = ({ email, time, message }) => {
+  const userEmail = localStorage.getItem('email');
   
   return (
-    <div className={email === user ? 'nos' : 'eles'}>
+    <div className={email === userEmail ? 'nos' : 'eles'}>
       <div className="nick">
-        <h4 data-testid="nickname">{user}</h4>
+        <h4 data-testid="nickname">{email}</h4>
         <h4 data-testid="message-time">{time}</h4>
       </div>
-      <h2 data-testid="text-message">{message}</h2>
+      <p data-testid="text-message">{message}</p>
   </div>
   );
 };

@@ -8,6 +8,7 @@ const ChatList = () => {
   useEffect(() => {
     apiGetChats().then((response) => {
       setListOfChats(response);
+      console.log(response)
     })
     .catch((response) => {
       setListOfChats(response);
@@ -19,8 +20,8 @@ const ChatList = () => {
   }
   return (
     <div>
-      {listOfChats.map(({ email, lastMessageDate }) => (
-        <Chats email={email} lastMessageDate={lastMessageDate}  />
+      {listOfChats.map(({ email, time }, index) => (
+        <Chats key={index} email={email} time={time}  />
       ))}
     </div>
   );

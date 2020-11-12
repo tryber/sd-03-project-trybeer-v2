@@ -19,9 +19,10 @@ const onConnection = (socket, io) => {
 
   socket.on('message', async ({ token, message }) => {
     const user = await authServices(token);
+    const time = roomServices.getTime();
     const { room } = await usersServices.findUserSocket({ email: user.email });
-    await roomServices.saveMessage(room, user, message);
-    return io.to(room).emit('message', { user, message });
+    await roomServices.saveMessage(room, user, message, time);
+    return io.to(room).emit('message', { email: user.email, message, time });
   });
   // const findOrder = async (id, io) => {
   //   const order = await salesServices.getSale(id)
