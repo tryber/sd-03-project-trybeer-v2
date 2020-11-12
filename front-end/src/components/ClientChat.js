@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './ClientChat.css';
-import { ClientMenu } from './Menu/index';
+
 const io = require('socket.io-client');
 const socket = io('http://localhost:3001', { transports: ['websocket'] });
 

@@ -86,7 +86,6 @@ const finishSale = async (user, order) => {
         .replace('T', ' '),
       status: 'Pendente',
     });
-
     const saleId = result.dataValues.id;
 
     if (saleId) {

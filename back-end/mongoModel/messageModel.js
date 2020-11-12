@@ -5,16 +5,18 @@ const insert = async (message, email) => {
   const chat = await db.collection('messages').findOne({ email });
 
   if (!chat) {
-    db.collection('messages').insertOne({
+    await db.collection('messages').insertOne({
       email,
       messages: [message],
     });
   }
 
-  db.collection('messages').updateOne(
+  await db.collection('messages').updateOne(
     { email },
     {
-      messages: { $push: message },
+      $push: {
+        messages: message,
+      },
     },
   );
 };
