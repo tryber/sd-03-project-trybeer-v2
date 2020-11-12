@@ -9,24 +9,24 @@ const AdminChatsPage = () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
   const [chatList, setChatList] = useState([]);
 
-  useEffect(() => {
-    const fetchChatList = async () => await getChatsList(token) || [];
+  // useEffect(() => {
+  //   const fetchChatList = async () => await getChatsList(token) || [];
 
-    fetchChatList().then((chatList) => setChatList(chatList));
-  }, [token]);
+  //   fetchChatList().then((chatList) => setChatList(chatList));
+  // }, [token]);
 
   return (
     <div className="admin-chats">
       <AdminSideBar />
       <section className="admin-chats-aside">
         <h1>Conversas</h1>
-        {chatList.map(({clientEmail, messages}) => (
+        {chatList.map(({ clientEmail, messages }) => (
           <Link
             key={ clientEmail }
-            to={{
+            to={ {
               pathname: '/admin/chat/',
-              state: { clientEmail, messages}
-            }}
+              state: { clientEmail, messages },
+            } }
           >
             <ChatTile
               email={ clientEmail }

@@ -12,7 +12,7 @@ const AdminChat = () => {
 
   useEffect(() => {
     setChatMsgs(messages);
-  }, [token]);
+  }, [token, messages]);
 
   const submitMessage = (event) => {
     event.preventDefault();
@@ -23,17 +23,20 @@ const AdminChat = () => {
     <div className="admin-chat">
       <AdminSideBar />
       <section className="admin-chats-aside">
-        <h1>Conversa com {clientEmail}</h1>
-        {messages.map(({ timeStamp, text, isClientMsg }) =>
-        <article className={ isClientMsg ? 'msg-customer' : 'msg-admin' }>
-          <div id="userName" data-testid="nickname">
-            {isClientMsg ? clientEmail : 'Loja'}
-          </div>
-          <div id="hours" data-testid="message-time">{timeStamp}</div>
-          <div id="message-text" data-testid="text-message">{text}</div>
-        </article>
-        )}
-        <form onClick={submitMessage}>
+        <h1>
+          Conversa com
+          {clientEmail}
+        </h1>
+        {messages.map(({ timeStamp, text, isClientMsg }) => (
+          <article key={ text } className={ isClientMsg ? 'msg-customer' : 'msg-admin' }>
+            <div id="userName" data-testid="nickname">
+              { isClientMsg ? clientEmail : 'Loja' }
+            </div>
+            <div id="hours" data-testid="message-time">{timeStamp}</div>
+            <div id="message-text" data-testid="text-message">{text}</div>
+          </article>
+        ))}
+        <form onSubmit={ submitMessage }>
           <input data-testid="chat-message" />
           <button type="submit" data-testid="send-message">Enviar</button>
         </form>

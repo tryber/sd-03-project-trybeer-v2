@@ -8,10 +8,10 @@ const ChatTile = ({
 }) => (
   <div className="chat">
     <div className="chat-info">
-      <h3 data-testid={ 'profile-name' }>
+      <h3 data-testid="profile-name">
         {email}
       </h3>
-      <h3 data-testid={ 'last-message' }>
+      <h3 data-testid="last-message">
         {`Última mensagem às ${time}`}
       </h3>
     </div>
@@ -19,8 +19,8 @@ const ChatTile = ({
 );
 
 ChatTile.propTypes = {
-  userEmail: PropTypes.string.isRequired,
-  lastMsg: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  time: PropTypes.string.isRequired,
 };
 
 export default ChatTile;

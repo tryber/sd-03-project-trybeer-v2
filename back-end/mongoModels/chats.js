@@ -5,9 +5,8 @@ const getAll = async () => connection()
     db
       .collection('chats')
       .find({})
-      .project({ 'clientEmail': 1, 'messages': 1 })
-      .toArray()
-  );
+      .project({ clientEmail: 1, messages: 1 })
+      .toArray());
 
 module.exports = {
   getAll,

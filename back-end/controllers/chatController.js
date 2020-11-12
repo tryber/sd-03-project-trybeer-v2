@@ -8,4 +8,4 @@ const getAllConvos = async (_req, res) => {
 
 module.exports = {
   getAllConvos,
-}
+};
