@@ -15,6 +15,7 @@ const orderDetails = require('./controllers/orderDetails');
 const userInfo = require('./controllers/userInfo');
 const admin = require('./controllers/admin');
 const adminOrders = require('./controllers/adminOrders');
+const chat = require('./controllers/chat');
 const { saveMessage } = require('./dbMongo/modelSaveMessage');
 
 const app = express();
@@ -30,6 +31,7 @@ app.use('/profile', profile);
 app.use('/register', userRegister);
 app.use('/productList', productList);
 app.use('/orderDetails', orderDetails);
+app.use('/chat', chat);
 
 app.use('/images', express.static(path.join(__dirname, '/images')));
 app.use('/products', products);

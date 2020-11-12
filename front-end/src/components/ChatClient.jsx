@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import MenuTop from '../components/MenuTop'
 
 const io = window.io;
 
@@ -32,6 +33,7 @@ function ChatClient() {
 
   return (
     <div>
+      <MenuTop />
       {allMessages.map(({ renderMessage, returnedTime }) => (
         <div>
           <p data-testid="nickname">{email}</p>
