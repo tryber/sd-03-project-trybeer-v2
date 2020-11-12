@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './ClientChat.css';
-import { ClientMenu } from './Menu/index';
+import { ClientMenu, AdminMenu } from './Menu/index';
+
+import { ContextAplication } from '../context/ContextAplication';
+
 const io = require('socket.io-client');
+
 const socket = io('http://localhost:3001', { transports: ['websocket'] });
 
 const connectWithBack = async () => {
@@ -13,49 +17,58 @@ const connectWithBack = async () => {
 };
 
 function ClientChat() {
+  const {
+    userChat,
+  } = useContext(ContextAplication);
   const [chat, setChat] = useState([]);
   const user = JSON.parse(localStorage.getItem('user')) || null;
 
-  socket.on('message', ({ message, user, time }) => {
-    const nickname = user.role === 'administrator' ? 'Loja' : user.email;
-    setChat([...chat, { nickname, time, message }]);
+  socket.on('message', ({ newMessage }) => {
+    const { from, time, text } = newMessage;
+    setChat([...chat, { from, time, text }]);
+  });
+
+  socket.on('history', (previousMessages) => {
+    setChat(previousMessages);
   });
 
   const displayMessage = () => {
     const message = document.getElementById('message-input').value;
-    socket.emit('message', { message, user });
-    document.getElementById('message-input').value = '';
-  }
+    if (user.role === 'administrator') {
+      socket.emit('message', { message, user, to: userChat });
+    } else {
+      socket.emit('message', { message, user, to: 'Loja' });
+      document.getElementById('message-input').value = '';
+    }
+  };
 
   const getData = async () => {
     try {
       await connectWithBack();
+      socket.emit('history', user);
     } catch (e) {
       return e;
     }
     return false;
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(() => getData(), []);
 
   return (
     <div>
       { user === null && <Redirect to="/login" />}
-      { /* <ClientMenu /> */ }
+      {user.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
       <div className="chat-div">
-        {chat.length > 0 && chat.map((item) =>
-          <div>
-            <p>{`${item.nickname} - ${item.time}`}</p>
-            <p>{ item.message }</p>
-          </div>
-        )}
+        {chat.length && chat.map((item) => (
+          <div key={ item.time }>
+            <p>{`${item.from} - ${item.time}`}</p>
+            <p>{item.text}</p>
+          </div>))}
       </div>
       <input id="message-input" />
-      <button onClick={() => displayMessage()}>Enviar Mensagem</button>
+      <button type="button" onClick={ () => displayMessage() }>Enviar Mensagem</button>
     </div>
-  )
-};
+  );
+}
 
 export default ClientChat;
