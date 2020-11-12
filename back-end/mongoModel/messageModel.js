@@ -13,11 +13,9 @@ const insert = async (message, email) => {
 
   await db.collection('messages').updateOne(
     { email },
-    {
-      $push: {
-        messages: message,
-      },
-    },
+    { $push: {
+      messages: message,
+    } },
   );
 };
 

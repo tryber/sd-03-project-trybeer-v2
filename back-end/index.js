@@ -18,7 +18,7 @@ const userController = getUserController(userService);
 const routers = require('./routers/index');
 const { errorHandler } = require('./middlewares');
 
-const { insert } = require('./mongoModel/messageModel');
+const { getHistory, insert } = require('./mongoModel/messageModel');
 
 app.use(cors());
 app.io = io;
@@ -48,12 +48,30 @@ app.use('/chat', validateToken, (_req, res) => {
 });
 
 io.on('connection', async (socket) => {
-  socket.on('message', ({ message, user }) => {
+  socket.on('message', ({ message, user, to }) => {
     const dateTime = new Date();
     const time = moment(dateTime).format('hh:mm:ss');
-    io.emit('message', { message, user, time });
+    const newMessage = {
+      from: '',
+      to: '',
+      text: message,
+      time,
+    };
+    if (user.role === 'administrator') {
+      newMessage.from = 'Loja';
+      newMessage.to = to;
+      insert(newMessage, to);
+    } else {
+      newMessage.from = user.email;
+      newMessage.to = to;
+      insert(newMessage, user.email);
+    }
+    io.emit('message', { newMessage });
+  });
 
-    return insert(message, user, time);
+  socket.on('history', async ({ email }) => {
+    const previousMessages = await getHistory(email);
+    if (previousMessages !== null) socket.emit('history', previousMessages.messages);
   });
 });
 
