@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Chat.css';
 import { ClientMenu, AdminMenu } from './Menu/index';
@@ -23,6 +23,8 @@ function ClientChat() {
   const [chat, setChat] = useState([]);
   const user = JSON.parse(localStorage.getItem('user')) || null;
 
+  socket.emit('history', user);
+
   socket.on('message', ({ newMessage }) => {
     const { from, time, text } = newMessage;
     setChat([...chat, { from, time, text }]);
@@ -45,28 +47,42 @@ function ClientChat() {
   const getData = async () => {
     try {
       await connectWithBack();
-      socket.emit('history', user);
     } catch (e) {
       return e;
     }
     return false;
   };
 
-  useEffect(() => getData(), []);
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div>
       { user === null && <Redirect to="/login" />}
       {user.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
+      <p id="hidden-text">a</p>
+      {user.role === 'administrator'
+        && <Link to="/admin/chats">Voltar</Link>}
       <div className="chat-div">
         {chat.length && chat.map((item) => (
           <div key={ item.time }>
-            <p>{`${item.from} - ${item.time}`}</p>
-            <p>{item.text}</p>
+            <p data-testid="nickname">{item.from}</p>
+            <p data-testid="message-time">{item.time}</p>
+            <p data-testid="text-message">{item.text}</p>
           </div>))}
       </div>
-      <input id="message-input" />
-      <button type="button" onClick={ () => displayMessage() }>Enviar Mensagem</button>
+      <input
+        id="message-input"
+        data-testid={ user.role === 'administrator' ? 'chat-message' : 'message-input' }
+      />
+      <button
+        data-testid={ user.role === 'administrator' ? 'send-message-btn' : 'send-message' }
+        type="button"
+        onClick={ () => displayMessage() }
+      >
+        Enviar Mensagem
+      </button>
     </div>
   );
 }
