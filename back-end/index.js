@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const path = require('path');
+const moment = require('moment');
 
 const app = express();
 const httpServer = require('http').createServer(app);
 const io = require('socket.io')(httpServer);
+const validateToken = require('./middlewares/validateToken');
 
 const getUserController = require('./controllers/userController');
 const getUserService = require('./services/userService');
@@ -17,11 +18,16 @@ const userController = getUserController(userService);
 const routers = require('./routers/index');
 const { errorHandler } = require('./middlewares');
 
+const { insert } = require('./mongoModel/messageModel');
+
 app.use(cors());
+app.io = io;
 
 app.use('/images', express.static(`${process.cwd()}/images`));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use('/images', express.static(`${process.cwd()}/images`));
 
 app.use('/login', routers.login(userController.loginController));
 
@@ -37,12 +43,18 @@ app.use('/orders', routers.orders);
 
 app.use('/checkout', routers.checkout);
 
-app.use('/chat', (_req, res) => {
-  res.send(200);
+app.use('/chat', validateToken, (_req, res) => {
+  res.status(200);
 });
 
 io.on('connection', async (socket) => {
-  socket.emit('message', { message: 'Hello, you\'re on!' });
+  socket.on('message', ({ message, user }) => {
+    const dateTime = new Date();
+    const time = moment(dateTime).format('hh:mm:ss');
+    io.emit('message', { message, user, time });
+
+    return insert(message, user, time);
+  });
 });
 
 app.use(errorHandler);
