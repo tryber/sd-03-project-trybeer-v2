@@ -39,10 +39,13 @@ const OrderDetails = () => {
       <h4 data-testid="order-number">{`Pedido ${id}`}</h4>
       {console.log(orderDetails)}
       <span data-testid="order-date">{DateTime.fromMillis(Date.parse(orderDetails.sale_date)).toFormat('dd/LL')}</span>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <ul>
         {orderDetails.products.map((product, index) => (
           <li key={ product.id }>
-            {console.log(product)}
             <span data-testid={ `${index}-product-qtd` }>{product.sales_products.quantity}</span>
             <span data-testid={ `${index}-product-name` }>{product.name}</span>
             <span data-testid={ `${index}-product-total-value` }>{formatPrice(product.sales_products.quantity * product.price)}</span>
@@ -50,6 +53,7 @@ const OrderDetails = () => {
         ))}
       </ul>
       <span data-testid="order-total-value">{formatPrice(orderDetails.total_price)}</span>
+      <span>{orderDetails.status}</span>
     </Auth>
   );
 };
