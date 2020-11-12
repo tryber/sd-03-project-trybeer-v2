@@ -5,7 +5,7 @@ const insert = async (message, email) => {
   const chat = await db.collection('messages').findOne({ email });
 
   if (!chat) {
-    await db.collection('messages').insertOne({
+    return db.collection('messages').insertOne({
       email,
       messages: [message],
     });
