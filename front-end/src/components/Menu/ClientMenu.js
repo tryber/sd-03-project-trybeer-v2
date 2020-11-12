@@ -32,6 +32,7 @@ function ClientMenu() {
           <Link to="/products" data-testid="side-menu-item-products"><button type="button">Produtos</button></Link>
           <Link to="/orders" data-testid="side-menu-item-my-orders"><button type="button">Meus Pedidos</button></Link>
           <Link to="/profile" data-testid="side-menu-item-my-profile"><button type="button">Meu Perfil</button></Link>
+          <Link to="/chat" data-testid="side-menu-chat"><button type="button">Conversar com a loja</button></Link>
         </div>
         <button type="submit" data-testid="side-menu-item-logout" onClick={ (e) => logout(e, history) } className="logout-button">Sair</button>
       </aside>

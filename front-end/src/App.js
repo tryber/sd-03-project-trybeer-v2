@@ -12,6 +12,7 @@ import AplicationProvider from './context/ContextAplication';
 import AdminOrders from './components/AdminOrders';
 import AdminDetails from './components/AdminDetails';
 import Chat from './components/Chat';
+import AdminChats from './components/AdminChats';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/admin/profile" component={ ProfileScreen } />
         <Route exact path="/admin/orders/:id" component={ AdminDetails } />
         <Route exact path="/admin/chat" component={ Chat } />
+        <Route exact path="/admin/chats" component={ AdminChats } />
       </Switch>
     </AplicationProvider>
   );

@@ -49,6 +49,7 @@ app.use('/chat', validateToken, (_req, res) => {
 
 io.on('connection', async (socket) => {
   socket.on('message', ({ message, user, to }) => {
+    console.log(message);
     const dateTime = new Date();
     const time = moment(dateTime).format('hh:mm:ss');
     const newMessage = {
