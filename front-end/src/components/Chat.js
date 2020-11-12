@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import './ClientChat.css';
+import './Chat.css';
 import { ClientMenu, AdminMenu } from './Menu/index';
 
 import { ContextAplication } from '../context/ContextAplication';
