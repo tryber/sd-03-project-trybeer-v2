@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
+const socketIo = require('socket.io');
 
 const {
   registerController,
@@ -42,6 +43,11 @@ app.post('/register', registerController);
 app.post('/profile', updateNameController);
 app.post('/checkout', auth(true), createSale);
 
-app.use(errorHandler);
+const server = app.listen(3001, () => console.log('Listening on port 3001!'));
+const io = socketIo(server);
 
-app.listen(3001, () => console.log('Listening on port 3001!'));
+io.on('connect', (socket) => {
+  console.log(`${socket.id}`);
+});
+
+app.use(errorHandler);

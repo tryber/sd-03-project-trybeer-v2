@@ -12,6 +12,7 @@
     "test-band": "jest --watchAll --runInBand --detectOpenHandles",
     "test-coverage": "jest --coverage",
     "debug": "nodemon index.js",
+    "server":"nodemon ./server/server.js",
     "start:watch": "nodemon index.js",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
   },
