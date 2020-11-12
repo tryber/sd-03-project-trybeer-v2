@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const moment = require('moment');
 
 const app = express();
 const httpServer = require('http').createServer(app);
@@ -50,13 +49,12 @@ app.use('/chat', validateToken, (_req, res) => {
 io.on('connection', async (socket) => {
   socket.on('message', ({ message, user, to }) => {
     console.log(message);
-    const dateTime = new Date();
-    const time = moment(dateTime).format('hh:mm:ss');
+    const dateTime = new Date().toLocaleTimeString();
     const newMessage = {
       from: '',
       to: '',
       text: message,
-      time,
+      time: dateTime,
     };
     if (user.role === 'administrator') {
       newMessage.from = 'Loja';
@@ -71,7 +69,9 @@ io.on('connection', async (socket) => {
   });
 
   socket.on('history', async ({ email }) => {
+    console.log(email)
     const previousMessages = await getHistory(email);
+    console.log(previousMessages)
     if (previousMessages !== null) socket.emit('history', previousMessages.messages);
   });
 });
