@@ -1,12 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
-import MenuTop from '../components/MenuTop'
+import MenuTop from './MenuTop';
 
-const io = window.io;
+const { io } = window;
 
 function ChatClient() {
   const [message, setMessage] = useState('');
   const [allMessages, setAllMessages] = useState([]);
-
 
   const { email } = JSON.parse(localStorage.getItem('user')) || [];
   const time = new Date().toLocaleTimeString('pt-br').substring(5, '');
@@ -24,12 +23,11 @@ function ChatClient() {
     socket.current.on('message', ({ message, time }) => {
       renderMessage = message;
       returnedTime = time;
-      console.log(returnedTime)
-      console.log('dentro', socket)
+      console.log(returnedTime);
+      console.log('dentro', socket);
       setAllMessages((current) => [...current, { renderMessage, returnedTime }]);
     });
   }, [renderMessage]);
-
 
   return (
     <div>
@@ -38,13 +36,21 @@ function ChatClient() {
         <div>
           <p data-testid="nickname">{email}</p>
           <p data-testid="message-time">{returnedTime}</p>
-          <p data-testid="text-message"> {renderMessage} </p>
+          <p data-testid="text-message">
+            {' '}
+            {renderMessage}
+            {' '}
+          </p>
         </div>
       ))}
       <input data-testid="message-input" onChange={(e) => setMessage(e.target.value)} value={message} />
       <button
         onClick={() => socket.current.emit('message', { message, email, time })}
-        data-testid="send-message">&gt;</button>
+        data-testid="send-message"
+      >
+        &gt;
+
+      </button>
     </div>
   );
 }

@@ -33,9 +33,9 @@ function App() {
         <Route exact path="/register" component={ UserRegisterPage } />
         <Route exact path="/orders" component={ Orders } />
         <Route exact path="/orders/:id" component={ OrderDetails } />
-        <Route path="/admin/profile" component={ AdminProfilePage } />
-        <Route path="/admin/chat" component={ AdminChat } />
-        <Route path="/chat" component={ ChatClient } />
+        <Route exact path="/admin/profile" component={ AdminProfilePage } />
+        <Route exact path="/admin/chats" component={ AdminChat } />
+        <Route exact path="/chat" component={ ChatClient } />
         <Route exact path="/" component={ Home } />
       </Switch>
     </BeerProvider>
