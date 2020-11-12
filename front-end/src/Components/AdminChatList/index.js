@@ -6,29 +6,31 @@ import ChatTile from '../ChatTile';
 import './styles.css';
 
 const AdminChatsPage = () => {
-  // const { token } = JSON.parse(localStorage.getItem('user'));
+  const { token } = JSON.parse(localStorage.getItem('user'));
   const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
-    // const fetchChatList = async () => await getOrderList(token) || [];
-    const fetchChatList = async () => await getChatsList() || [];
+    const fetchChatList = async () => await getChatsList(token) || [];
 
-    fetchChatList().then((chats) => setChatList(chats));
-  }, []);
-  //token no evento do hooks
+    fetchChatList().then((chatList) => setChatList(chatList));
+  }, [token]);
+
   return (
     <div className="admin-chats">
       <AdminSideBar />
       <section className="admin-chats-aside">
         <h1>Conversas</h1>
-        {chatList.map((userEmail, lastMsg) => (
+        {chatList.map(({clientEmail, messages}) => (
           <Link
-            key={ userEmail }
-            to={ '/admin/chat/' }
+            key={ clientEmail }
+            to={{
+              pathname: '/admin/chat/',
+              state: { clientEmail, messages}
+            }}
           >
             <ChatTile
-              email={ userEmail }
-              time={ lastMsg }
+              email={ clientEmail }
+              time={ messages[messages.length - 1].timeStamp }
             />
           </Link>
         )) }
