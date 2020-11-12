@@ -5,7 +5,7 @@ const { authMiddleware } = require('../middleware');
 
 const usersRouter = Router();
 
-module.exports = (io) => {
+module.exports = (_io) => {
   usersRouter
     .post('/login', usersControllers.login)
     .post('/', usersControllers.validate, usersControllers.register)

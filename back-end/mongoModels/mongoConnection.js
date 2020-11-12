@@ -5,7 +5,7 @@ const { DB_URL, DB_NAME } = process.env;
 
 let schema = null;
 
-module.exports = async () => {
+const connect = async () => {
   if (schema) return Promise.resolve(schema);
 
   return mongoClient
@@ -23,3 +23,8 @@ module.exports = async () => {
       process.exit(1);
     });
 };
+
+const connectTo = (coll) => connect()
+  .then((db) => db.collection(coll));
+
+module.exports = { connect, connectTo };

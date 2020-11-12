@@ -4,7 +4,7 @@ const { authMiddleware } = require('../middleware');
 
 const productsRouter = Router();
 
-module.exports = (io) => {
+module.exports = (_io) => {
   productsRouter
     .get('/', authMiddleware(true), productsControllers.getAll);
 
