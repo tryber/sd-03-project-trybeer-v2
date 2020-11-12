@@ -17,6 +17,7 @@ const AdminSideBar = ({ Children }) => {
           <div className="divTitle fontStyle">Trybeer</div>
           <div className="white-border fontStyle"><a data-testid="side-menu-item-orders" href="/admin/orders">Pedidos</a></div>
           <div className="white-border fontStyle"><a data-testid="side-menu-item-profile" href="/admin/profile">Perfil</a></div>
+          <div className="white-border fontStyle"><a data-testid="side-menu-item-chat" href="/admin/chats">Conversas</a></div>
         </div>   
         <div className="menu-logout">
           <div className="white-border fontStyle"><a
