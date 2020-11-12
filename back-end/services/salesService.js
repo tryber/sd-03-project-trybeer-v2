@@ -1,23 +1,32 @@
-const { salesModel } = require('../models');
+const { sales } = require('../models');
 
-const registerSales = async (userId,
+const registerSales = async (
+  userId,
   totalPrice,
   deliveryAddress,
-  deliveryNumber, products = []) => {
+  deliveryNumber,
+  products = [],
+) => {
   try {
     // registra evento de venda
-    const registrySales = await salesModel.addSale(userId,
+    const registrySales = await salesModel.addSale(
+      userId,
       totalPrice,
       deliveryAddress,
-      deliveryNumber);
+      deliveryNumber,
+    );
 
     // registro dos produtos por evento de venda
-    const registryProductsBySale = await Promise
-      .all(products.map((product) => {
+    const registryProductsBySale = await Promise.all(
+      products.map((product) => {
         const { id, quantity } = product;
         return salesModel.addSalesProducts(registrySales.saleID, id, quantity);
-      }));
-    const itemCount = await registryProductsBySale.reduce((acc, item) => acc + item, 0);
+      }),
+    );
+    const itemCount = await registryProductsBySale.reduce(
+      (acc, item) => acc + item,
+      0,
+    );
     return { ...registrySales, soldItems: itemCount };
   } catch (error) {
     throw new Error(error.message);
@@ -38,24 +47,32 @@ const updateSalesStatus = async (id, status) => {
 const salesDetailsById = async (saleID) => {
   try {
     const sales = await salesModel.getSalesDetailsByID(saleID);
-    const salesData = sales.length ? { saleID: sales[0].saleID,
-      userID: sales[0].userID,
-      orderValue: sales[0].orderValue,
-      deliveryAddress: sales[0].deliveryAddress,
-      deliveryNumber: sales[0].deliveryNumber,
-      saleDate: sales[0].saleDate,
-      status: sales[0].status,
-      products: sales.map(({ soldProductID,
-        soldQuantity,
-        productName,
-        productPrice,
-        productImage }) => ({
-        soldProductID,
-        soldQuantity,
-        productName,
-        productPrice,
-        productImage,
-      })) } : {};
+    const salesData = sales.length
+      ? {
+        saleID: sales[0].saleID,
+        userID: sales[0].userID,
+        orderValue: sales[0].orderValue,
+        deliveryAddress: sales[0].deliveryAddress,
+        deliveryNumber: sales[0].deliveryNumber,
+        saleDate: sales[0].saleDate,
+        status: sales[0].status,
+        products: sales.map(
+          ({
+            soldProductID,
+            soldQuantity,
+            productName,
+            productPrice,
+            productImage,
+          }) => ({
+            soldProductID,
+            soldQuantity,
+            productName,
+            productPrice,
+            productImage,
+          }),
+        ),
+      }
+      : {};
 
     return { ...salesData };
   } catch (error) {
@@ -75,9 +92,9 @@ const salesByUser = async (userId) => {
 
 const allSales = async () => {
   try {
-    const sales = await salesModel.getAllSales();
-
-    return [...sales];
+    const AllSales = await sales.findAll({});
+    console.log('vendas', AllSales);
+    return [...AllSales];
   } catch (error) {
     throw new Error(error.message);
   }
