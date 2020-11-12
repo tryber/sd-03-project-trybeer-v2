@@ -15,12 +15,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DECIMAL(9, 2),
       },
-      password: {
-        allowNull: false,
+      delivery_address: {
         type: Sequelize.STRING,
       },
-      role: {
-        allowNull: false,
+      delivery_number: {
+        type: Sequelize.INTEGER,
+      },
+      sale_date: {
+        type: Sequelize.DATE,
+      },
+      status: {
         type: Sequelize.STRING,
       },
     });
