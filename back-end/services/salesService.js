@@ -27,7 +27,8 @@ const getAll = async () => {
 };
 
 const updateSale = async (id, status) => {
-  const [update] = await sales.update({ where: { id } }, { status });
+  const [update] = await sales.update({ status }, { where: { id } });
+  console.log(update)
   return update;
 };
 

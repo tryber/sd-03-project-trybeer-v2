@@ -23,4 +23,8 @@ const getHistory = async (email) => connect().then(
   (db) => db.collection('messages').findOne({ email }),
 );
 
-module.exports = { getHistory, insert };
+const getAll = async () => connect().then(
+  (db) => db.collection('messages').find().toArray(),
+);
+
+module.exports = { getHistory, insert, getAll };
