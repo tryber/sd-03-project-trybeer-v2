@@ -16,6 +16,7 @@ function AdminMenu() {
       <div>
         <Link to="/admin/orders" data-testid="side-menu-item-orders"><button type="button">Pedidos</button></Link>
         <Link to="/admin/profile" data-testid="side-menu-item-profile"><button type="button">Perfil</button></Link>
+        <Link to="/admin/chats" data-testid="side-menu-item-chat"><button type="button">Conversas</button></Link>
         <button type="submit" data-testid="side-menu-item-logout" onClick={ (e) => logout(e, history) }>Sair</button>
       </div>
     </aside>
