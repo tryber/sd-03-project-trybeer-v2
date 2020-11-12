@@ -24,6 +24,15 @@ const AdminSideBar = () => (
           Perfil
         </button>
       </Link>
+      <Link to="/admin/chats">
+        <button
+          type="button"
+          className="btn-admin"
+          data-testid="side-menu-item-chat"
+        >
+          Conversas
+        </button>
+      </Link>
     </div>
     <Link to="/login">
       <button

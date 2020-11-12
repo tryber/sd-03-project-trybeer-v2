@@ -11,6 +11,7 @@ const {
 } = require('./controllers/userController');
 
 const { getAllProducts } = require('./controllers/productController');
+const { getAllConvos } = require('./controllers/chatController');
 
 const {
   listSales,
@@ -33,6 +34,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.get('/', (_req, res) => res.send());
 
 app.get('/products', auth(true), getAllProducts);
+app.get('/admin/chats', getAllConvos);
 app.get('/admin/orders', listSales);
 app.get('/admin/orders/:id', auth(true), saleDetails);
 app.get('/orders', auth(true), getSalesByUserId);
@@ -48,6 +50,12 @@ const io = socketIo(server);
 
 io.on('connect', (socket) => {
   console.log(`${socket.id}`);
+
+  socket.on('message', (messages) => {
+    if (messages !== '') {
+      console.log(` mensagem:${messages}`);
+    }
+  });
 });
 
 app.use(errorHandler);

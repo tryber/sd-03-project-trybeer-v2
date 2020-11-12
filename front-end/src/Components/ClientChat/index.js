@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
+const moment = require('moment');
 const io = window.io;
 
 const ClientChat = () => {
@@ -10,31 +11,36 @@ const ClientChat = () => {
   const getUser = localStorage.getItem('user');
   const getEmail = JSON.parse(getUser);
 
-  const submitMessage = (event) => {
-    event.preventDefault();
-  };
-
   useEffect(() => {
     socket.current = io('http://localhost:3001');
+  }, [])
 
+  useEffect(() => {
     if (message !== '') {
-      socket.current.emit('message', (message) => {
-        console.log(message);
-      });
-  
       setMessages((msgs) => [...msgs, message]);
       setMessage('');
       setAttMessage('');
     }
+    socket.current.emit('message', message);
+
   }, [message]);
 
+  const clearPage = (event) => {
+    event.preventDefault();
+  };
+
+  const newDate = moment().format('HH:mm');
   return (
     <div>
-      <form onClick={submitMessage}>
+      <form onSubmit={clearPage}>
         <h1>Estou funcionando</h1>
         <div id="userName" data-testid="nickname">{getEmail.email}</div>
         <div id="hours" data-testid="message-time">Hora</div>
-        <div id="message-text" data-testid="text-message"><ul>{messages.map((msg) => <li key={msg}>{msg}</li>)}</ul></div>
+        <div id="message-text" data-testid="text-message">
+          <ul>
+            {messages.map((msg) => <li key={msg}>{msg} {newDate}</li>)}
+          </ul>
+        </div>
         <input
           onChange={(event) => setAttMessage(event.target.value)}
           value={attMessage}
