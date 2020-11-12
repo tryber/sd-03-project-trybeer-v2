@@ -10,7 +10,7 @@ const getUsersRoom = async ({ email }) => connectTo('rooms')
 const saveMessage = async (room, user, message) => connectTo('rooms')
   .then((coll) => coll.updateOne(
     { _id: ObjectId(room) },
-    { $push: { messages: { email: user.email, message } } }
+    { $push: { messages: { email: user.email, message } } },
   ));
 
 const getRoomById = async (id) => connectTo('rooms')

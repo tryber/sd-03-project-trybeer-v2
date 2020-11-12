@@ -28,6 +28,6 @@ class Users {
     user = { ...user, ...info };
     return user;
   }
-};
+}
 
 module.exports = Users;
