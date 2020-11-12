@@ -9,25 +9,12 @@ import AdminOrderDetailAPI from '../services/AdminOrderService'
 function AdminOrderDetailPage () {
   const { statusChanged, setStatusChanged } = useContext(BeerContext);
   const { id } = useParams();
-  let data;
   const [received, setReceived] = useState();
 
   useEffect(() => {
     AdminOrderDetailAPI(id)
     .then((response) => {
       if (response.status === 200) {
-        // data = response.data;
-        setReceived(response.data);
-      }
-    })
-    .catch((error) => error); 
-  }, []);
-
-  useEffect(() => {
-    AdminOrderDetailAPI(id)
-    .then((response) => {
-      if (response.status === 200) {
-        // data = response.data;
         setReceived(response.data);
       }
     })

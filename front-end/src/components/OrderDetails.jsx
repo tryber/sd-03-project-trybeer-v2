@@ -40,14 +40,16 @@ function OrderDetails() {
             <tr>
               <th>Quantidade</th>
               <th>Produto</th>
+              <th>Status</th>
               <th>Total</th>
             </tr>
           </thead>
           <tbody>
-            {orderDetails.map(({ name, quantity, price }, index) => (
+            {orderDetails.map(({ name, quantity, price, statusCLient }, index) => (
               <tr key={name}>
                 <td data-testid={`${index}-product-qtd`}>{`${quantity}`}</td>
                 <td data-testid={`${index}-product-name`}>{name}</td>
+                <td>{statusCLient}</td>
                 <td data-testid={`${index}-product-total-value`}>{`R$ ${(quantity * price).toFixed(decimal).replace('.', ',')}`}</td>
               </tr>
             ))}

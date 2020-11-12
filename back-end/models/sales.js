@@ -1,7 +1,7 @@
 const createSales = (sequelize, DataTypes) => {
   const sales = sequelize.define('sales', {
-    // id: { type: DataTypes.INTEGER, primaryKey: true },
-    user_id: DataTypes.INTEGER,
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    user_id: { type: DataTypes.INTEGER, foreignKey: true },
     total_price: DataTypes.DECIMAL(9, 2),
     delivery_address: DataTypes.STRING,
     delivery_number: DataTypes.STRING,
