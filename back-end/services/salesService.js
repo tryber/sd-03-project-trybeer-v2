@@ -1,4 +1,4 @@
-const { sales } = require('../models');
+const { sales, sequelize } = require('../models');
 
 const registerSales = async (
   userId,
@@ -46,17 +46,55 @@ const updateSalesStatus = async (id, status) => {
 
 const salesDetailsById = async (saleID) => {
   try {
-    const sales = await salesModel.getSalesDetailsByID(saleID);
-    const salesData = sales.length
+    const salesDetails = await sequelize.query(
+      `SELECT sales.*, sproducts.product_id AS sold_product_id, sproducts.quantity AS sold_quantity, products.name AS product_name, products.price AS product_price, products.url_image AS product_image FROM Trybeer.sales_products AS sproducts INNER JOIN Trybeer.sales AS sales ON sproducts.sale_id = sales.id AND sales.id = ${saleID} INNER JOIN Trybeer.products AS products ON sproducts.product_id = products.id ORDER BY sales.id`,
+    );
+    const salesResults = salesDetails.reduce(
+      (
+        acc,
+        [
+          id,
+          userID,
+          totalPrice,
+          deliveryAddress,
+          deliveryNumber,
+          saleDate,
+          status,
+          soldProductID,
+          soldQuantity,
+          productName,
+          productPrice,
+          productImage,
+        ],
+      ) => [
+        ...acc,
+        {
+          saleID: id,
+          userID,
+          orderValue: totalPrice,
+          deliveryAddress,
+          deliveryNumber,
+          saleDate: new Date(saleDate).toISOString(),
+          status,
+          soldProductID,
+          soldQuantity,
+          productName,
+          productPrice,
+          productImage,
+        },
+      ],
+      [],
+    );
+    const salesData = salesResults.length
       ? {
-        saleID: sales[0].saleID,
-        userID: sales[0].userID,
-        orderValue: sales[0].orderValue,
-        deliveryAddress: sales[0].deliveryAddress,
-        deliveryNumber: sales[0].deliveryNumber,
-        saleDate: sales[0].saleDate,
-        status: sales[0].status,
-        products: sales.map(
+        saleID: salesResults[0].saleID,
+        userID: salesResults[0].userID,
+        orderValue: salesResults[0].orderValue,
+        deliveryAddress: salesResults[0].deliveryAddress,
+        deliveryNumber: salesResults[0].deliveryNumber,
+        saleDate: salesResults[0].saleDate,
+        status: salesResults[0].status,
+        products: salesResults.map(
           ({
             soldProductID,
             soldQuantity,
