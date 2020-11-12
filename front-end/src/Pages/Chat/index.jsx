@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { TopMenu } from '../../Components';
+import Messages from './innerPage/messages';
 import './styles.css';
 
 const Chat = () => {
+  const [messages, setMessages] = useState([1]);
+  const [message, setMessage] = useState('');
+  const socket = useSelector(state => state.socketReducer.socket);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (socket) {
+      socket.emit('enterRoom', { token, dest: 'loja' });
+      socket.on('lastMessages', (messages) => setMessages(messages))
+    }
+  }, []);
+
+  const sendMessage = () => socket.emit('message', { token, message });
 
   return (
     <div>
       <TopMenu />
       <div id="container-chat">
-        <div className="eles">
-          <div className="nick">
-            <h4 data-testid="nickname" >email@email.com </h4>
-            <h4 data-testid="message-time" >17:32</h4>
-          </div>
-          <h2 data-testid="text-message" >Aqui vem as mensagens</h2>
-        </div>
-        <div className="nos">
-          <div className="nick">
-            <h4 data-testid="nickname" >Loja </h4>
-            <h4 data-testid="message-time" >17:32</h4>
-          </div>
-          <h2 data-testid="text-message" >Aqui vem as mensagens</h2>
-        </div>
-
+        {messages.map(({ user, time, message }, index) => (
+          <Messages key={index} user={user} time={time} messages={message} />
+        ))}
         <div className="inputButton">
-          <input type="text" data-testid="message-input" placeholder="Digite..." />
-          <button data-testid="send-message" >Enviar</button>
+          <input
+            type="text"
+            onChange={({target: { value }}) => setMessage(value)}
+            data-testid="message-input"
+            placeholder="Digite..."
+          />
+          <button data-testid="send-message" onClick={sendMessage}>Enviar</button>
         </div>
       </div>
     </div>

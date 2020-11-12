@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './index.css';
-import { GiHamburgerMenu } from 'react-icons/gi';
+// import { GiHamburgerMenu } from 'react-icons/gi';
 
 const cleanUser = () => {
   localStorage.removeItem('token');
@@ -19,6 +19,7 @@ const SideMenu = () => {
         <>
           <button data-testid="side-menu-item-profile" onClick={ () => history.push('/admin/profile') }>Meu Perfil</button>
           <button data-testid="side-menu-item-orders" onClick={ () => history.push('/admin/orders') }>Pedidos</button>
+          <button data-testid="side-menu-item-chat" onClick={ () => history.push('/admin/chats') }>Conversas</button>
         </>
       ) : (
         <>

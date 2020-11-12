@@ -7,6 +7,7 @@ const socketIo = require('socket.io');
 
 const onConnection = (socket, io) => {
   // socket.on('Status-id', (id) => findOrder(id, io));
+  socket.on('disconnect', () => console.log('kkk'))
 };
 
 module.exports = (httpServer) => {

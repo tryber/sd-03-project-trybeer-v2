@@ -18,6 +18,7 @@ import {
   MySales,
   CheckoutPage,
   Chat,
+  ChatList,
 } from '../Pages/index';
 
 const Routers = () => (
@@ -51,6 +52,9 @@ const Routers = () => (
       </Route>
       <Route path="/chat">
         <PrivateRoute component={ Chat } />
+      </Route>
+      <Route path="/admin/chats">
+        <PrivateRoute component={ ChatList } />
       </Route>
       <Route path="*" render={ () => <Redirect to="/login" /> } />
     </Switch>

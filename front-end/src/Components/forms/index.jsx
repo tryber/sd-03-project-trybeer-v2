@@ -85,7 +85,10 @@ const Forms = ({ register }) => {
             name="email"
             placeholder="Digite seu e-mail"
             data-testid={register ? "signup-email" : "email-input"}
-            onChange={({ target }) => setEmailIsEmpty(!EMAIL_REGEX.test(target.value))}
+            onChange={({ target }) => {
+              localStorage.setItem('email', target.value);
+              setEmailIsEmpty(!EMAIL_REGEX.test(target.value))
+            }}
           />
         </label>
 
