@@ -12,19 +12,18 @@ import './productCard.css';
 
 export default function ProductCard({ product, index }) {
   const { productCart, setProductCart, update, setUpdate } = useContext(ProductContext);
-  const { id, name, price, urlImage } = product;
+  const { id, name, price, url_image } = product;
 
   useEffect(() => {
     saveCartAtLocalStorage(productCart);
   }, [productCart, update]);
-
   return (
     <div className="products-display" key={name}>
       <div>
         <img
           className={`img-display skoll-chata-${index} `}
           data-testid={`${index}-product-img`}
-          src={urlImage}
+          src={url_image}
           alt={name}
         />
       </div>
