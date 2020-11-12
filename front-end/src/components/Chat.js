@@ -61,7 +61,7 @@ function ClientChat() {
     <div>
       { user === null && <Redirect to="/login" />}
       {user.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
-      <p id="hidden-text">a</p>
+      <p id="hidden-text">b</p>
       {user.role === 'administrator'
         && <Link to="/admin/chats">Voltar</Link>}
       <div className="chat-div">
