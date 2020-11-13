@@ -18,21 +18,22 @@ export default function AdminChats() {
 
       const response = await axios.get('http://localhost:3001/admin/chats', { headers: { authorization: token } });
       const chatsList = await response.data;
+      console.log(chatsList)
       if (isSubscribed) setChats(chatsList);
     };
     getChats();
-    isSubscribed = false;
+    return () => isSubscribed = false;
   }, []);
   // useEffect(() => {
   //   return () => {
   //     mountedRef.current = false
   //   }
   // }, [])
-  console.log(chats)
-  return !chats || !chats.length ? <h2>Não há conversas</h2> : (
+  console.log(chats);
+  return !chats ? <h2>Não há conversas</h2> : (
     <div>
       <ul>
-        {chats.map((chat) => (
+        { !!chats.length && chats.map((chat) => (
           <li key={ chat.email }>
             <button
               type="button"

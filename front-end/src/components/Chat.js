@@ -9,24 +9,20 @@ import { ContextAplication } from '../context/ContextAplication';
 const io = require('socket.io-client');
 
 const socket = io('http://localhost:3001', { transports: ['websocket'] });
-const user = JSON.parse(localStorage.getItem('user')) || null;
 
-const connectWithBack = async () => {
-  const { token } = JSON.parse(localStorage.getItem('user'));
-  const response = await axios.get('http://localhost:3001/chat', {
-    headers: { authorization: token },
-  });
-  return response;
-};
 
 function ClientChat() {
   const { userChat } = useContext(ContextAplication);
   const [chat, setChat] = useState([]);
   const localUser = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem('user')) || null;
 
-  const emitHistory = () => (localUser.role === 'administrator'
+  const emitHistory = () => 
+    {
+      localUser.role === 'administrator'
     ? socket.emit('history', { email: userChat })
-    : socket.emit('history', user));
+    : socket.emit('history', user)
+  };
 
   useEffect(emitHistory, []);
 
@@ -49,21 +45,47 @@ function ClientChat() {
     }
   };
 
-  const getData = async () => {
-    try {
-      await connectWithBack();
-    } catch (e) {
-      return e;
-    }
-    return false;
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   let isSubscribed = true;
+  //   if(isSubscribed) {
+  //   const getData = async () => {
+  //     try {
+  //         const { token } = JSON.parse(localStorage.getItem('user'));
+          
+  //         await axios.get('http://localhost:3001/admin/chat', {
+  //           headers: { authorization: token },
+  //           body: { userChat },
+  //         });
+  //       } catch (e) {
+  //         console.log(e);
+  //       }
+  //     }
+  //   };
+  //   getData();
+  //   return () => isSubscribed = false;
+  // }, []);
+  useEffect(
+    () => {
+      const getData = async () => {
+        try {
+          const { token } = JSON.parse(localStorage.getItem('user'));
+  
+          await axios.get('http://localhost:3001/chat', {
+            headers: { authorization: token },
+            body: { userChat },
+        })
+        } catch (e) {
+          return e;
+        }
+        return false;
+      };
+      getData();
+    }, []
+  )
 
   return (
     <div>
+      {console.log(user)}
       {user === null && <Redirect to="/login" />}
       {user !== null && user.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
       <p id="hidden-text">b</p>
