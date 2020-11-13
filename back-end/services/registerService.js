@@ -9,7 +9,7 @@ const createUser = async (userInfo) => {
   if (result) {
     return { error: 'email_in_use' };
   }
-  const whichRole = role ? 'admin' : 'client';
+  const whichRole = role ? 'administrator' : 'client';
   const modelInfo = { name, email, password, role: whichRole };
   const createdUser = await users.create(modelInfo);
 

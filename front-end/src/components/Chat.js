@@ -9,7 +9,7 @@ import { ContextAplication } from '../context/ContextAplication';
 const io = require('socket.io-client');
 
 const socket = io('http://localhost:3001', { transports: ['websocket'] });
-const user = JSON.parse(localStorage.getItem('user')) || null;
+const user = JSON.parse(localStorage.getItem('user'));
 
 const connectWithBack = async () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
