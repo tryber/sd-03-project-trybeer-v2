@@ -52,11 +52,13 @@ const server = app.listen(PORT, () => {
 const handlePrivateMessage = (io) => async (data) => {
   const { chatMessage } = data;
   const currentDate = new Date();
-  const timestamp = currentDate.toLocaleTimeString();
+  // const timestamp = currentDate.toLocaleTimeString();
   // `
   //   ${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}
   //   ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}
   // `;
+
+  const timestamp = `${currentDate.getHours()}:${('0'+new Date().getMinutes()).slice(-2)}`
 
   await messageController.savePrivateMessage(data.nickname, data.to, chatMessage, timestamp);
 
