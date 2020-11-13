@@ -13,6 +13,9 @@ import Orders from './screens/Orders';
 import AdminDetail from './screens/AdminDetail';
 import OrdersAdmin from './screens/OrdersAdmin';
 import AdminProfile from './screens/AdminProfile';
+import AdminChatList from './screens/AdminChatList';
+import Chat from './screens/Chat';
+import AdminChat from './screens/AdminChat';
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
       <Router>
         <Switch>
           <center>
+            <Route exact path="/chat" component={ Chat } />
+            <Route exact path="/admin/chats" component={ AdminChatList } />
+            <Route exact path="/admin/chat" component={ AdminChat } />
             <Route exact path="/checkout" component={ Checkout } />
             <Route exact path="/products" component={ Products } />
             <Route exact path="/admin/profile" component={ AdminProfile } />

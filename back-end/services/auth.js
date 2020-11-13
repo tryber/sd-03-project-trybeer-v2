@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const userModel = require('../models/models/userModel');
+const { users } = require('../models');
 
 const secret = 'donthack';
 
@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
 
     const { data } = decoded;
 
-    const user = await userModel.login(data);
+    const user = await users.findOne({ where: { email: data } });
 
     if (!user) {
       return res.status(401).json({ message: 'User does not exists.' });
