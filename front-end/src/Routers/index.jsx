@@ -54,6 +54,9 @@ const Routers = () => (
         <PrivateRoute component={Chat} />
       </Route>
       <Route path="/admin/chat">
+        <PrivateRoute component={Chat} />
+      </Route>
+      <Route path="/admin/chats">
         <PrivateRoute component={ChatList} />
       </Route>
       <Route path="*" render={() => <Redirect to="/login" />} />

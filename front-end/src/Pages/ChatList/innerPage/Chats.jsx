@@ -7,7 +7,7 @@ const Chats = ({ messages, users }) => {
   const { email = user.email, time = null } = lastMessage || {};
 
   return (
-    <Link to={{ pathname: "/chat", state: email }} data-testid="containerChat">
+    <Link to={{ pathname: "/admin/chat", state: email }} data-testid="containerChat">
       <h3 data-testid="profile-name">{email}</h3>
       <p data-testid="last-message">Última mensagem às {time}</p>
     </Link>
