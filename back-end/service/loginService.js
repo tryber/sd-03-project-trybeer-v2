@@ -1,7 +1,8 @@
-const { usersModel } = require('../models');
+const { Users } = require('../models');
 
 const singinEmail = async (email, myPassword) => {
-  const user = await usersModel.singinEmail(email);
+  const user = await Users.findOne({ where: email });
+  console.log(user.password);
   if (!user) {
     return { error: true, status: 404, message: 'Invalid email!' };
   }
