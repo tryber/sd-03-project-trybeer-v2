@@ -79,7 +79,7 @@ describe('/products', () => {
 
     userEvent.click(firstMinusBtn);
 
-    expect(valueSpan).toHaveTextContent('0.00');
+    expect(valueSpan).toHaveTextContent('0');
 
     const secondPlusBtn = screen.getByTestId('1-product-plus');
     fireEvent.click(firstPlusBtn);
