@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Chat.css';
 import { ClientMenu, AdminMenu } from './Menu/index';
-
-import { ContextAplication } from '../context/ContextAplication';
 
 const io = require('socket.io-client');
 
@@ -19,7 +17,7 @@ const connectWithBack = async () => {
 };
 
 function ClientChat() {
-  const { userChat } = useContext(ContextAplication);
+  const userChat = localStorage.getItem('userChat');
   const [chat, setChat] = useState([]);
   const localUser = JSON.parse(localStorage.getItem('user'));
 

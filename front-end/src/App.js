@@ -29,6 +29,7 @@ function App() {
         <Route exact path="/chat" component={ Chat } />
         <Route exact path="/admin/orders" component={ AdminOrders } />
         <Route exact path="/admin/profile" component={ ProfileScreen } />
+        <Route exact path="/admin/chat" component={ Chat } />
         <Route exact path="/admin/orders/:id" component={ AdminDetails } />
         {/*         <Route exact path="/admin/chat" component={ Chat } />
  */}

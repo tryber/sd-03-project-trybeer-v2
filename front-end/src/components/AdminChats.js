@@ -1,14 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import axios from 'axios';
-import { ContextAplication } from '../context/ContextAplication';
 
 const one = 1;
 
 export default function AdminChats() {
   const [chats, setChats] = useState([]);
-  const { setUserChat } = useContext(ContextAplication);
   const history = useHistory();
 
   useEffect(() => {
@@ -29,7 +27,7 @@ export default function AdminChats() {
   //   }
   // }, [])
 
-  return !chats ? <h2>Não há conversas</h2> : (
+  return !chats ? <h2>Nenhuma conversa por aqui</h2> : (
     <div>
       <ul>
         { !!chats.length && chats.map((chat) => (
@@ -37,7 +35,7 @@ export default function AdminChats() {
             <button
               type="button"
               onClick={ () => {
-                setUserChat(chat.email);
+                localStorage.setItem('userChat', chat.email);
                 history.push('/chat');
               } }
             >
