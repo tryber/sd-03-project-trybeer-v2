@@ -1,13 +1,13 @@
 require('dotenv/config');
 const mysqlx = require('@mysql/xdevapi');
 
-const { HOSTNAME, MYSQL_USER, MYSQL_PASSWORD, PORT_DB } = process.env;
+const { HOSTNAME, MYSQL_USER, MYSQL_PASSWORD, PORT_DB = 33060 } = process.env;
 const config = {
   host: HOSTNAME,
   user: MYSQL_USER,
   password: MYSQL_PASSWORD,
   port: PORT_DB,
-  // socketPath: '/var/run/mysqld/mysqld.sock',
+  socketPath: '/var/run/mysqld/mysqld.sock',
 };
 
 const usersConstric = `(
@@ -48,9 +48,9 @@ const salesProductsConstrict = `(
   FOREIGN KEY(product_id) REFERENCES products(id)
 );`;
 
-const userPopulate = `INSERT INTO users (id, name, email, password, role) VALUES
-('1', 'Tryber Admin', 'tryber@trybe.com.br', '123456', 'administrator'),
-('2', 'testuser', 'user@test.com', 'test123', 'client');`;
+const userPopulate = `INSERT INTO users (name, email, password, role) VALUES
+('Tryber Admin', 'tryber@trybe.com.br', '123456', 'administrator'),
+('testuser', 'user@test.com', 'test123', 'client');`;
 
 const productsPopulate = `INSERT INTO products (id, name, price, url_image) VALUES
 ('1','Skol Lata 250ml',2.20, 'http://localhost:3001/images/Skol Lata 350ml.jpg'),
@@ -108,9 +108,9 @@ const restartDb = async () => mysqlx
     populateTestTable(session, productsPopulate),
   ]))
   .catch((err) => {
-    console.log(err);
+    console.log('super error', err);
     session.close();
-    process.exit(1);
+    // process.exit(1);
   });
 
 const closeTestDB = async () => {

@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+
 const { productsRouter, usersRouter, salesRouter, adminsRouter } = require('./routes');
 const { errorMiddleware } = require('./middleware');
 

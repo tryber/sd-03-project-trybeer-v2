@@ -1,21 +1,22 @@
 const request = require('supertest');
-const app = require('../index');
 const { restartDb, closeTestDB } = require('./bancoTest');
 
-// const user = {
-//   name: 'exampleGrande',
-//   email: 'example@example.com',
-//   password: '123456',
-//   role: false,
-// };
+const http = require('http');
+const cors = require('cors');
+const express = require('express');
+const bodyParser = require('body-parser');
+const httpFactory = require('../httpFactory');
+const socketFactory = require('../socket/index');
 
-// const resultObj = {
-//   id: /\d*/,
-//   email: 'example@example.com',
-//   token: /[A-z-=0-9.]*/,
-//   name: 'exampleGrande',
-//   role: 'client',
-// };
+const server = express();
+server.use(bodyParser.json());
+server.use(cors());
+
+const app = http.createServer(server);
+const { io } = socketFactory(app);
+httpFactory(server, io);
+const PORT = 3001;
+
 afterAll((done) => done());
 describe('user register', () => {
   const nameError = 'pelo menos 12 caracteres, não pode conter numeros nem caracteres especiais';
@@ -24,6 +25,7 @@ describe('user register', () => {
   const lessInfoError = 'Faltando informacoes';
   const emailDuplicatedError = 'E-mail already in database.';
   let server;
+
   beforeAll(async () => {
     await restartDb();
     server = app.listen(4000);
@@ -438,7 +440,8 @@ describe('sale getAll', () => {
       .set('Authorization', token)
       .expect(200);
 
-    const { id } = JSON.parse(getSale.res.text).sales[0];
+    console.log('\u001b[34m', getSale, '\u001b[0m');
+    const { id } = getSale.body[0];
 
     await request(app).get(`/sales/${id}`)
       .set('Authorization', token)
@@ -452,7 +455,7 @@ describe('sale getAll', () => {
       .set('Authorization', token)
       .expect(200);
 
-    const { id } = JSON.parse(getSale.res.text).sales[0];
+    const { id } = getSale.body[0];
 
     await request(app).put(`/sales/${id}`)
       .send({ status: 'Entregue' })
