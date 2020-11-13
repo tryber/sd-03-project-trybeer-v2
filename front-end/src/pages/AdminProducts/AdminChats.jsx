@@ -10,7 +10,7 @@ const getTheLastDateMessage = (arr) => {
 }
 
 const AdminChats = () => {
-  const [cards, setCards] = useState();
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     axios({
@@ -28,7 +28,8 @@ const AdminChats = () => {
       <br/>
       <br/>
       <div data-testid="containerChat" >
-        {!cards ? <h1 data-testid="text-for-no-conversation">Nenhuma conversa por aqui deverá</h1> : cards.map(({ messages, email }, index) => {
+        {console.log(cards)}
+        {cards.length === 0 ? <h1 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</h1> : cards.map(({ messages, email }, index) => {
           return (
             <div
               key={index + 1}
