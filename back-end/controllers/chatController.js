@@ -2,7 +2,6 @@ const messageModel = require('../mongoModel/messageModel');
 
 const getAllChats = async (req, res) => {
   const result = await messageModel.getAll();
-
   res.status(200).json(result);
 };
 

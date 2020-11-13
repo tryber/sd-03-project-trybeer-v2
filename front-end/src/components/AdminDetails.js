@@ -7,17 +7,23 @@ import currency from '../helpers/currency';
 
 const getOrder = async (id) => {
   const { token } = JSON.parse(localStorage.getItem('user'));
-  const response = await axios.get(`http://localhost:3001/admin/orders/${id}`, { headers: { authorization: token } });
+  const response = await axios.get(`http://localhost:3001/admin/orders/${id}`, {
+    headers: { authorization: token },
+  });
   const answer = { ...response.data, total: currency(response.data.total) };
   return answer;
 };
 
-const changeStatus = async (id, order, setOrder) => {
+const changeStatus = async (id, order, setOrder, status) => {
   const { token } = JSON.parse(localStorage.getItem('user'));
 
-  await axios.put(`http://localhost:3001/admin/orders/${id}`, { status: 'Entregue' }, { headers: { authorization: token } });
+  await axios.put(
+    `http://localhost:3001/admin/orders/${id}`,
+    { status },
+    { headers: { authorization: token } }
+  );
 
-  const newOrder = { ...order, status: 'Entregue' };
+  const newOrder = { ...order, status };
   setOrder(newOrder);
 };
 
@@ -28,7 +34,7 @@ const AdminDetails = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getOrder(id) || [];
+        const data = (await getOrder(id)) || [];
         setOrder(data);
       } catch (e) {
         return e;
@@ -40,32 +46,41 @@ const AdminDetails = () => {
 
   return (
     <div>
-      { user === null && <Redirect to="/login" />}
+      {user === null && <Redirect to='/login' />}
       <AdminMenu />
-      <h1 data-testid="order-number">
-        Pedido
-        {' '}
-        { order.saleId }
-        {' '}
-        -
-      </h1>
-      <h1 data-testid="order-status">
-        {' '}
-        { order.status }
-      </h1>
-      { order.saleProducts.map((p, index) => (
-        <div key={ p.soldProductId }>
-          <p data-testid={ `${index}-product-qtd` }>{ p.soldQuantity }</p>
-          <p data-testid={ `${index}-product-name` }>{ p.productName }</p>
-          <p data-testid={ `${index}-product-total-value` }>{ currency(p.productPrice * p.soldQuantity) }</p>
-          <p data-testid={ `${index}-order-unit-price` }>{ `(${currency(p.productPrice)})` }</p>
-        </div>)) }
-      <h3 data-testid="order-total-value">
-        Total:
-        {' '}
-        { order.total }
-      </h3>
-      { order.status === 'Pendente' && <button onClick={ () => changeStatus(id, order, setOrder) } type="button" data-testid="mark-as-delivered-btn">Marcar como entregue</button>}
+      <h1 data-testid='order-number'>Pedido {order.saleId} -</h1>
+      <h1 data-testid='order-status'> {order.status}</h1>
+      {order.saleProducts.map((p, index) => (
+        <div key={p.soldProductId}>
+          <p data-testid={`${index}-product-qtd`}>{p.soldQuantity}</p>
+          <p data-testid={`${index}-product-name`}>{p.productName}</p>
+          <p data-testid={`${index}-product-total-value`}>
+            {currency(p.productPrice * p.soldQuantity)}
+          </p>
+          <p data-testid={`${index}-order-unit-price`}>{`(${currency(
+            p.productPrice
+          )})`}</p>
+        </div>
+      ))}
+      <h3 data-testid='order-total-value'>Total: {order.total}</h3>
+      {order.status === 'Pendente' && (
+        <button
+          onClick={() => changeStatus(id, order, setOrder, 'Preparando')}
+          type='button'
+          data-testid='mark-as-prepared-btn'
+        >
+          Preparar pedido
+        </button>
+      )}
+      {order.status !== 'Entregue' && (
+        <button
+          onClick={() => changeStatus(id, order, setOrder, 'Entregue')}
+          type='button'
+          data-testid='mark-as-delivered-btn'
+        >
+          Marcar como entregue
+        </button>
+      )}
     </div>
   );
 };

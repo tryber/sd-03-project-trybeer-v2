@@ -23,9 +23,10 @@ function ClientChat() {
   const [chat, setChat] = useState([]);
   const localUser = JSON.parse(localStorage.getItem('user'));
 
-  const emitHistory = () => (localUser.role === 'administrator'
-    ? socket.emit('history', { email: userChat })
-    : socket.emit('history', localUser));
+  const emitHistory = () =>
+    localUser.role === 'administrator'
+      ? socket.emit('history', { email: userChat })
+      : socket.emit('history', localUser);
 
   useEffect(emitHistory, []);
 

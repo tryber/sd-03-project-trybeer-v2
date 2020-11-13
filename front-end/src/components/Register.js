@@ -13,10 +13,13 @@ async function submitRegister(e, email, password, name, checkbox, history, setEr
       name,
       role: checkbox,
     });
+
+    console.log(response);
     localStorage.setItem('user', JSON.stringify(response.data.token));
     setError('');
     return history.push(checkbox ? 'admin/orders' : '/products');
   } catch (err) {
+    console.log(err);
     return setError('E-mail already in database.');
   }
 }
