@@ -1,5 +1,5 @@
 const socketIo = require('socket.io');
-const { onEnterRoom, onMessage, onDisconnect, auth } = require('./chat');
+const { onEnterRoom, onMessage, onDisconnect } = require('./chat');
 
 const onConnection = (socket, io) => {
   socket.on('enterRoom', onEnterRoom(socket));

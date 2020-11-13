@@ -5,7 +5,8 @@ const getTime = () => {
   return `${date.getHours()}:${date.getMinutes()}`;
 };
 
-const saveMessage = async (room, user, message, time) => Rooms.saveMessage(room, user, message, time);
+const saveMessage = async (room, user, message, time) =>
+  Rooms.saveMessage(room, user, message, time);
 
 const createRoom = async ({ email, role }, user2) => {
   const user = role === 'administrator' ? 'Loja' : { role, email };
@@ -32,7 +33,7 @@ const getRoomById = async (room) => {
 const getAllRooms = async () => {
   const allRooms = await Rooms.getAllRooms();
   return allRooms;
-}
+};
 
 module.exports = {
   saveMessage,

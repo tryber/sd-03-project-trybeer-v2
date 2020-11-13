@@ -1,7 +1,8 @@
 const { roomServices, usersServices, authServices } = require('../services');
 
 const onEnterRoom = (socket) => async ({ token, dest }) => {
-  const { email, role } = user = await authServices(token);
+  const user = await authServices(token);
+  const { email, role } = user;
   const room = await roomServices.getRoomByUsers({ email, role }, dest);
   console.log('room', room);
   if (!room) {
@@ -27,19 +28,8 @@ const onDisconnect = (socket) => async () => {
   await usersServices.deleteUserSocket(socket.id);
 };
 
-const auth = async (socket, next) => {
-  const header = socket.handshake.headers['authorization'];
-  console.log('header', header);
-  const { authorization: token } = socket.handshake.headers || {};
-  console.log('token', token, socket.handshake.headers);
-  const user = await authServices(token);
-  if (user.error) return next(new Error(error.message));
-  socket.user = user;
-};
-
 module.exports = {
   onEnterRoom,
   onMessage,
   onDisconnect,
-  auth,
 };

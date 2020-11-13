@@ -16,7 +16,6 @@ const saveMessage = async (room, user, message, time) => connectTo('rooms')
 const getRoomById = async (id) => connectTo('rooms')
   .then((coll) => coll.findOne({ _id: ObjectId(id) }));
 
-
 const getAllRooms = async () => connectTo('rooms')
   .then((coll) => coll.find().toArray());
 
