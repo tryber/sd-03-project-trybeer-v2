@@ -12,7 +12,7 @@ const socket = io('http://localhost:3001', { transports: ['websocket'] });
 
 const connectWithBack = async () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
-  const response = await axios.get('http://localhost:3001/products', { headers: { authorization: token } });
+  const response = await axios.get('http://localhost:3001/chat', { headers: { authorization: token } });
   return response;
 };
 

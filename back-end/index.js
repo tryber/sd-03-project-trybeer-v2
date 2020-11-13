@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const moment = require('moment');
 
 const app = express();
 const httpServer = require('http').createServer(app);
@@ -50,8 +49,7 @@ app.use('/chat', validateToken, (_req, res) => {
 io.on('connection', async (socket) => {
   socket.on('message', ({ message, user, to }) => {
     console.log(message);
-    const dateTime = new Date();
-    const time = moment(dateTime).format('hh:mm:ss');
+    const time = new Date().toLocaleTimeString();
     const newMessage = {
       from: '',
       to: '',
