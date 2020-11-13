@@ -4,7 +4,7 @@ import './styles.css';
 
 const AdminSideBar = () => {
   const history = useHistory();
-  const seconds = 500;
+  const seconds = 1000;
   return (
     <div className="admin-side-bar-container">
       <div>
