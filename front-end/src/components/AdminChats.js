@@ -28,10 +28,11 @@ export default function AdminChats() {
   //     mountedRef.current = false
   //   }
   // }, [])
-  return !chats ? <h2>Não há conversas</h2> : (
+  console.log(chats)
+  return !chats || !chats.length ? <h2>Não há conversas</h2> : (
     <div>
       <ul>
-        {chats.length && chats.map((chat) => (
+        {chats.map((chat) => (
           <li key={ chat.email }>
             <button
               type="button"

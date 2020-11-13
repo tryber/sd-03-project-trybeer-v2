@@ -1,6 +1,6 @@
 .chat-div {
   border: 2px solid black;
-  height: 30vh;
+  height: 50vh;
   padding: 20px;
   overflow-x: scroll;
 }
