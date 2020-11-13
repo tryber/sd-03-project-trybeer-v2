@@ -1,6 +1,6 @@
-const Model = require('./mongoConnection');
 const MongoDb = require('mongodb');
 const faker = require('faker');
+const Model = require('./mongoConnection');
 
 jest.mock('mongodb');
 

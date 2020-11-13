@@ -21,7 +21,7 @@ describe('chatController', () => {
       services.roomServices.createRoom.mockResolvedValue({ id });
       services.authServices.mockResolvedValue({ email, role });
       const enterRoom = chatController.onEnterRoom(socket);
-      await enterRoom({ token, dest })
+      await enterRoom({ token, dest });
       expect(services.roomServices.getRoomByUsers).toHaveBeenCalledTimes(1);
       expect(services.roomServices.getRoomByUsers).toHaveBeenCalledWith({ email, role }, dest);
       expect(services.roomServices.createRoom).toHaveBeenCalledTimes(1);
@@ -39,20 +39,19 @@ describe('chatController', () => {
       const id = 1;
       services.roomServices.getRoomByUsers.mockResolvedValue({ id });
       services.authServices.mockResolvedValue({ email, role });
-      services.roomServices.getRoomById.mockResolvedValue({ message })
+      services.roomServices.getRoomById.mockResolvedValue({ message });
       const enterRoom = chatController.onEnterRoom(socket);
-      await enterRoom({ token, dest })
+      await enterRoom({ token, dest });
       expect(services.roomServices.getRoomByUsers).toHaveBeenCalledTimes(1);
       expect(services.usersServices.saveUserSocket).toHaveBeenCalledTimes(1);
       expect(services.roomServices.getRoomById).toHaveBeenCalledTimes(1);
       expect(join).toHaveBeenCalledTimes(1);
       expect(emit).toHaveBeenCalledTimes(1);
     });
-  })
+  });
   describe('on Message', () => {
     it('sending message', async () => {
       const email = 'aaaaa@aaaa.com.br';
-      const role = 'client';
       const room = 1;
       const time = '17:33';
       const token = 'meu token';
@@ -67,7 +66,8 @@ describe('chatController', () => {
       await onMessage({ token, message });
       expect(services.authServices).toHaveBeenCalledWith(token);
       expect(services.usersServices.findUserSocket).toHaveBeenCalledWith({ email });
-      expect(services.roomServices.saveMessage).toHaveBeenCalledWith(room, { email }, message, time);
+      expect(services.roomServices.saveMessage)
+        .toHaveBeenCalledWith(room, { email }, message, time);
       expect(emit).toHaveBeenCalledWith('message', { email, message, time });
       expect(emit).toHaveBeenCalledTimes(1);
     });

@@ -1,21 +1,20 @@
 const request = require('supertest');
-const { restartDb, closeTestDB } = require('./bancoTest');
 
 const http = require('http');
 const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
+const { restartDb, closeTestDB } = require('./bancoTest');
 const httpFactory = require('../httpFactory');
 const socketFactory = require('../socket/index');
 
-const server = express();
-server.use(bodyParser.json());
-server.use(cors());
+const httpServer = express();
+httpServer.use(bodyParser.json());
+httpServer.use(cors());
 
-const app = http.createServer(server);
+const app = http.createServer(httpServer);
 const { io } = socketFactory(app);
-httpFactory(server, io);
-const PORT = 3001;
+httpFactory(httpServer, io);
 
 afterAll((done) => done());
 describe('user register', () => {
@@ -439,8 +438,6 @@ describe('sale getAll', () => {
     const getSale = await request(app).get('/sales')
       .set('Authorization', token)
       .expect(200);
-
-    console.log('\u001b[34m', getSale, '\u001b[0m');
     const { id } = getSale.body[0];
 
     await request(app).get(`/sales/${id}`)
