@@ -1,7 +1,7 @@
+const faker = require('faker');
+const Boom = require('boom');
 const salesController = require('./sales');
 const { salesServices } = require('../services');
-const Boom = require('boom');
-const faker = require('faker');
 
 jest.mock('../services/');
 jest.mock('boom');
@@ -109,7 +109,7 @@ describe('Sales Controllers', () => {
       const paramsId = faker.random.number();
       const userId = faker.random.number();
       const req = { params: { id: paramsId }, user: { id: userId, role: 'client' } };
-      const sale = { userId: userId + 1 };;
+      const sale = { userId: userId + 1 };
       const next = jest.fn();
       const json = jest.fn();
       const res = { status: jest.fn().mockReturnValue({ json }) };

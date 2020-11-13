@@ -27,7 +27,7 @@ const getRoomByUsers = async (user, user2) => {
 
 const getRoomById = async (room) => {
   const dbRoom = await Rooms.getRoomById(room);
-  if (!room) return null;
+  if (!dbRoom) return null;
   const { _id: id, ...roomCleaned } = dbRoom;
   return { ...roomCleaned, id: id.toString() };
 };

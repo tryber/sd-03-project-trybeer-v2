@@ -1,6 +1,6 @@
-const auth = require('./auth');
 const jwt = require('jsonwebtoken');
 const faker = require('faker');
+const auth = require('./auth');
 const usersServices = require('./users');
 
 jest.mock('jsonwebtoken');
@@ -19,7 +19,7 @@ describe('authService', () => {
     jwt.verify.mockReturnValue(user);
     usersServices.getUserByEmail.mockResolvedValue(user);
 
-    const returned = await auth(null, true);;
+    const returned = await auth(null, true);
 
     expect(usersServices.getUserByEmail).toHaveBeenCalledWith(email);
     expect(returned).toBe(user);
@@ -32,7 +32,7 @@ describe('authService', () => {
     jwt.verify.mockReturnValue(user);
     usersServices.getUserByEmail.mockResolvedValue(null);
 
-    const returned = await auth(null, true);;
+    const returned = await auth(null, true);
 
     expect(usersServices.getUserByEmail).toHaveBeenCalledWith(email);
     expect(returned).toEqual({ error: true, message: 'email ou senha inválido' });
@@ -45,7 +45,7 @@ describe('authService', () => {
     jwt.verify.mockReturnValue(user);
     usersServices.getUserByEmail.mockResolvedValue(null);
 
-    const returned = await auth(null, false);;
+    const returned = await auth(null, false);
 
     expect(usersServices.getUserByEmail).toHaveBeenCalledWith(email);
     expect(returned).toEqual(null);
@@ -56,7 +56,7 @@ describe('authService', () => {
 
     usersServices.getUserByEmail.mockResolvedValue(null);
 
-    const returned = await auth(null, false);;
+    const returned = await auth(null, false);
 
     expect(usersServices.getUserByEmail).not.toHaveBeenCalled();
     expect(returned).toEqual({ error: true, message: 'autenticacao invalido' });
