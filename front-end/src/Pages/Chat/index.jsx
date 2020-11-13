@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TopMenu } from '../../Components';
 import { useLocation } from 'react-router-dom';
 import Messages from './innerPage/messages';
 import './styles.css';
 
-const generatePass = (email) => {
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
+const generatePass = (email, token, role) => {
   if (role !== 'administrator') return { token, dest: 'Loja ' };
   return { token, dest: { email } };
 };
@@ -18,10 +17,11 @@ const Chat = () => {
   const socket = useSelector(state => state.socketReducer.socket);
   const { state } = useLocation();
   const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
 
   useEffect(() => {
     if (socket) {
-      socket.emit('enterRoom', generatePass(state));
+      socket.emit('enterRoom', generatePass(state, token, role));
       socket.on('lastMessages', (messages) => setMessages(messages));
       socket.on('message', (message) => setMessages((m) => [...m, message]));
     }
@@ -32,6 +32,9 @@ const Chat = () => {
   return (
     <div>
       <TopMenu />
+      {role === 'administrator'
+        && <Link to="/admin/chats"><button>voltar</button></Link>
+      }
       <div id="container-chat">
         {messages.map(({ email, time, message }, index) => (
           <Messages key={index} email={email} time={time} message={message} />
