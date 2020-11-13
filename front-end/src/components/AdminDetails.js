@@ -17,18 +17,13 @@ const getOrder = async (id) => {
 const changeStatus = async (id, order, setOrder, status) => {
   const { token } = JSON.parse(localStorage.getItem('user'));
 
-  console.log(token)
-  console.log(id)
-  console.log(order)
-  console.log(setOrder)
-  console.log(status)
-
   await axios.put(
     `http://localhost:3001/admin/orders/${id}`,
-    { headers: { authorization: token }, body: { status }, params: { id } }
+    { status },
+    { headers: { authorization: token } }
   );
 
-  const newOrder = { ...order, status: 'Entregue' };
+  const newOrder = { ...order, status };
   setOrder(newOrder);
 };
 
@@ -68,7 +63,7 @@ const AdminDetails = () => {
         </div>
       ))}
       <h3 data-testid='order-total-value'>Total: {order.total}</h3>
-      {order.status === 'Pendente' && order.status !== 'Entregue' && (
+      {order.status === 'Pendente' && (
         <button
           onClick={() => changeStatus(id, order, setOrder, 'Preparando')}
           type='button'
@@ -77,7 +72,7 @@ const AdminDetails = () => {
           Preparar pedido
         </button>
       )}
-      {order.status === 'Pendente' && (
+      {order.status !== 'Entregue' && (
         <button
           onClick={() => changeStatus(id, order, setOrder, 'Entregue')}
           type='button'
