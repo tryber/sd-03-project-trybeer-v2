@@ -17,8 +17,8 @@ import ProfilePage from './pages/clientProfilePage/ProfilePage';
 import ClientOrdersPage from './pages/clientOrdersPage/ClientOrdersPage';
 import ClientOrderDetail from './pages/clientOrderDetail/ClientOrderDetail';
 import AdminOrderDetail from './pages/adminOrderDetail/AdminOrderDetail';
-import AdminChatPage from './pages/adminChat/AdminChatPage';
-import AdminChat from './pages/adminChat/AdminChat';
+import AdminChatPage from './pages/chat/AdminChatPage';
+import AdminChat from './pages/chat/AdminChat';
 import ChatPage from './pages/chat/ChatPage';
 
 function App() {

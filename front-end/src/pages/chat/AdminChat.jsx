@@ -1,21 +1,21 @@
 import React, { useRef, useEffect, useState } from 'react';
-import MenuTop from '../../components/menuTop/MenuTop';
-import Sidebar from '../../components/sidebar/Sidebar';
+import { Link } from 'react-router-dom';
+import AdminSideBar from '../../components/adminMenuSideBar/AdminMenuSideBar';
 import './Chat.css';
 
 const io = window.io;
 
-function ChatPage() {
+function AdminChat() {
   const socket = useRef();
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [nickname, setNickname] = useState('');
 
   useEffect(() => {
-    const { email } = JSON.parse(window.localStorage.getItem('user'));
-    setUserEmail(email);
+    const user = localStorage.getItem('nickname');
+    setNickname(user);
     socket.current = io('http://localhost:3001');
-    socket.current.emit('private-history', { id: email });
+    socket.current.emit('private-history', { id: user, storeId: 'Loja' });
   }, []);
 
   useEffect(() => {
@@ -33,24 +33,26 @@ function ChatPage() {
     e.preventDefault();
     const messageObj = {
       chatMessage: messageInput,
-      nickname: userEmail,
-      to: 'Loja',
+      nickname: 'Loja',
+      to: nickname,
     };
     socket.current.emit('private', messageObj);
-    socket.current.emit('private-history', { id: userEmail, storeId: 'Loja' });
+    socket.current.emit('private-history', { id: nickname, storeId: 'Loja' });
 
     setMessageInput('');
   };
 
   return (
-    <div>
-      <MenuTop />
+    <div className="d-flex">
+      <AdminSideBar />
       <div className="container">
-        <Sidebar />
-        <div className="chat-content">
+        <Link to="/admin/chats" data-testid="back-button">
+          VOLTAR
+        </Link>
+        <div className="chat-content-admin">
           {messages.map(({ chatMessage, from, timestamp }, index) => (
             <div
-              className={from === 'Loja' ? 'left' : 'right'}
+              className={from === 'Loja' ? 'right' : 'left'}
               key={`${index}`}
             >
               <span data-testid="nickname">{from}</span> -
@@ -83,4 +85,4 @@ function ChatPage() {
   );
 }
 
-export default ChatPage;
+export default AdminChat;

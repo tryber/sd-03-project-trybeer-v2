@@ -51,13 +51,20 @@ const server = app.listen(PORT, () => {
 
 const handlePrivateMessage = (io) => async (data) => {
   const { chatMessage } = data;
-  await messageController.savePrivateMessage(data.nickname, data.to, chatMessage);
+  const currentDate = new Date();
+  const timestamp = currentDate.toLocaleTimeString();
+  // `
+  //   ${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}
+  //   ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}
+  // `;
 
-  io.in('room1').emit('private', { from: data.nickname, to: data.to, chatMessage });
+  await messageController.savePrivateMessage(data.nickname, data.to, chatMessage, timestamp);
+
+  io.in('room1').emit('private', { from: data.nickname, to: data.to, chatMessage, timestamp });
 };
 
-const getPrivateMessages = (socket) => async ({ id }) => {
-  const privateMessages = await messageController.getPrivateMessages(id, 'store');
+const getPrivateMessages = (socket) => async ({ id, storeId }) => {
+  const privateMessages = await messageController.getPrivateMessages(id, storeId);
   socket.join('room1');
   socket.emit('private-history', privateMessages);
 };
