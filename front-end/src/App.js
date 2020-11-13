@@ -12,6 +12,8 @@ import OrderDetails from './pages/UserProducts/OrderDetails';
 import AdminOrders from './pages/AdminProducts/AdminOrders';
 import AdminProfile from './pages/UserCrud/AdminProfile';
 import AdminOrderDetails from './pages/AdminProducts/AdminOrderDetails';
+import Chat from './pages/UserProducts/Chat';
+import AdminChats from './pages/AdminProducts/AdminChats';
 
 function App() {
   return (
@@ -40,9 +42,15 @@ function App() {
           <Route exact path="/admin/orders">
             <AdminOrders />
           </Route>
+          <Route exact path="/admin/chats">
+            <AdminChats />
+          </Route>
         </Switch>
       </OrdersProvider>
       <Switch>
+        <Route exact path="/chat">
+          <Chat />
+        </Route>
         <Route exact path="/register">
           <SignupPage />
         </Route>
