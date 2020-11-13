@@ -65,9 +65,9 @@ function ClientChat() {
   return (
     <div>
       {user === null && <Redirect to="/login" />}
-      {user.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
+      {user !== null && user.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
       <p id="hidden-text">b</p>
-      {user.role === 'administrator' && (
+      {user !== null && user.role === 'administrator' && (
         <Link to="/admin/chats">
           <button data-testid="back-button" type="button">
             Voltar
