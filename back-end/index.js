@@ -48,7 +48,6 @@ io.on('connect', (socket) => {
   console.log(`Socket ${socket.id}`);
 
   socket.on('message', ({ message, email, time }) => {
-    console.log('O que recebi: ', { message, email, time });
     io.emit('message', { message, email, time });
     saveMessage(message, email, time);
   });
