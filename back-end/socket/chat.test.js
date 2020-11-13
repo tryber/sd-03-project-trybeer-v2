@@ -8,6 +8,7 @@ describe('chatController', () => {
     services.roomServices.getRoomByUsers.mockReset();
     services.usersServices.saveUserSocket.mockReset();
   });
+
   describe('Enter Chat Room', () => {
     it('room doesnt exists', async () => {
       const email = 'aaaa@aaaa.com.br';

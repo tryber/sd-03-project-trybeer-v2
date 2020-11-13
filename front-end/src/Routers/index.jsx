@@ -53,6 +53,9 @@ const Routers = () => (
       <Route path="/chat">
         <PrivateRoute component={Chat} />
       </Route>
+      <Route path="/admin/chat">
+        <PrivateRoute component={Chat} />
+      </Route>
       <Route path="/admin/chats">
         <PrivateRoute component={ChatList} />
       </Route>
