@@ -19,7 +19,7 @@ const SideMenu = () => {
         <>
           <button data-testid="side-menu-item-profile" onClick={ () => history.push('/admin/profile') }>Meu Perfil</button>
           <button data-testid="side-menu-item-orders" onClick={ () => history.push('/admin/orders') }>Pedidos</button>
-          <button data-testid="side-menu-item-chat" onClick={ () => history.push('/admin/chats') }>Conversas</button>
+          <button data-testid="side-menu-item-chat" onClick={ () => history.push('/admin/chat') }>Conversas</button>
         </>
       ) : (
         <>

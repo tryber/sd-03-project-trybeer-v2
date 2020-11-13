@@ -33,7 +33,7 @@ const Chat = () => {
     <div>
       <TopMenu />
       {role === 'administrator'
-        && <Link to="/admin/chats"><button data-testid="back-button">voltar</button></Link>
+        && <Link to="/admin/chat"><button data-testid="back-button">voltar</button></Link>
       }
       <div id="container-chat">
         {messages.map(({ email, time, message }, index) => (
