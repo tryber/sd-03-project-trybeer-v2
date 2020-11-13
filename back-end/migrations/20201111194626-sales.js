@@ -29,13 +29,17 @@ module.exports = {
         allowNull: false,
       },
       sale_date: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        field: 'published',
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       status: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        field: 'published',
       },
       updatedAt: {
         type: Sequelize.DATE,

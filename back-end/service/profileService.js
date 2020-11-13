@@ -1,11 +1,9 @@
-const { usersModel } = require('../models');
+const { users } = require('../models');
 
 const changeName = async (name, email) => {
-  await usersModel.changeName(name, email);
+  await users.update({ name }, { where: { email } });
 
-  const user = await usersModel.singinEmail(email);
-
-  return user;
+  return users.findOne({ where: { email } }).then(({ dataValues }) => dataValues);
 };
 
 module.exports = {

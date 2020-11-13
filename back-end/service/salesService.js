@@ -1,39 +1,32 @@
-const { usersModel, salesModel } = require('../models');
+const { users, sales } = require('../models');
 
-const allSales = async () => {
-  const sales = await salesModel.allSales();
-
-  return sales;
-};
+const allSales = async () => sales.findAll({});
 
 const finishSales = async (email, total, address, number, date) => {
-  const allUsers = await usersModel.getAllUsers();
-  const { id } = allUsers.find((elem) => elem.email === email);
-
+  const { id } = await users.findOne({ where: { email } });
   const totalToInsert = total.replace(',', '.');
 
-  const checkout = await salesModel.finishSales(id, totalToInsert, address, number, date);
-  const sales = await salesModel.allSales();
-  const UserSales = await sales.filter((elem) => elem.userId === id);
+  const { dataValues } = await sales.create({ user_id: id, total_price: totalToInsert, delivery_address: address, delivery_number: number, sale_date: date, status: 'pending' });
+  const UserSales = await sales.findAll({ where: { user_id: id } });
+  console.log(UserSales)
   const positionSale = (UserSales.length - 1);
   const newSale = UserSales[positionSale];
 
   const saleResponse = {
-    ...checkout,
+    ...dataValues,
     saleId: newSale.id,
   };
-
-  return saleResponse;
+console.log(saleResponse)
+  //return saleResponse;
 };
-
-const changeStatus = async (id) => {
-  await salesModel.changeStatus(id, 'Entregue');
-
-  return 'ok';
-};
+// 
+// const changeStatus = async (id) => {
+//   await salesModel.changeStatus(id, 'Entregue');
+// 
+//   return 'ok';
+// };
 
 module.exports = {
   allSales,
   finishSales,
-  changeStatus,
 };

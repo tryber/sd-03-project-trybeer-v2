@@ -1,11 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const Sales = sequelize.define('sales', {
-    id: {
-      primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     user_id: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -22,18 +16,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    sale_date: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     status: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-  }, { sale_date: 'published', updatedAt: 'updated' });
+  }, { createdAt: 'published', updatedAt: 'updated' });
 
   Sales.associate = (models) => {
     Sales.belongsTo(models.users, { as: 'users', foreignKey: 'user_id' });
-  };
-
-  Sales.associate = (models) => {
-    Sales.hasMany(models.SalesProducts, { foreignKey: 'sale_id', as: 'sales_products' });
+    Sales.hasMany(models.sales_products, { foreignKey: 'sale_id', as: 'sales_products' });
   };
 
   return Sales;

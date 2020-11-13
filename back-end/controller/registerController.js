@@ -7,7 +7,7 @@ const secret = 'xablaublaxablau';
 
 const singupUser = rescue(async (req, res, next) => {
   const { name, email, password, role } = req.body;
-console.log(name)
+
   const newUser = await registerService.singupUser(name, email, password, role);
 
   if (newUser.error) {

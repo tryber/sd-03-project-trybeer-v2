@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const model = require('../models/userModel');
+const { users } = require('../models');
 
 const secret = 'xablaublaxablau';
 
@@ -15,13 +15,13 @@ const authJWT = async (req, res, next) => {
 
     const { email } = decoded.data;
 
-    const user = await model.singinEmail(email);
+    const findUser = await users.findOne({ where: { email } });
 
-    if (!user) {
+    if (!findUser) {
       return res.status(401).json({ message: 'missing auth token' });
     }
 
-    req.user = user;
+    req.user = findUser;
     next();
   } catch (err) {
     return res.status(401).json({ message: 'jwt malformed' });

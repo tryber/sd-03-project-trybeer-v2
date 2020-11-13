@@ -1,13 +1,12 @@
-const { salesModel } = require('../models');
+const { sales_products: SalesProducts } = require('../models');
 
-const allSalesProduct = async () => {
-  const sales = await salesModel.allSalesProduct();
-
-  return sales;
-};
+const allSalesProduct = async () => SalesProducts.findAll({});
 
 const registerProduct = async (saleId, productId, quantity) => {
-  const register = await salesModel.registerProduct(saleId, productId, quantity);
+  if (!saleId || !productId || !quantity) {
+    return { error: true, status: 404, message: 'Informação incompleta!' };
+  }
+  const register = await SalesProducts.create({ sale_id: saleId, product_id: productId, quantity });
 
   return register;
 };
