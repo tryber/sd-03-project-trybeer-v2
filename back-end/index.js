@@ -49,7 +49,8 @@ app.use('/chat', validateToken, (_req, res) => {
 io.on('connection', async (socket) => {
   socket.on('message', ({ message, user, to }) => {
     console.log(message);
-    const dateTime = new Date().toLocaleTimeString();
+    const date = new Date();
+    const dateTime = `${date.getHours()}:${date.getMinutes()}`;
     const newMessage = {
       from: '',
       to: '',

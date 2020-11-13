@@ -9,7 +9,6 @@ import { ContextAplication } from '../context/ContextAplication';
 const io = require('socket.io-client');
 
 const socket = io('http://localhost:3001', { transports: ['websocket'] });
-const user = JSON.parse(localStorage.getItem('user'));
 
 const connectWithBack = async () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
@@ -26,7 +25,7 @@ function ClientChat() {
 
   const emitHistory = () => (localUser.role === 'administrator'
     ? socket.emit('history', { email: userChat })
-    : socket.emit('history', user));
+    : socket.emit('history', localUser));
 
   useEffect(emitHistory, []);
 
@@ -41,10 +40,10 @@ function ClientChat() {
 
   const displayMessage = () => {
     const message = document.getElementById('message-input').value;
-    if (user.role === 'administrator') {
-      socket.emit('message', { message, user, to: userChat });
+    if (localUser.role === 'administrator') {
+      socket.emit('message', { message, user: localUser, to: userChat });
     } else {
-      socket.emit('message', { message, user, to: 'Loja' });
+      socket.emit('message', { message, user: localUser, to: 'Loja' });
       document.getElementById('message-input').value = '';
     }
   };
@@ -64,10 +63,10 @@ function ClientChat() {
 
   return (
     <div>
-      {user === null && <Redirect to="/login" />}
-      {user !== null && user.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
+      {localUser === null && <Redirect to="/login" />}
+      {localUser !== null && localUser.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
       <p id="hidden-text">b</p>
-      {user !== null && user.role === 'administrator' && (
+      {localUser !== null && localUser.role === 'administrator' && (
         <Link to="/admin/chats">
           <button data-testid="back-button" type="button">
             Voltar
