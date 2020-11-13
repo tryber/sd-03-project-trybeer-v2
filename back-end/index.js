@@ -58,7 +58,7 @@ const handlePrivateMessage = (io) => async (data) => {
   //   ${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}
   // `;
 
-  const timestamp = `${currentDate.getHours()}:${('0'+new Date().getMinutes()).slice(-2)}`
+  const timestamp = `${currentDate.getHours()}:${(`0${new Date().getMinutes()}`).slice(-2)}`;
 
   await messageController.savePrivateMessage(data.nickname, data.to, chatMessage, timestamp);
 
