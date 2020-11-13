@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const socketIo = require('socket.io');
 const path = require('path');
 const cors = require('cors');
 
@@ -22,6 +23,7 @@ const {
 
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorHandler');
+const chatController = require('./controllers/chatController');
 
 const app = express();
 
@@ -46,4 +48,22 @@ app.post('/checkout', auth(true), createSale);
 
 app.use(errorHandler);
 
-app.listen(3001, () => console.log('Listening on port 3001!'));
+const server = app.listen(3001, () => console.log('Listening on port 3001!'));
+
+const io = socketIo(server);
+// Express e socket.io rodando na mesma porta por conta desse bind
+io.on('connect', (socket) => {
+  console.log('Nova conexão:', socket.id);
+
+  // socket.on('msgToClient', (msg) => {
+  //   io.emit('msgToClient', msg);
+  // });
+
+  socket.on('syncHistory', ({ chatHistory, clientEmail }) => {
+    chatController.updateConvo(clientEmail, chatHistory);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(socket.id, 'desconectou-se');
+  });
+});

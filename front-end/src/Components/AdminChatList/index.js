@@ -9,11 +9,11 @@ const AdminChatsPage = () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
   const [chatList, setChatList] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchChatList = async () => await getChatsList(token) || [];
+  useEffect(() => {
+    const fetchChatList = async () => await getChatsList(token) || [];
 
-  //   fetchChatList().then((chatList) => setChatList(chatList));
-  // }, [token]);
+    fetchChatList().then((chats) => setChatList(chats));
+  }, [token]);
 
   return (
     <div className="admin-chats">
