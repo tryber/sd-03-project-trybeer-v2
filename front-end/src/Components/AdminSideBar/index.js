@@ -5,7 +5,7 @@ import './styles.css';
 const AdminSideBar = () => (
   <div className="admin-side-bar-container">
     <div>
-      <h1>TryBeer</h1>
+      <h1>TryBeerr</h1>
       <Link to="/admin/orders">
         <button
           type="button"
