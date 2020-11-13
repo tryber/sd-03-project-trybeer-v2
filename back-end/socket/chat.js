@@ -4,7 +4,7 @@ const onEnterRoom = (socket) => async ({ token, dest }) => {
   const user = await authServices(token);
   const { email, role } = user;
   const room = await roomServices.getRoomByUsers({ email, role }, dest);
-  console.log('room', room);
+
   if (!room) {
     const newRoom = await roomServices.createRoom({ role, email }, dest);
     usersServices.saveUserSocket(socket.id, newRoom, { email });

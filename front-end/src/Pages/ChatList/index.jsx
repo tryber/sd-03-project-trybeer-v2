@@ -20,8 +20,8 @@ const ChatList = () => {
 
   return (
     <div>
-      {listOfChats.map(({ messages }, index) => (
-        <Chats key={index} messages={messages} />
+      {listOfChats.map(({ messages, users }, index) => (
+        <Chats key={index} messages={messages} users={users} />
       ))}
     </div>
   );
