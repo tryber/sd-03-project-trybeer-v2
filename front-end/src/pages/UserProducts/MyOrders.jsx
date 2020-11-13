@@ -18,7 +18,7 @@ const MyOrders = () => {
     <Auth>
       <Header title="Meus Pedidos" />
       <Orders>
-      {orders.map((order, index) => <OrderCard key={ order.id } order={ order } index={ index } />)}
+      {orders.map((order, index) => <OrderCard key={ order.id } order={ order } index={ index } status={orders.status} />)}
       </Orders>
       <Footer />
     </Auth>

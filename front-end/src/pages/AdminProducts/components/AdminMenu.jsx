@@ -25,6 +25,16 @@ const AdminMenu = () => {
       </li>
       <li>
         <Link
+          to="/admin/chats"
+          type="button"
+          className="menu-btn"
+          data-testid="side-menu-item-chat" 
+        >
+          Conversas
+        </Link>
+      </li>
+      <li>
+        <Link
           to="/login"
           onClick={() => logout()}
           className="menu-btn"

@@ -31,6 +31,16 @@ const renderClientList = () => (
     </li>
     <li>
       <Link
+        to="/chat"
+        type="button"
+        className="menu-btn"
+        data-testid="side-menu-chat"
+      >
+        Conversar com a loja
+      </Link>
+    </li>
+    <li>
+      <Link
         to="/login"
         onClick={() => logout()}
         className="menu-btn"
