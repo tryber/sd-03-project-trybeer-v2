@@ -15,7 +15,7 @@ const createRoom = async ({ email, role }, user2) => {
 
 const getRoomByUsers = async (user, user2) => {
   const room = await Rooms.getUsersRoom({
-    email: role !== 'administrator' ? user.email : user2.email,
+    email: user.role !== 'administrator' ? user.email : user2.email,
   });
   if (!room) return null;
   const { _id: id, ...roomCleaned } = room;

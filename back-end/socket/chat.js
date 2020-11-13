@@ -18,7 +18,7 @@ const onEnterRoom = (socket) => async ({ token, dest }) => {
 const onMessage = (_socket, io) => async ({ token, message }) => {
   const user = await authServices(token);
   const time = roomServices.getTime();
-  const { room } = await usersServices.findUserSocket({ email: user.email });
+  const { room } = await usersServices.findUserSocket({ email: user.email }) || {};
   await roomServices.saveMessage(room, { email: user.email }, message, time);
   return io.to(room).emit('message', { email: user.email, message, time });
 };
