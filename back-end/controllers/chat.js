@@ -1,12 +1,12 @@
 const { Router } = require('express');
 const {
-    getAllMessages,
-    getAllMessagesOfUser,
-  } = require('../dbMongo/modelSaveMessage');
+  getAllMessages,
+  getAllMessagesOfUser,
+} = require('../dbMongo/modelSaveMessage');
 
 const chat = Router();
 
-chat.post('/findOne', async (req, res) => { 
+chat.post('/findOne', async (req, res) => {
   const { nickname } = req.body;
   const userHistory = await getAllMessagesOfUser(nickname);
   res.status(200).json(userHistory);
@@ -17,6 +17,5 @@ chat.get('/', async (req, res) => {
   console.log(chatHistory);
   res.status(200).json(chatHistory);
 });
-
 
 module.exports = chat;

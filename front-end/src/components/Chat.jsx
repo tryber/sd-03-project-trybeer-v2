@@ -5,12 +5,25 @@ import axios from 'axios';
 const { io } = window;
 
 function Chat() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState();
+  const [adminMessages, setAdminMessages] = useState([]);
   const [response, setResponse] = useState();
   const [nickname, setNickname] = useState();
   const [updatePage, setUpdatePage] = useState(false);
   const time = new Date().toLocaleTimeString('pt-br').substring(5, '');
   const socket = useRef();
+  const receivedeMessage = [];
+
+  useEffect(() => {
+    socket.current = io('http://localhost:3001');
+  },[]);
+
+  useEffect(() => {
+    socket.current.on('message', ({ message, email, time, adminNick }) => {
+      receivedeMessage.push({ message, email, time, adminNick });
+      setAdminMessages(receivedeMessage);
+    });
+  },[]);
 
   useEffect(() => {
     const user = localStorage.getItem('nickname');
@@ -22,19 +35,24 @@ function Chat() {
       axios.post('http://localhost:3001/chat/findOne', { nickname })
       .then(({ data }) => setMessages(data));
     }
-  }, [nickname, updatePage]);
+  }, [nickname]);
 
-  useEffect(() => {
-    socket.current = io('http://localhost:3001');
-  },[]);
-
-  // useEffect(() => {
-  //   socket.current.on('adminMessage', () => setUpdatePage(!updatePage));
-  // },[]);
-
-  if (messages.history) {
+  if (messages) {
     return (
       <div>
+        <div>
+        { (adminMessages.length > 0) &&
+          adminMessages.map((e,i) => 
+            <ul>
+              <li key={`${e.nickname}-${i}`}>
+                <p data-testid="nickname">{e.adminNick || e.email}</p>
+                <p data-testid="message-time">Hora: {e.time}</p>
+                <p data-testid="text-message">{e.message}</p>
+              </li>
+            </ul>
+            )
+          }
+        </div>
         <div className="history">
           <p>Você está conversando com: {nickname}</p>
           {
@@ -63,8 +81,8 @@ function Chat() {
                   adminNick: 'Loja',
                 });
                 setResponse('');
-                setUpdatePage(!updatePage);
-              }           
+                // setUpdatePage(!updatePage);
+              }
             }
           >Enviar</button>
         </div>

@@ -19,7 +19,6 @@ import AdminProfilePage from './pages/AdminProfilePage';
 import AdminOrderDetailPage from './pages/AdminOrderDetailPage';
 import AdminChat from './components/AdminChat';
 import ChatClient from './components/ChatClient';
-import Chat from './components/Chat';
 import AdminChatPage from './pages/AdminChatPage';
 
 function App() {

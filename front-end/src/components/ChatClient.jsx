@@ -1,11 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import MenuTop from './MenuTop';
+import axios from 'axios';
 
 const { io } = window;
 
 function ChatClient() {
   const [message, setMessage] = useState('');
   const [allMessages, setAllMessages] = useState([]);
+  const [oldMessages, setOldMessages] = useState();
 
   const { email } = JSON.parse(localStorage.getItem('user')) || [];
   const time = new Date().toLocaleTimeString('pt-br').substring(5, '');
@@ -20,21 +22,43 @@ function ChatClient() {
   let returnedTime;
 
   useEffect(() => {
-    socket.current.on('message', ({ message, time }) => {
+    socket.current.on('message', ({ message, email, time }) => {
       renderMessage = message;
       returnedTime = time;
       console.log(returnedTime);
       console.log('dentro', socket);
-      setAllMessages((current) => [...current, { renderMessage, returnedTime }]);
+      setAllMessages((current) => [...current, { renderMessage, nickname: email, returnedTime }]);
     });
   }, [renderMessage]);
+
+  useEffect(() => {
+    axios.post('http://localhost:3001/chat/findOne', { nickname: email })
+      .then(({ data }) => {
+        if (data) {
+          setOldMessages(data);
+        }
+      });
+  },[]);
+
+  useEffect(() => {
+    if (oldMessages) {
+      const history = [];
+      oldMessages.history.map((e) => {
+        renderMessage = e.chatMessage;
+        returnedTime = e.timestamp;
+        history.push({ renderMessage, nickname: e.nickname, returnedTime });
+      });
+      console.log('Histórico: ', history);
+      setAllMessages((current) => [...current, ...history]);
+    }
+  },[oldMessages]);
 
   return (
     <div>
       <MenuTop />
-      {allMessages.map(({ renderMessage, returnedTime }) => (
+      {allMessages.map(({ renderMessage, nickname, returnedTime }) => (
         <div>
-          <p data-testid="nickname">{email}</p>
+          <p data-testid="nickname">{nickname}</p>
           <p data-testid="message-time">{returnedTime}</p>
           <p data-testid="text-message">
             {' '}

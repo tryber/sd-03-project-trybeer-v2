@@ -48,12 +48,12 @@ io.on('connect', (socket) => {
   console.log(`Socket ${socket.id}`);
 
   socket.on('message', ({ message, email, time }) => {
-    io.emit('message', { message, time });
+    io.emit('message', { message, email, time });
     saveMessage(message, email, time);
   });
   socket.on('adminMessage', ({ message, email, time, adminNick }) => {
     console.log('Recebi do Admin: ', { message, email, time, adminNick });
-    io.emit('message', { message, time });
+    io.emit('message', { message, email, time, adminNick });
     saveAdminMessage(message, email, time, adminNick);
   });
 });
