@@ -1,13 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import MenuTop from './MenuTop';
+import axios from 'axios';
 
 const { io } = window;
 
 function ChatClient() {
   const [message, setMessage] = useState('');
   const [allMessages, setAllMessages] = useState([]);
+  const [oldMessages, setOldMessages] = useState();
 
-  const { email } = JSON.parse(localStorage.getItem('user')) || [];
+  const { email: userEmail } = JSON.parse(localStorage.getItem('user')) || [];
   const time = new Date().toLocaleTimeString('pt-br').substring(5, '');
 
   const socket = useRef();
@@ -20,21 +22,44 @@ function ChatClient() {
   let returnedTime;
 
   useEffect(() => {
-    socket.current.on('message', ({ message, time }) => {
-      renderMessage = message;
-      returnedTime = time;
-      console.log(returnedTime);
-      console.log('dentro', socket);
-      setAllMessages((current) => [...current, { renderMessage, returnedTime }]);
+    socket.current.on('message', ({ message, email, time, adminNick }) => {
+      if (email === userEmail || adminNick) {
+        renderMessage = message;
+        returnedTime = time;
+        console.log(returnedTime);
+        console.log('dentro', socket);
+        setAllMessages((current) => [...current, { renderMessage, nickname: (adminNick || email), returnedTime }]);
+      }
     });
   }, [renderMessage]);
+
+  useEffect(() => {
+    axios.post('http://localhost:3001/chat/findOne', { nickname: userEmail })
+      .then(({ data }) => {
+        if (data) {
+          setOldMessages(data);
+        }
+      });
+  },[]);
+
+  useEffect(() => {
+    if (oldMessages) {
+      const history = [];
+      oldMessages.history.map((e) => {
+        renderMessage = e.chatMessage;
+        returnedTime = e.timestamp;
+        history.push({ renderMessage, nickname: e.nickname, returnedTime });
+      });
+      setAllMessages((current) => [...current, ...history]);
+    }
+  },[oldMessages]);
 
   return (
     <div>
       <MenuTop />
-      {allMessages.map(({ renderMessage, returnedTime }) => (
+      {allMessages.map(({ renderMessage, nickname, returnedTime }) => (
         <div>
-          <p data-testid="nickname">{email}</p>
+          <p data-testid="nickname">{nickname}</p>
           <p data-testid="message-time">{returnedTime}</p>
           <p data-testid="text-message">
             {' '}
@@ -45,7 +70,7 @@ function ChatClient() {
       ))}
       <input data-testid="message-input" onChange={(e) => setMessage(e.target.value)} value={message} />
       <button
-        onClick={() => socket.current.emit('message', { message, email, time })}
+        onClick={() => socket.current.emit('message', { message, email: userEmail, time })}
         data-testid="send-message"
       >
         &gt;
