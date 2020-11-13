@@ -1,6 +1,8 @@
 const mongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
 
+// usando mongodb
+
 let schema = null;
 
 const connection = async () => {
