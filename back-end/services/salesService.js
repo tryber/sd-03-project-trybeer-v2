@@ -1,16 +1,33 @@
 const { sales, salesProducts, products } = require('../models');
 
 const getAll = async () => {
-  const [results] = await sales.findAll();
+  const results = await sales.findAll();
+  // console.log(results);
   if (!results) {
     return { error: 'no_sales' };
   }
-  return results;
+  const serializeOrders = results.map(
+    ({
+      total_price: total,
+      id: saleId,
+      delivery_number: number,
+      delivery_address: address,
+      status,
+      productKey,
+    }) => ({
+      total,
+      saleId,
+      number,
+      address,
+      status,
+      salesProducts: productKey,
+    }),
+  );
+  return serializeOrders;
 };
 
 const updateSale = async (id, status) => {
-  const [update] = await sales.update({ where: { id } }, { status });
-  return update;
+  await sales.update({ status }, { where: { id } });
 };
 
 const getSaleById = async (id) => {
@@ -21,14 +38,32 @@ const getSaleById = async (id) => {
       as: 'products',
     },
   });
-  console.log(sale);
+
   if (!sale) {
     return { error: 'no_sales' };
   }
-  // const saleProducts = await sales.findByPk(id);
-  // const fullSale = sale;
 
-  return sale;
+  const serializeSale = {
+    total: sale.total_price,
+    saleId: sale.id,
+    number: sale.delivery_number,
+    address: sale.delivery_address,
+    status: sale.status,
+    saleProducts: sale.products.map(
+      ({
+        salesProducts: saleProduct,
+        id: soldProductId,
+        name: productName,
+        price: productPrice,
+      }) => ({
+        soldProductId,
+        productName,
+        productPrice,
+        soldQuantity: saleProduct.quantity,
+      }),
+    ),
+  };
+  return serializeSale;
 };
 
 function cartTotal(cart) {
@@ -50,9 +85,8 @@ const finishSale = async (user, order) => {
         .replace('T', ' '),
       status: 'Pendente',
     });
-
     const saleId = result.dataValues.id;
-    console.log(result.dataValues);
+
     if (saleId) {
       const serializeCart = cart.map(
         ({ id, quantity }) => ({
@@ -61,11 +95,8 @@ const finishSale = async (user, order) => {
           quantity,
         }),
       );
-      console.log('serializeCart:', serializeCart);
 
-      const test = await salesProducts.bulkCreate(serializeCart).catch((e) => console.log(e));
-      console.log('não parei de rodar');
-      console.log(test);
+      await salesProducts.bulkCreate(serializeCart).catch((e) => console.log(e));
     }
   } catch (e) {
     console.log(e);

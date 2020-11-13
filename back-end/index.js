@@ -49,12 +49,12 @@ app.use('/chat', validateToken, (_req, res) => {
 io.on('connection', async (socket) => {
   socket.on('message', ({ message, user, to }) => {
     console.log(message);
-    const time = new Date().toLocaleTimeString();
+    const dateTime = new Date().toLocaleTimeString();
     const newMessage = {
       from: '',
       to: '',
       text: message,
-      time,
+      time: dateTime,
     };
     if (user.role === 'administrator') {
       newMessage.from = 'Loja';

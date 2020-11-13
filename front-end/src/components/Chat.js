@@ -9,21 +9,26 @@ import { ContextAplication } from '../context/ContextAplication';
 const io = require('socket.io-client');
 
 const socket = io('http://localhost:3001', { transports: ['websocket'] });
+const user = JSON.parse(localStorage.getItem('user')) || null;
 
 const connectWithBack = async () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
-  const response = await axios.get('http://localhost:3001/chat', { headers: { authorization: token } });
+  const response = await axios.get('http://localhost:3001/chat', {
+    headers: { authorization: token },
+  });
   return response;
 };
 
 function ClientChat() {
-  const {
-    userChat,
-  } = useContext(ContextAplication);
+  const { userChat } = useContext(ContextAplication);
   const [chat, setChat] = useState([]);
-  const user = JSON.parse(localStorage.getItem('user')) || null;
+  const localUser = JSON.parse(localStorage.getItem('user'));
 
-  socket.emit('history', user);
+  const emitHistory = () => (localUser.role === 'administrator'
+    ? socket.emit('history', { email: userChat })
+    : socket.emit('history', user));
+
+  useEffect(emitHistory, []);
 
   socket.on('message', ({ newMessage }) => {
     const { from, time, text } = newMessage;
@@ -59,25 +64,31 @@ function ClientChat() {
 
   return (
     <div>
-      { user === null && <Redirect to="/login" />}
+      {user === null && <Redirect to="/login" />}
       {user.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
       <p id="hidden-text">b</p>
-      {user.role === 'administrator'
-        && <Link to="/admin/chats">Voltar</Link>}
+      {user.role === 'administrator' && (
+        <Link to="/admin/chats">
+          <button data-testid="back-button" type="button">
+            Voltar
+          </button>
+        </Link>)}
       <div className="chat-div">
-        {chat.length && chat.map((item) => (
-          <div key={ item.time }>
-            <p data-testid="nickname">{item.from}</p>
-            <p data-testid="message-time">{item.time}</p>
-            <p data-testid="text-message">{item.text}</p>
-          </div>))}
+        {chat.length
+          && chat.map((item) => (
+            <div key={ item.time }>
+              <p data-testid="nickname">{item.from}</p>
+              <p data-testid="message-time">{item.time}</p>
+              <p data-testid="text-message">{item.text}</p>
+            </div>
+          ))}
       </div>
       <input
         id="message-input"
-        data-testid={ user.role === 'administrator' ? 'chat-message' : 'message-input' }
+        data-testid="message-input"
       />
       <button
-        data-testid={ user.role === 'administrator' ? 'send-message-btn' : 'send-message' }
+        data-testid="send-message"
         type="button"
         onClick={ () => displayMessage() }
       >

@@ -1,11 +1,11 @@
-const mongodb = require('mongodb').MongoClient;
+const mongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
 
 let schema = null;
 
 const connection = () => {
   if (schema) return Promise.resolve(schema);
-  return mongodb
+  return mongoClient
     .connect(process.env.DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -20,5 +20,4 @@ const connection = () => {
       process.exit(1);
     });
 };
-
 module.exports = connection;
