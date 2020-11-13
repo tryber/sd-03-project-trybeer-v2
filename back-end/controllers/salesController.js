@@ -71,6 +71,7 @@ sales.route('/register').post(validateSchema(schemas.registrySalesSchema), async
 
     return res.status(200).json({ saleInfo: { ...registerSales } });
   } catch (error) {
+    console.log('error salesControler', error);
     return next(error);
   }
 });

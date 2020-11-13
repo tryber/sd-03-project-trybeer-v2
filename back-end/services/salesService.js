@@ -9,12 +9,12 @@ const registerSales = async (
 ) => {
   try {
     // registra evento de venda
-    const registrySales = await salesModel.addSale(
-      userId,
-      totalPrice,
-      deliveryAddress,
-      deliveryNumber,
-    );
+    const registrySales = await sales.create({
+      user_id: userId,
+      total_price: totalPrice,
+      delivery_address: deliveryAddress,
+      delivery_number: deliveryNumber,
+    });
 
     // registro dos produtos por evento de venda
     const registryProductsBySale = await Promise.all(

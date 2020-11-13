@@ -66,10 +66,8 @@ const schemas = {
         .max(1000000)
         .required(),
       name: Joi.string(),
-      price: Joi.number().greater(0)
-        .precision(2)
-        .required(),
-      urlImage: Joi.string(),
+      price: Joi.string().required(),
+      url_image: Joi.string(),
       quantity: Joi.number().min(1)
         .max(1000000)
         .required(),
