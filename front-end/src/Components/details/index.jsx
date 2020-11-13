@@ -31,6 +31,7 @@ const Details = ({
       { role === 'administrator'
         ? <h2 className={ status } data-testid="order-status">{status}</h2>
         : <>
+          <h2 className={ status } data-testid="order-status">{status}</h2>
           <h2 className={ status } data-testid="top-title">Detalhes do pedido</h2>
           <br />
           <h2 className={ status } data-testid="order-date">{handleDate(data)}</h2>
