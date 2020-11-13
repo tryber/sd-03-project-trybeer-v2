@@ -2,6 +2,12 @@ module.exports = (sequelize, DataTypes) => {
   const SaleObject = sequelize.define(
     'sales',
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       user_id: {
         type: DataTypes.INTEGER,
       },
@@ -15,8 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       sale_date: {
+        allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: new Date(),
+        defaultValue: DataTypes.NOW,
       },
       status: {
         type: DataTypes.STRING,
