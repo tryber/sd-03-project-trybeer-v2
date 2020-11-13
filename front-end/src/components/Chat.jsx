@@ -9,21 +9,9 @@ function Chat() {
   const [adminMessages, setAdminMessages] = useState([]);
   const [response, setResponse] = useState();
   const [nickname, setNickname] = useState();
-  const [updatePage, setUpdatePage] = useState(false);
   const time = new Date().toLocaleTimeString('pt-br').substring(5, '');
   const socket = useRef();
   const receivedeMessage = [];
-
-  useEffect(() => {
-    socket.current = io('http://localhost:3001');
-  },[]);
-
-  useEffect(() => {
-    socket.current.on('message', ({ message, email, time, adminNick }) => {
-      receivedeMessage.push({ message, email, time, adminNick });
-      setAdminMessages(receivedeMessage);
-    });
-  },[]);
 
   useEffect(() => {
     const user = localStorage.getItem('nickname');
@@ -36,6 +24,19 @@ function Chat() {
       .then(({ data }) => setMessages(data));
     }
   }, [nickname]);
+
+  useEffect(() => {
+    socket.current = io('http://localhost:3001');
+  },[]);
+
+  useEffect(() => {
+    socket.current.on('message', ({ message, email, time, adminNick }) => {
+      if (email === nickname || adminNick) {
+        receivedeMessage.push({ message, email, time, adminNick });
+        setAdminMessages(receivedeMessage);
+      }
+    });
+  },[]);
 
   if (messages) {
     return (
