@@ -12,7 +12,6 @@ module.exports = async (token, isNecessary = true) => {
 
     return DBUser;
   } catch (err) {
-    console.log(err);
     return { error: true, message: 'autenticacao invalido' };
   }
 };
