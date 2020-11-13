@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { TopMenu } from '../../Components';
+import { useLocation } from 'react-router-dom';
 import Messages from './innerPage/messages';
 import './styles.css';
+
+const generatePass = (email) => {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
+  if (role !== 'administrator') return { token, dest: 'Loja ' };
+  return { token, dest: { email } };
+};
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const socket = useSelector(state => state.socketReducer.socket);
+  const { state } = useLocation();
   const token = localStorage.getItem('token');
-  
+
   useEffect(() => {
     if (socket) {
-      socket.emit('enterRoom', { token, dest: 'loja' });
+      socket.emit('enterRoom', generatePass(state));
       socket.on('lastMessages', (messages) => setMessages(messages));
       socket.on('message', (message) => setMessages((m) => [...m, message]));
     }
@@ -30,7 +39,7 @@ const Chat = () => {
         <div className="inputButton">
           <input
             type="text"
-            onChange={({target: { value }}) => setMessage(value)}
+            onChange={({ target: { value } }) => setMessage(value)}
             data-testid="message-input"
             placeholder="Digite..."
           />

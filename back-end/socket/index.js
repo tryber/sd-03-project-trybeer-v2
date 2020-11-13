@@ -1,40 +1,15 @@
 const socketIo = require('socket.io');
-const { roomServices, usersServices, authServices } = require('../services');
+const { onEnterRoom, onMessage, onDisconnect, auth } = require('./chat');
 
 const onConnection = (socket, io) => {
-  // socket.on('Status-id', (id) => findOrder(id, io));
-  socket.on('enterRoom', async ({ token, dest }) => {
-    const user = await authServices(token);
-    const room = await roomServices.getRoomByUsers({ email: user.email }, dest);
-    if (!room) {
-      const newRoom = await roomServices.createRoom(user, dest);
-      usersServices.saveUserSocket(socket.id, newRoom, { email: user.email });
-      return socket.join(newRoom);
-    }
-    usersServices.saveUserSocket(socket.id, room.id, { email: user.email });
-    socket.join(room.id);
-    const { messages = [] } = await roomServices.getRoomById(room.id) || {};
-    return socket.emit('lastMessages', messages);
-  });
-
-  socket.on('message', async ({ token, message }) => {
-    const user = await authServices(token);
-    const time = roomServices.getTime();
-    const { room } = await usersServices.findUserSocket({ email: user.email });
-    await roomServices.saveMessage(room, user, message, time);
-    return io.to(room).emit('message', { email: user.email, message, time });
-  });
-  // const findOrder = async (id, io) => {
-  //   const order = await salesServices.getSale(id)
-  //   return io.emit('Status', order);
-  // };
-  socket.on('disconnect', () => {
-    usersServices.deleteUserSocket(socket.id);
-  });
+  socket.on('enterRoom', onEnterRoom(socket));
+  socket.on('message', onMessage(socket, io));
+  socket.on('disconnect', onDisconnect(socket));
 };
 
 module.exports = (httpServer) => {
   const io = socketIo(httpServer, { origins: '*:*' });
+  // io.use(auth);
   io.on('connection', (socket) => onConnection(socket, io));
   return { io };
 };

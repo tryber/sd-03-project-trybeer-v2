@@ -7,13 +7,16 @@ const getTime = () => {
 
 const saveMessage = async (room, user, message, time) => Rooms.saveMessage(room, user, message, time);
 
-const createRoom = async (user1, user2) => {
-  const room = await Rooms.createRoom(user1, user2);
+const createRoom = async ({ email, role }, user2) => {
+  const user = role === 'administrator' ? 'Loja' : { role, email };
+  const room = await Rooms.createRoom(user, user2);
   return room.insertedId.toString();
 };
 
-const getRoomByUsers = async (user1, user2) => {
-  const room = await Rooms.getUsersRoom(user1, user2);
+const getRoomByUsers = async (user, user2) => {
+  const room = await Rooms.getUsersRoom({
+    email: role !== 'administrator' ? user.email : user2.email,
+  });
   if (!room) return null;
   const { _id: id, ...roomCleaned } = room;
   return { ...roomCleaned, id: id.toString() };

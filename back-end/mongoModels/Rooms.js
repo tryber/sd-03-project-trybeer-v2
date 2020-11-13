@@ -18,7 +18,7 @@ const getRoomById = async (id) => connectTo('rooms')
 
 
 const getAllRooms = async () => connectTo('rooms')
-    .then((coll) => coll.find().toArray());
+  .then((coll) => coll.find().toArray());
 
 module.exports = {
   saveMessage,
