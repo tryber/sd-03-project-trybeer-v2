@@ -17,8 +17,14 @@ const savePrivateMessage = async (id1, id2, messageObj) => {
   return savedMessage;
 };
 
+const findAllMessages = async () => {
+  const messages = await messagesModel.findAllMessages();
+  return messages;
+};
+
 module.exports = {
   getPrivateMessages,
   createPrivateChatRoomAndSaveMessage,
   savePrivateMessage,
+  findAllMessages,
 };

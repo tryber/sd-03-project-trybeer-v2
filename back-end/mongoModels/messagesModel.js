@@ -59,8 +59,15 @@ const savePrivateMessage = async (id1, id2, messageObj) => {
   return saveMessage.value;
 };
 
+const findAllMessages = async () => {
+  const db = await connection();
+  const saveMessage = await db.collection('messages').find({}).toArray();
+  return saveMessage;
+};
+
 module.exports = {
   getPrivateMessages,
   savePrivateMessage,
   createPrivateChatRoomAndSaveMessage,
+  findAllMessages,
 };

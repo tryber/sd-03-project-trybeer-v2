@@ -17,6 +17,11 @@ function AdminMenuSideBar() {
               Perfil
             </a>
           </li>
+          <li className="nav-item" data-testid="side-menu-item-chat">
+            <a className="nav-link active" href="/admin/chats">
+              Conversas
+            </a>
+          </li>
           <li className="nav-item" data-testid="side-menu-item-logout">
             <a className="nav-link active" href="/login">
               Sair

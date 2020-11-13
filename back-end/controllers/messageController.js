@@ -28,7 +28,13 @@ const savePrivateMessage = async (id1, id2, chatMessage) => {
     { chatMessage, timestamp: formattedDate, from: id1 });
 };
 
+const findAllMessages = async () => {
+  const messages = await messagesService.findAllMessages();
+  return messages;
+};
+
 module.exports = {
   getPrivateMessages,
   savePrivateMessage,
+  findAllMessages,
 };

@@ -62,6 +62,11 @@ const getPrivateMessages = (socket) => async ({ id }) => {
   socket.emit('private-history', privateMessages);
 };
 
+const findAllMessages = (socket) => async () => {
+  const messages = await messageController.findAllMessages();
+  socket.emit('store-history', messages);
+};
+
 const io = socketIo(server);
 
 io.on('connect', (socket) => {
@@ -70,4 +75,5 @@ io.on('connect', (socket) => {
   socket.on('disconnect', () => socket.broadcast.emit('user-left', { username: socket.username }));
   socket.on('private', handlePrivateMessage(io, socket));
   socket.on('private-history', getPrivateMessages(socket));
+  socket.on('store-history', findAllMessages(socket));
 });
