@@ -11,7 +11,8 @@ import OrderDetailsScreen from './components/OrderDetails';
 import AplicationProvider from './context/ContextAplication';
 import AdminOrders from './components/AdminOrders';
 import AdminDetails from './components/AdminDetails';
-import ClientChat from './components/ClientChat';
+import Chat from './components/Chat';
+import AdminChats from './components/AdminChats';
 
 function App() {
   return (
@@ -25,10 +26,12 @@ function App() {
         <Route exact path="/orders/:id" component={ OrderDetailsScreen } />
         <Route exact path="/orders" component={ OrdersScreen } />
         <Route exact path="/checkout" component={ CheckoutScreen } />
+        <Route exact path="/chat" component={ Chat } />
         <Route exact path="/admin/orders" component={ AdminOrders } />
         <Route exact path="/admin/profile" component={ ProfileScreen } />
         <Route exact path="/admin/orders/:id" component={ AdminDetails } />
-        <Route exact path="/chat" component={ ClientChat } />
+{/*         <Route exact path="/admin/chat" component={ Chat } />
+ */}        <Route exact path="/admin/chats" component={ AdminChats } />
       </Switch>
     </AplicationProvider>
   );

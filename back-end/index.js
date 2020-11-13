@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const moment = require('moment');
 
 const app = express();
 const httpServer = require('http').createServer(app);
@@ -18,7 +17,7 @@ const userController = getUserController(userService);
 const routers = require('./routers/index');
 const { errorHandler } = require('./middlewares');
 
-const { insert } = require('./mongoModel/messageModel');
+const { getHistory, insert } = require('./mongoModel/messageModel');
 
 app.use(cors());
 app.io = io;
@@ -48,12 +47,32 @@ app.use('/chat', validateToken, (_req, res) => {
 });
 
 io.on('connection', async (socket) => {
-  socket.on('message', ({ message, user }) => {
-    const dateTime = new Date();
-    const time = moment(dateTime).format('hh:mm:ss');
-    io.emit('message', { message, user, time });
+  socket.on('message', ({ message, user, to }) => {
+    console.log(message);
+    const dateTime = new Date().toLocaleTimeString();
+    const newMessage = {
+      from: '',
+      to: '',
+      text: message,
+      time: dateTime,
+    };
+    if (user.role === 'administrator') {
+      newMessage.from = 'Loja';
+      newMessage.to = to;
+      insert(newMessage, to);
+    } else {
+      newMessage.from = user.email;
+      newMessage.to = to;
+      insert(newMessage, user.email);
+    }
+    io.emit('message', { newMessage });
+  });
 
-    return insert(message, user, time);
+  socket.on('history', async ({ email }) => {
+    console.log(email)
+    const previousMessages = await getHistory(email);
+    console.log(previousMessages)
+    if (previousMessages !== null) socket.emit('history', previousMessages.messages);
   });
 });
 

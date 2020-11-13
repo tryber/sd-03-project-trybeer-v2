@@ -5,7 +5,7 @@ const insert = async (message, email) => {
   const chat = await db.collection('messages').findOne({ email });
 
   if (!chat) {
-    await db.collection('messages').insertOne({
+    return db.collection('messages').insertOne({
       email,
       messages: [message],
     });
@@ -13,11 +13,9 @@ const insert = async (message, email) => {
 
   await db.collection('messages').updateOne(
     { email },
-    {
-      $push: {
-        messages: message,
-      },
-    },
+    { $push: {
+      messages: message,
+    } },
   );
 };
 
@@ -25,4 +23,8 @@ const getHistory = async (email) => connect().then(
   (db) => db.collection('messages').findOne({ email }),
 );
 
-module.exports = { getHistory, insert };
+const getAll = async () => connect().then(
+  (db) => db.collection('messages').find().toArray(),
+);
+
+module.exports = { getHistory, insert, getAll };
