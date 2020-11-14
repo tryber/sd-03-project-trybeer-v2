@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import AdminSideBar from '../AdminSideBar/index';
 import './styles.css';
 
@@ -54,15 +54,19 @@ const AdminChat = () => {
       <AdminSideBar />
       <section className="admin-chats-aside">
         <h1>{`Conversa com ${clientEmail}`}</h1>
-        {chatHistory.map(({ timeStamp, text, isClientMsg }) => (
-          <article key={ text } className={ isClientMsg ? 'msg-customer' : 'msg-admin' }>
-            <div id="userName" data-testid="nickname">
-              { isClientMsg ? clientEmail : 'Loja' }
-            </div>
-            <div id="hours" data-testid="message-time">{timeStamp}</div>
-            <div id="message-text" data-testid="text-message">{text}</div>
-          </article>
-        ))}
+        {
+        !chatHistory
+          ? 'Nenhuma conversa por aqui'
+          : chatHistory.map(({ timeStamp, text, isClientMsg }) => (
+            <article key={ text } className={ isClientMsg ? 'msg-customer' : 'msg-admin' }>
+              <div data-testid="nickname">
+                { isClientMsg ? clientEmail : 'Loja' }
+              </div>
+              <div data-testid="message-time">{timeStamp}</div>
+              <div data-testid="text-message">{text}</div>
+            </article>
+          ))
+}
         <form>
           <input
             data-testid="chat-message"
@@ -71,12 +75,13 @@ const AdminChat = () => {
           />
           <button
             type="submit"
-            data-testid="send-message"
+            data-testid="send-message-btn"
             onClick={ submitMessage }
           >
             Enviar
           </button>
         </form>
+        <Link data-testid="back-button" to="/admin/chats/">Voltar</Link>
       </section>
     </div>
   );

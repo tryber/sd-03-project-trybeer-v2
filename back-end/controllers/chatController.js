@@ -1,4 +1,3 @@
-// const moment = require('moment');
 const chatModel = require('../mongoModels/chats');
 
 const getAllConvos = async (_req, res) => {
