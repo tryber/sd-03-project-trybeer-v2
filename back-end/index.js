@@ -77,8 +77,6 @@ const findAllMessages = (socket) => async () => {
 const io = socketIo(server);
 
 io.on('connect', (socket) => {
-  console.log(`Socket ${socket.id} connected`);
-
   socket.on('disconnect', () => socket.broadcast.emit('user-left', { username: socket.username }));
   socket.on('private', handlePrivateMessage(io, socket));
   socket.on('private-history', getPrivateMessages(socket));

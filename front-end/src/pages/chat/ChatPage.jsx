@@ -47,36 +47,38 @@ function ChatPage() {
       <MenuTop />
       <div className="container">
         <Sidebar />
-        <div className="chat-content">
-          {messages.map(({ chatMessage, from, timestamp }, index) => (
-            <div
-              className={from === 'Loja' ? 'left' : 'right'}
-              key={`${index}`}
+        <div id="wrapper">
+          <div className="chat-content">
+            {messages.map(({ chatMessage, from, timestamp }, index) => (
+              <div
+                className={from === 'Loja' ? 'left' : 'right'}
+                key={`${index}`}
+              >
+                <span data-testid="nickname">{from}</span> -
+                <span data-testid="message-time">{timestamp}</span> <br />
+                <span data-testid="text-message">{chatMessage}</span>
+              </div>
+            ))}
+          </div>
+          <div className="message-form">
+            <input
+              className="form-control"
+              type="text"
+              data-testid="message-input"
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              id="message-box"
+            />
+            <button
+              onClick={(e) => handleSendMessage(e)}
+              className="btn btn-success btn-custom"
+              type="submit"
+              id="send-button"
+              data-testid="send-message"
             >
-              <span data-testid="nickname">{from}</span> -
-              <span data-testid="message-time">{timestamp}</span> <br />
-              <span data-testid="text-message">{chatMessage}</span>
-            </div>
-          ))}
-        </div>
-        <div className="message-form">
-          <input
-            className="form-control"
-            type="text"
-            data-testid="message-input"
-            value={messageInput}
-            onChange={(e) => setMessageInput(e.target.value)}
-            id="message-box"
-          />
-          <button
-            onClick={(e) => handleSendMessage(e)}
-            className="btn btn-success btn-custom"
-            type="submit"
-            id="send-button"
-            data-testid="send-message"
-          >
-            Enviar
-          </button>
+              Enviar
+            </button>
+          </div>
         </div>
       </div>
     </div>

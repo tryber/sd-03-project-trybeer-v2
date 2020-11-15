@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import AdminSideBar from '../../components/adminMenuSideBar/AdminMenuSideBar';
+import './Chat.css';
 
 const io = window.io;
 
@@ -21,8 +22,6 @@ function AdminChatPage() {
       });
     }
   }, [socket]);
-
-  console.log(chats);
 
   const chatWithNickAndTime = chats.map((e) => {
     const time = e.messagesArray.map((el) => el.timestamp);
@@ -56,12 +55,22 @@ function AdminChatPage() {
                 data-testid="containerChat"
                 onClick={() => onCardChatClick(nickname)}
               >
-                <p style={{ color: '#000' }} data-testid="profile-name">
-                  {nickname}
-                </p>
-                <p style={{ color: '#000' }} data-testid="last-message">
-                  {time}
-                </p>
+                <div className="card-body">
+                  <h5
+                    style={{ color: '#000' }}
+                    data-testid="profile-name"
+                    className="card-title"
+                  >
+                    {nickname}
+                  </h5>
+                  <p
+                    style={{ color: '#000' }}
+                    data-testid="last-message"
+                    className="card-text"
+                  >
+                    {`Última mensagem às ${time}`}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

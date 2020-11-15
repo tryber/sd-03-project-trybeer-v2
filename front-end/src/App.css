@@ -104,6 +104,8 @@
 
 .btn-custom:hover {
   color: white;
+  border-color: #963438;
+  background-color: #963438;
 }
 
 /* Forms */
@@ -117,4 +119,6 @@
 
 .form-button:hover {
   color: white;
+  border-color: #963438;
+  background-color: #963438;
 }
