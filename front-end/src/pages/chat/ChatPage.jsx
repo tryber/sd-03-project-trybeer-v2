@@ -71,7 +71,7 @@ function ChatPage() {
             />
             <button
               onClick={(e) => handleSendMessage(e)}
-              className="btn btn-success btn-custom"
+              className="btn btn-send"
               type="submit"
               id="send-button"
               data-testid="send-message"

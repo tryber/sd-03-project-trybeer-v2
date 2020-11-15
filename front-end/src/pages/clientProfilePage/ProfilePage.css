@@ -2,8 +2,11 @@
   margin-top: 1rem;
 }
 
-#profile-page {
-  margin-top: 6rem;
-  padding: 2rem;
+.profile-page {
+  margin: 6rem 2rem 0;
   text-align: center;
+}
+
+.profile-label {
+  width: 100%;
 }

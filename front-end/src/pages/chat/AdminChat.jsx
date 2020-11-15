@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AdminSideBar from '../../components/adminMenuSideBar/AdminMenuSideBar';
+import seta from './reply.svg';
 import './Chat.css';
 
 const io = window.io;
@@ -46,8 +47,9 @@ function AdminChat() {
     <div className="d-flex">
       <AdminSideBar />
       <div className="container">
-        <Link to="/admin/chats" data-testid="back-button">
-          VOLTAR
+        <Link className="link-voltar" to="/admin/chats" data-testid="back-button">
+          <img className="seta" src={seta} alt="seta" />
+          {`Conversando com ${nickname}`}
         </Link>
         <div className="chat-content-admin">
           {messages.map(({ chatMessage, from, timestamp }, index) => (
@@ -72,7 +74,7 @@ function AdminChat() {
           />
           <button
             onClick={(e) => handleSendMessage(e)}
-            className="btn btn-success btn-custom"
+            className="btn btn-send"
             type="submit"
             id="send-button"
             data-testid="send-message"

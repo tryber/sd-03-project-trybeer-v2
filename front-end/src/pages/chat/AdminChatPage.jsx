@@ -29,7 +29,7 @@ function AdminChatPage() {
     return { nickname: e.id1, time: last };
   });
 
-  chatWithNickAndTime.sort((a, b) => (a.time > b.time ? 1 : -1));
+  chatWithNickAndTime.sort((a, b) => (a.time > b.time ? -1 : 1));
 
   const onCardChatClick = (nickname) => {
     localStorage.setItem('nickname', nickname);
@@ -43,14 +43,14 @@ function AdminChatPage() {
       <AdminSideBar />
       <div className="container">
         {chats.length === 0 ? (
-          <p data-testid="text-for-no-conversation">
+          <h1 className="message text-center" data-testid="text-for-no-conversation">
             Nenhuma conversa por aqui
-          </p>
+          </h1>
         ) : (
           <div>
             {chatWithNickAndTime.map(({ nickname, time }) => (
               <div
-                className="card"
+                className="card chats-list"
                 key={nickname}
                 data-testid="containerChat"
                 onClick={() => onCardChatClick(nickname)}
