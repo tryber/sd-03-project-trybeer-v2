@@ -15,7 +15,7 @@ function ChatPage() {
     const { email } = JSON.parse(window.localStorage.getItem('user'));
     setUserEmail(email);
     socket.current = io('http://localhost:3001');
-    socket.current.emit('private-history', { id: email });
+    socket.current.emit('private-history', { id: email, storeId: 'Loja' });
   }, []);
 
   useEffect(() => {
