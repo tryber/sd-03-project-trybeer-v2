@@ -32,11 +32,11 @@ const ProfilePage = () => {
     <div>
       <MenuTop pageTitle="Meu perfil" datatest="top-title" />
       <Sidebar />
-      <div id="wrapper" id="profile-page">
+      <div id="wrapper" className="profile-page">
         <form>
           <fieldset aria-label="Disabled fieldset example">
             <div className="mb-3">
-              <label htmlFor="name" className="form-label">
+              <label htmlFor="name" className="form-label profile-label">
                 Nome:
                 <input
                   data-testid="profile-name-input"
@@ -50,7 +50,7 @@ const ProfilePage = () => {
               </label>
             </div>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label">
+              <label htmlFor="email" className="form-label profile-label">
                 Email:
                 <input
                   data-testid="profile-email-input"

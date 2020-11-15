@@ -64,7 +64,6 @@ function ProductCard({ product, index, getTotalPrice }) {
 
   return (
     <div className="card product-card" style={ { background: '#FCE694', border: 'none' } }>
-      {console.log(urlImage)}
       <img
         className="card-img-top img-card"
         data-testid={ `${index}-product-img` }

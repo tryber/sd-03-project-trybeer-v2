@@ -39,6 +39,15 @@ function Sidebar() {
           <li className="nav-item">
             <a
               className="nav-link"
+              data-testid="side-menu-chat"
+              href="/chat"
+            >
+              Conversar com a loja
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              className="nav-link"
               data-testid="side-menu-item-logout"
               href="/login"
             >
