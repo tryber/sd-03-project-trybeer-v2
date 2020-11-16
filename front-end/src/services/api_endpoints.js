@@ -81,8 +81,7 @@ export const getChatsList = async (token) => {
       authorization: token,
     },
   })
-    .then((result) => result.data)
-    .catch((e) => console.log('Error fetching message logs', e));
+    .then((result) => result.data);
   return convos;
 };
 

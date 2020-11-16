@@ -15,7 +15,7 @@ const AdminOrdersPage = () => {
     setTimeout(() => {
       fetchOrders()
         .then((orders) => setProductList(orders));
-    }, seconds)
+    }, seconds);
   }, [token]);
 
   return (
