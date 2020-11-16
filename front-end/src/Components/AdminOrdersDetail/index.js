@@ -14,6 +14,7 @@ const AdminOrdersDetail = () => {
   const [disableButton, setDisableButton] = useState('');
   const { id: saleId, total_price: total } = saleInfo;
   const { id } = useParams();
+  const zero = 0;
   const orderStatus = [
     { name: 'Preparar pedido', status: 'Preparando', testId: 'mark-as-prepared-btn' },
     { name: 'Marcar como entregue', status: 'Entregue', testId: 'mark-as-delivered-btn' },
@@ -83,7 +84,7 @@ const AdminOrdersDetail = () => {
             {`Total: R$ ${realFormat(total)}`}
           </h2>
         </div>
-        {orderStatus.map(({ name, status, testId }) => (
+        {saleItems.length > zero && orderStatus.map(({ name, status, testId }) => (
           <button
             data-testid={ testId }
             type="button"

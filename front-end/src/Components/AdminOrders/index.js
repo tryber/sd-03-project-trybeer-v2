@@ -8,12 +8,14 @@ import './styles.css';
 const AdminOrdersPage = () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
   const [productList, setProductList] = useState([]);
+  const seconds = 500;
 
   useEffect(() => {
     const fetchOrders = async () => await getOrderList(token) || [];
-
-    fetchOrders()
-      .then((orders) => setProductList(orders));
+    setTimeout(() => {
+      fetchOrders()
+        .then((orders) => setProductList(orders));
+    }, seconds);
   }, [token]);
 
   return (
