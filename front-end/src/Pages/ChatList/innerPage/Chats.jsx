@@ -1,12 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Chats = ({ email, lastMessageDate }) => {
+const Chats = ({ messages, users }) => {
+  const user = users.find((u) => u !== 'Loja') || {};
+  const lastMessage = messages.slice(-1)[0];
+  const { email = user.email, time = null } = lastMessage || {};
+
   return (
-    <div data-testid="containerChat">
+    <Link to={{ pathname: "/admin/chat", state: email }} data-testid="containerChat">
       <h3 data-testid="profile-name">{email}</h3>
-      <p data-testid="last-message">{lastMessageDate}</p>
-    </div>
-  )
-}
+      <p data-testid="last-message">Última mensagem às {time}</p>
+    </Link>
+  );
+};
 
 export default Chats;

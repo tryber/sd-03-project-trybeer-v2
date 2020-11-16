@@ -1,14 +1,14 @@
 require('dotenv').config();
-const mongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb');
 
 const { DB_URL, DB_NAME } = process.env;
 
 let schema = null;
 
-module.exports = async () => {
+const connect = async () => {
   if (schema) return Promise.resolve(schema);
 
-  return mongoClient
+  return MongoClient
     .connect(DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -23,3 +23,8 @@ module.exports = async () => {
       process.exit(1);
     });
 };
+
+const connectTo = async (coll) => connect()
+  .then((db) => db.collection(coll));
+
+module.exports = { connect, connectTo };

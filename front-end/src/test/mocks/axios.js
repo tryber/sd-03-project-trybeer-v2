@@ -16,7 +16,7 @@ const get = async (url, { headers: { Authorization, authorization } = {} } = {})
     case createUrl('/products'): return rs({ products });
     // case createUrl('/user'): return rs({ email: 'user@email.com', name: 'Nome Qualquer' });
     case createUrl('/sales/1'): return rs(saleMockData);
-    case createUrl('/sales'): return rs({ sales });
+    case createUrl('/sales'): return rs(sales);
     default: return rj('no url on mock');
   }
 };
@@ -34,7 +34,7 @@ const post = async (url, body, { headers: { Authorization, authorization } = {} 
   return 'post';
 };
 
-const put = async (url, body, { headers: { Authorization, authorization } = {} } = {}) => {
+const put = async (url, _body, { headers: { Authorization, authorization } = {} } = {}) => {
   const token = authorization || Authorization || null;
 
   if (!token) return rj('No token in the put tests');

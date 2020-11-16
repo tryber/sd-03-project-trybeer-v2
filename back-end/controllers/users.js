@@ -54,7 +54,8 @@ const register = rescue(async (req, res, next) => {
 
   if (possibleUser) return next(Boom.conflict('E-mail already in database.'));
 
-  const newUser = await usersServices.createUser({ email, name, password, role });
+  const { password: p, ...newUser } = await usersServices
+    .createUser({ email, name, password, role });
 
   const { token, error } = usersServices.generateToken(newUser);
 

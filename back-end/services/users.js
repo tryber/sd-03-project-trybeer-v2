@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const Models = require('../models');
+const Mongo = require('../mongoModels');
 
 const { SECRET = 'preguicaDeCriarUmSegredo' } = process.env;
 
@@ -62,11 +63,16 @@ const changeUserName = async (name, { id }) => {
   const { dataValues: { password, ...user } } = await Models.users.findByPk(id);
 
   const [updated] = await Models.users.update({ name }, { where: { id } });
-
   if (!updated) return { error: true, message: 'not updated' };
 
   return { ...user, name };
 };
+
+const saveUserSocket = async (socketId, room, user) => Mongo.Users.setUser(socketId, room, user);
+
+const deleteUserSocket = async (socketId) => Mongo.Users.removeUserBySocketId(socketId);
+
+const findUserSocket = async (query) => Mongo.Users.findUser(query);
 
 module.exports = {
   nameSchema,
@@ -76,4 +82,7 @@ module.exports = {
   createUser,
   changeUserName,
   generateToken,
+  saveUserSocket,
+  deleteUserSocket,
+  findUserSocket,
 };

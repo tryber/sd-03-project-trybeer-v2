@@ -59,9 +59,13 @@ const addSale = async (saleObj, sellProducts) => Models.sales
 const getAllSales = async () => Models.sales.findAll();
 
 const formatProduct = ({
-  dataValues: { urlImage, name, id, price, sales_products: { dataValues: { quantity } } },
+  urlImage,
+  name,
+  id,
+  price,
+  sales_products: { dataValues: { quantity } },
 }) => (
-  { urlImage, name, id, price: parseFloat(price), quantity: parseInt(quantity) }
+  { urlImage, name, id, price: parseFloat(price, 10), quantity: parseInt(quantity, 10) }
 );
 
 const getAllUserSales = async (userId) => Models.sales.findAll({ where: { userId } })
@@ -81,7 +85,10 @@ const getSale = async (id) => {
     },
   );
   if (!sale) return { error: true, message: 'Compra não encontrada' };
-  return { ...sale.dataValues, products: sale.dataValues.products.map(formatProduct) };
+  return {
+    ...sale.dataValues,
+    products: sale.dataValues.products.map((p) => formatProduct(p.dataValues)),
+  };
 };
 
 const deliverySale = async (id, status) => {

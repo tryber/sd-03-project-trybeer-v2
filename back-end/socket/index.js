@@ -1,21 +1,15 @@
 const socketIo = require('socket.io');
-
-// const findOrder = async (id, io) => {
-//   const order = await salesServices.getSale(id)
-//   return io.emit('Status', order);
-// };
+const { onEnterRoom, onMessage, onDisconnect } = require('./chat');
 
 const onConnection = (socket, io) => {
-  // socket.on('Status-id', (id) => findOrder(id, io));
-  socket.on('disconnect', () => console.log('kkk'))
+  socket.on('enterRoom', onEnterRoom(socket));
+  socket.on('message', onMessage(socket, io));
+  socket.on('disconnect', onDisconnect(socket));
 };
 
 module.exports = (httpServer) => {
   const io = socketIo(httpServer, { origins: '*:*' });
-
+  // io.use(auth);
   io.on('connection', (socket) => onConnection(socket, io));
-
-  return {
-    io,
-  };
+  return { io };
 };
