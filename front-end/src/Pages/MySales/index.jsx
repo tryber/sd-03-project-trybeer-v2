@@ -16,6 +16,7 @@ const MySales = () => {
   if (loading) return <Loading />;
   if (error) return <h3>{error}</h3>;
 
+  console.log('\u001b[34m', 'info', info, '\u001b[0m');
   return (
     <>
       <TopMenu />

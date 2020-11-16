@@ -10,13 +10,13 @@ const SaleCard = ({ id, date, status, total, index }) => {
   const socket = useSelector(state => state.socketReducer.socket);
 
   useEffect(() => {
-    socket.emit('Status-id', id);
-    socket.on(
+    socket && socket.emit('Status-id', id);
+    socket && socket.on(
       'Status',
-      ({ id:orderId, status }) => Number(orderId) === id ? setStatusOrder(status) : null
+      ({ id: orderId, status }) => Number(orderId) === id ? setStatusOrder(status) : null
     );
   }, []);
-  
+
   return (
     <Link to={`/orders/${id}`} className="sale-card">
       <h3 className="sale-detail" data-testid={`${index}-order-number`}>

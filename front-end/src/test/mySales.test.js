@@ -3,6 +3,7 @@ import axios from 'axios';
 import { fireEvent, waitForDomChange, cleanup } from '@testing-library/react';
 import renderWithRouter from './renderWithRouter';
 import mocks from './mocks';
+import App from '../App';
 import MySales from '../Pages/MySales/index';
 
 const mockGetSales = jest.spyOn(axios, 'get').mockImplementation(mocks.axios.get);
@@ -19,7 +20,10 @@ describe('Testing /orders', () => {
   });
 
   it('testing if elements exists', async () => {
+    localStorage.setItem('token', 'disfhposdnvoásidfhásd');
+    // localStorage.setItem('role', 'administrator');
     const { getByTestId } = renderWithRouter(<MySales />, '/orders');
+
     await waitForDomChange();
 
     const saleContainer = getByTestId('0-order-card-container');
@@ -36,6 +40,8 @@ describe('Testing /orders', () => {
   });
 
   it('testing if redirect to orders details', async () => {
+    localStorage.setItem('token', 'disfhposdnvoásidfhásd');
+    // localStorage.setItem('role', 'administrator');
     const { getByTestId, history } = renderWithRouter(<MySales />, '/orders');
     await waitForDomChange();
 
