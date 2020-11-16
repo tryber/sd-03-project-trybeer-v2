@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import MenuBar from '../MenuBar';
 import { getProductsLocalStorage } from '../../utils/localStorage';
 import { postNewOrd } from '../../services/api_endpoints';
 import './styles.css';
 
 const Checkout = () => {
-  const history = useHistory();
   const user = getProductsLocalStorage('user');
   const [cart, setCart] = useState([]);
   const [newCart, setNewCart] = useState([]);
@@ -14,7 +12,6 @@ const Checkout = () => {
   const [numberAdress, setNumberAdress] = useState('');
   const [message, setMessage] = useState(null);
   const zero = 0;
-  const seconds = 3000;
 
   const calculePrice = (param, paramZero) => param
     .reduce((acc, { price, quantity }) => acc + (price * quantity), paramZero);
