@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import './style/Products.css';
+import './CSS/Products.css';
 import { Redirect, Link } from 'react-router-dom';
 import { BeerContext } from '../context/context';
 import MenuTop from './MenuTop';

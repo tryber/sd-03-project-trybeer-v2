@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { BeerContext } from '../context/context';
-import './style/MenuTop.css';
+import './CSS/MenuTop.css';
 
 function MenuTop() {
   const [open, setOpen] = useState(false);

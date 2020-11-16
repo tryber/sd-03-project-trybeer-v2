@@ -1,6 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useContext } from 'react';
 import MenuTop from './MenuTop';
 import axios from 'axios';
+import { BeerContext } from '../context/context';
+import './CSS/Chat.css';
 
 const { io } = window;
 
@@ -8,6 +10,7 @@ function ChatClient() {
   const [message, setMessage] = useState('');
   const [allMessages, setAllMessages] = useState([]);
   const [oldMessages, setOldMessages] = useState();
+  const { setTitle } = useContext(BeerContext);
 
   const { email: userEmail } = JSON.parse(localStorage.getItem('user')) || [];
   const time = new Date().toLocaleTimeString('pt-br').substring(5, '');
@@ -22,12 +25,12 @@ function ChatClient() {
   let returnedTime;
 
   useEffect(() => {
+    setTitle('Chat');
     socket.current.on('message', ({ message, email, time, adminNick }) => {
       if (email === userEmail || adminNick) {
         renderMessage = message;
         returnedTime = time;
         console.log(returnedTime);
-        console.log('dentro', socket);
         setAllMessages((current) => [...current, { renderMessage, nickname: (adminNick || email), returnedTime }]);
       }
     });
@@ -40,7 +43,7 @@ function ChatClient() {
           setOldMessages(data);
         }
       });
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (oldMessages) {
@@ -52,30 +55,41 @@ function ChatClient() {
       });
       setAllMessages((current) => [...current, ...history]);
     }
-  },[oldMessages]);
+  }, [oldMessages]);
+
+  console.log(oldMessages)
 
   return (
     <div>
       <MenuTop />
-      {allMessages.map(({ renderMessage, nickname, returnedTime }) => (
-        <div>
-          <p data-testid="nickname">{nickname}</p>
-          <p data-testid="message-time">{returnedTime}</p>
-          <p data-testid="text-message">
-            {' '}
-            {renderMessage}
-            {' '}
-          </p>
-        </div>
-      ))}
-      <input data-testid="message-input" onChange={(e) => setMessage(e.target.value)} value={message} />
-      <button
-        onClick={() => socket.current.emit('message', { message, email: userEmail, time })}
-        data-testid="send-message"
-      >
-        &gt;
-
+      <div className="chat-content">
+        {allMessages.map(({ renderMessage, nickname, returnedTime }, i) => (
+          <div key={`${i}`}>
+            <div className="align-nick">
+              <p className="nick-chat" data-testid="nickname">{nickname}</p>
+              <p data-testid="message-time">{returnedTime}</p>
+            </div>
+            <p className="render-messages" data-testid="text-message">
+              {' '}
+              {renderMessage}
+              {' '}
+            </p>
+          </div>
+        ))}
+        <div className="align-input">
+          <input
+            placeholder="type your message"
+            className="input-message"
+            data-testid="message-input" onChange={(e) => setMessage(e.target.value)} value={message} />
+          <button
+            className="btn-message"
+            onClick={() => socket.current.emit('message', { message, email: userEmail, time })}
+            data-testid="send-message"
+          >
+            &gt;
       </button>
+        </div>
+      </div>
     </div>
   );
 }

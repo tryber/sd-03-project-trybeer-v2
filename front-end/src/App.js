@@ -41,7 +41,6 @@ function App() {
         <Route exact path="/" component={ Home } />
       </Switch>
     </BeerProvider>
-
   );
 }
 

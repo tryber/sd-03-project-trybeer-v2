@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import './style/OrdersAdmin.css';
+import './CSS/OrdersAdmin.css';
 
 const AdminProfile = () => {
   const [redirectLogin, setRedirectLogin] = useState(false);
