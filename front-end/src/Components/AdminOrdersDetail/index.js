@@ -83,7 +83,7 @@ const AdminOrdersDetail = () => {
             {`Total: R$ ${realFormat(total)}`}
           </h2>
         </div>
-        {orderStatus.map(({ name, status, testId }) => (
+        {saleItems.length > 0 && orderStatus.map(({ name, status, testId }) => (
           <button
             data-testid={ testId }
             type="button"

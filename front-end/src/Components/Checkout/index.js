@@ -49,7 +49,7 @@ const Checkout = () => {
 
   function goToProducts() {
     setTimeout(() => {
-      history.push('/products');
+      // history.push('/products');
     }, seconds);
   }
 
