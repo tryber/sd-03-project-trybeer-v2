@@ -47,6 +47,7 @@ describe('testing checkout page', () => {
     expect(productQnt.innerHTML).toBe('2');
     expect(unitPrice).toHaveTextContent('2.20');
     expect(ProductTotalValue).toHaveTextContent('4.40');
+    
     window.location.reload();
     expect(product.innerHTML).toBe('Skol Lata 250ml');
     expect(productQnt.innerHTML).toBe('2');
