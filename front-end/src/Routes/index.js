@@ -13,7 +13,7 @@ import {
   adminOrders,
   adminOrdersDetail,
 } from '../pages';
-
+const { ClientChat }=require('../Components')
 const Routes = () => (
   <BrowserRouter>
     <Switch>
@@ -21,6 +21,7 @@ const Routes = () => (
       <Route exact path="/login" component={ login } />
       <Route exact path="/register" component={ register } />
       <Route exact path="/profile" component={ clientProfile } />
+      <Route exact path="/chat" component={ ClientChat } />
       <BeerProvider>
         <Route exact path="/products" component={ products } />
         <Route exact path="/orders" component={ orders } />
