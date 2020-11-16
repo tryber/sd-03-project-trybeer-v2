@@ -48,9 +48,9 @@ const Checkout = () => {
   };
 
   function goToProducts() {
-    setTimeout(() => {
-      history.push('/products');
-    }, seconds);
+    // setTimeout(() => {
+    //   history.push('/products');
+    // }, seconds);
   }
 
   useEffect(() => {

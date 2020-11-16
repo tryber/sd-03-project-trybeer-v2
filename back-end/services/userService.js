@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { user } = require('../models');
 
-const { JWT_SECRET } = process.env;
+const JWT_SECRET = 'tentecerveja';
 const jwtConfig = {
   expiresIn: '1d',
   algorithm: 'HS256',

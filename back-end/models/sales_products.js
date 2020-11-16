@@ -20,13 +20,13 @@ module.exports = (sequelize, DataTypes) => {
     // });
     product.belongsToMany(sale, {
       through: salesProducts,
-      as: 'sales',
+      as: 'sale',
       foreignKey: 'product_id',
     });
 
     sale.belongsToMany(product, {
       through: salesProducts,
-      as: 'products',
+      as: 'product',
       foreignKey: 'sale_id',
     });
   };

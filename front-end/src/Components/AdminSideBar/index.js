@@ -1,20 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './styles.css';
 
-const AdminSideBar = () => (
+const AdminSideBar = () => {
+  const history = useHistory();
+  return (
   <div className="admin-side-bar-container">
     <div>
       <h1>TryBeer</h1>
-      <Link to="/admin/orders">
+      {/* <Link to="/admin/orders"> */}
         <button
           type="button"
           className="btn-admin"
           data-testid="side-menu-item-orders"
+          onClick={ () => {
+            setTimeout(() => history.push('/admin/orders'), 500)
+            }
+          }
         >
           Pedidos
         </button>
-      </Link>
+      {/* </Link> */}
       <Link to="/admin/profile">
         <button
           type="button"
@@ -36,5 +42,6 @@ const AdminSideBar = () => (
     </Link>
   </div>
 );
+  }
 
 export default AdminSideBar;
