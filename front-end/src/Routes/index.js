@@ -13,7 +13,9 @@ import {
   adminOrders,
   adminOrdersDetail,
 } from '../pages';
-const { ClientChat }=require('../Components')
+
+const { ClientChat } = require('../Components');
+
 const Routes = () => (
   <BrowserRouter>
     <Switch>

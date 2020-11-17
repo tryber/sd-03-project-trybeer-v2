@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getChatsList } from '../../services/api_endpoints';
 import AdminSideBar from '../AdminSideBar/index';
 import ChatTile from '../ChatTile';
-import './styles.css';
+import './style.css';
 
 const AdminChatsPage = () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
