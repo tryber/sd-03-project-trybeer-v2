@@ -11,7 +11,6 @@ const {
 } = require('./controllers/userController');
 
 const { getAllProducts } = require('./controllers/productController');
-const { getAllConvos } = require('./controllers/chatController');
 
 const {
   listSales,
@@ -22,7 +21,7 @@ const {
 } = require('./controllers/saleController');
 
 const auth = require('./middlewares/auth');
-const errorHandler = require('./middlewares/errorHandler');
+/* const errorHandler = require('./middlewares/errorHandler'); */
 const chatController = require('./controllers/chatController');
 
 const app = express();
@@ -35,7 +34,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.get('/', (_req, res) => res.send());
 
 app.get('/products', auth(true), getAllProducts);
-app.get('/admin/chats', getAllConvos);
 app.get('/admin/orders', listSales);
 app.get('/admin/orders/:id', auth(true), saleDetails);
 app.get('/orders', auth(true), getSalesByUserId);
@@ -46,18 +44,20 @@ app.post('/register', registerController);
 app.post('/profile', updateNameController);
 app.post('/checkout', auth(true), createSale);
 
-app.use(errorHandler);
-
 const server = app.listen(3001, () => console.log('Listening on port 3001!'));
-
 const io = socketIo(server);
+io.on('connect', (socket) => {
+  console.log(`${socket.id}`);
+
+  socket.on('message', async (objMsg) => {
+    const { email, hora, msg } = objMsg;
+    console.log(`${email} ${hora} ${msg}`);
+  });
+});
+
 // Express e socket.io rodando na mesma porta por conta desse bind
 io.on('connect', (socket) => {
   console.log('Nova conexão:', socket.id);
-
-  // socket.on('msgToClient', (msg) => {
-  //   io.emit('msgToClient', msg);
-  // });
 
   socket.on('syncHistory', ({ chatHistory, clientEmail }) => {
     chatController.updateConvo(clientEmail, chatHistory);

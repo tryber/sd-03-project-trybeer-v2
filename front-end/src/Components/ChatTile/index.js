@@ -17,10 +17,8 @@ const ChatTile = ({
     </div>
   </div>
 );
-
 ChatTile.propTypes = {
   email: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
 };
-
 export default ChatTile;

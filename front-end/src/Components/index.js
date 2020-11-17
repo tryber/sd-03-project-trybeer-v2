@@ -6,7 +6,6 @@ export { default as OrdersDetails } from './OrdersDetails';
 export { default as Checkout } from './Checkout';
 export { default as AdminSideBar } from './AdminSideBar';
 export { default as AdminProfile } from './AdminProfile';
-export { default as AdminChatsPage } from './AdminChatList';
-export { default as AdminChatWindow } from './AdminChatWindow';
 export { default as AdminOrders } from './AdminOrders';
 export { default as AdminOrdersDetail } from './AdminOrdersDetail';
+export { default as ClientChat } from './ClientChat';
