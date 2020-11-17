@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-const { moment } = require('moment');
+const moment = require('moment');
 
 const { io } = window;
 
@@ -10,9 +10,9 @@ const ClientChat = () => {
   const [messages, setMessages] = useState([]);
 
   const socket = useRef();
-  const { getUser } = localStorage.getItem('user');
+  const getUser = localStorage.getItem('user');
   const getEmail = JSON.parse(getUser);
-  const { email } = getEmail.email;
+  const { email } = getEmail;
   const hora = moment().format('HH:mm');
 
   useEffect(() => {
