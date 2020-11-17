@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 const moment = require('moment');
 const io = window.io;
+
 const ClientChat = () => {
   const [message, setMessage] = useState('');
   const [attMessage, setAttMessage] = useState('');
@@ -19,17 +20,15 @@ const ClientChat = () => {
   useEffect(() => {
     if (message !== '') {
       setMessages((msgs) => [...msgs, message]);
-      setMessage('');
-      setAttMessage('');
+      const objMsg = {
+        email: email,
+        hora: newDate,
+        msg: message,
+      };
+    
+      console.log(objMsg);
+      socket.current.emit('message', objMsg);
     };
-  
-    const obgMsg = {
-      email: email,
-      hora: newDate,
-      msg: message,
-    };
-  
-    socket.current.emit('message', `${obgMsg}`);
   }, [message]);
 
   const clearPage = (event) => {

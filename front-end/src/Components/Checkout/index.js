@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import MenuBar from '../MenuBar';
 import { getProductsLocalStorage } from '../../utils/localStorage';
 import { postNewOrd } from '../../services/api_endpoints';
 import './styles.css';
 
 const Checkout = () => {
-  const history = useHistory();
   const user = getProductsLocalStorage('user');
   const [cart, setCart] = useState([]);
   const [newCart, setNewCart] = useState([]);
@@ -49,7 +47,7 @@ const Checkout = () => {
 
   function goToProducts() {
     setTimeout(() => {
-      history.push('/products');
+      // history.push('/products');
     }, seconds);
   }
 

@@ -73,6 +73,18 @@ export const getOrdersFromAPI = async (token) => {
   return response;
 };
 
+export const getChatsList = async (token) => {
+  const convos = await axios({
+    baseURL: `${url}admin/chats`,
+    method: 'get',
+    headers: {
+      authorization: token,
+    },
+  })
+    .then((result) => result.data);
+  return convos;
+};
+
 export const getOrderList = async (token) => {
   const orders = await axios({
     baseURL: `${url}admin/orders`,
