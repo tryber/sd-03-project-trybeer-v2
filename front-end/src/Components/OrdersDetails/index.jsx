@@ -42,7 +42,7 @@ const OrdersDetails = () => {
       setOrders(orderDetail);
     }
     getData(id);
-  }, []);
+  }, [id, token]);
 
   if (!token) return <Redirect to="/login"/>
 

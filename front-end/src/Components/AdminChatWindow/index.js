@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import AdminSideBar from '../AdminSideBar/index';
-import './style.css';
+import './styles.css';
 
 const { io } = window;
 // Para usar o socket neste arquivo
