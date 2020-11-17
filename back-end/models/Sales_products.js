@@ -21,13 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'sale_id',
       otherKey: 'id',
     });
-    return SalesProductsObject;
-
-  // UserObject.associate = (models) => {
-  //   UserObject.hasOne(models.Post, {
-  //     foreignKey: 'id',
-  //     as: 'addressesuser',
-  //   });
-  // };
   };
+  return SalesProductsObject;
 };
