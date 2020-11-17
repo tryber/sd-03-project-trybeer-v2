@@ -66,7 +66,7 @@ const AdminChat = () => {
               <div data-testid="text-message">{text}</div>
             </article>
           ))
-}
+        }
         <form>
           <input
             data-testid="chat-message"
