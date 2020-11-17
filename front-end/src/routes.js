@@ -10,6 +10,7 @@ import AdminProfile from './pages/AdminProfile/Index';
 import AdminOrders from './pages/AdminOrders/Index';
 import AdminOrdersDetails from './pages/AdminOrdersDetails/Index';
 import UserOrdersDetails from './pages/UserOrdersDetails/Index';
+import UserChat from './pages/UserChat/Index';
 
 function Routes() {
   return (
@@ -25,6 +26,7 @@ function Routes() {
         <Route exact path="/orders" component={ UserOrders } />
         <Route exact path="/admin/profile" component={ AdminProfile } />
         <Route exact path="/admin/orders" component={ AdminOrders } />
+        <Route exact path="/chat" component={ UserChat } />
         <Route exact path="/admin/orders/:id" component={ AdminOrdersDetails } />
       </Switch>
     </Router>

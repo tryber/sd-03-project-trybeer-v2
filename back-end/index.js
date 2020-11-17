@@ -3,27 +3,15 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const httpFactory = require('./http');
+const socketFactory = require('./socket');
 const routes = require('./routes');
+const connection = require('./models/mongoConnection');
 
-const app = express();
-app.use(bodyParser.json());
-app.use(cors());
-app.use('/login', routes.loginRoute);
-app.use('/register', routes.registerRoute);
-app.use('/profile', routes.profileRoute);
-app.use('/products', routes.productsRoute);
-app.use('/sales', routes.salesRoute);
-app.use('/individualProduct', routes.individualProductRoute);
-app.use('/images', express.static('images'));
+const app = httpFactory(express, routes, cors, bodyParser);
 
-app.use((error, _req, res, _next) => {
-  const { message, status } = error;
-  if (status < 500) {
-    return res.status(status).json(message);
-  }
-  res.status(500).send('Something broke!');
-});
+const { ioServer } = socketFactory(connection, app);
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => console.log(`listen on port: ${PORT}`));
+ioServer.listen(PORT, () => console.log(`listen on port: ${PORT}`));
