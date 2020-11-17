@@ -61,7 +61,7 @@ const LoginPage = () => {
           setIsSubmit(!isSubmit);
         }}
       >
-        <h2>Trybeer</h2>
+        <h2 className="title">Trybeer</h2>
         <div className="login-div-inputs login-labels">
           <label className="login-labels" htmlFor="email">
             <p>Email</p>

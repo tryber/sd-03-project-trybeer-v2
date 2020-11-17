@@ -1,4 +1,3 @@
-// const { productsModel } = require('../models');
 const { products } = require('../models');
 
 const getAllProducts = async () => {

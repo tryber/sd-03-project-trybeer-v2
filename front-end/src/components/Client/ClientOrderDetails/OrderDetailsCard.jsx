@@ -28,9 +28,11 @@ function OrderDetailsCard({ object, date }) {
             </span>
             <span className="details-total-price">
               <p data-testid="order-total-value">
-                {`Total: R$  ${(order.soldQuantity * order.productPrice)
-                  .toFixed(initialFloat)
-                  .replace('.', ',')}`}
+                <strong>
+                  {`Total: R$  ${(order.soldQuantity * order.productPrice)
+                    .toFixed(initialFloat)
+                    .replace('.', ',')}`}
+                </strong>
               </p>
             </span>
           </div>
