@@ -7,6 +7,7 @@ function OrderDetail() {
   const userData = JSON.parse(localStorage.getItem('user') || '{}');
   const [details, setDetails] = useState({});
   const [loading, setLoading] = useState(true);
+  console.log('details', details)
   const { saleDate = {} } = details;
   const sqlFormattedDate = (date = '') => {
     const initialDateIndex = 5;
@@ -22,6 +23,7 @@ function OrderDetail() {
     try {
       const result = await fetch(url);
       const json = await result.json();
+      console.log('json', json.sale);
       return setDetails(json.sale);
     } catch (error) {
       return error.message;

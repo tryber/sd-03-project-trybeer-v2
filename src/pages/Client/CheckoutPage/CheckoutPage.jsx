@@ -39,7 +39,7 @@ function Checkout() {
 
   const submitOrder = useCallback(
     () => registerOrder(
-      userData.dataValues.id,
+      userData.id,
       totalPrice,
       deliveryAddress,
       deliveryNumber,
@@ -57,7 +57,7 @@ function Checkout() {
       },
     ),
     [
-      userData.dataValues.id,
+      userData.id,
       totalPrice,
       deliveryAddress,
       deliveryNumber,
@@ -83,9 +83,11 @@ function Checkout() {
       clearTimeout(timer);
     };
   }, [isSubmit, message]);
-  if (!userData.dataValues.name) return <Redirect to="/login" />;
+
+  if (!userData.name) return <Redirect to="/login" />;
 
   if (redirect) return <Redirect to="/products" />;
+
   return (
     <div>
       <ClientNavBar title="Finalizar Pedido" />
@@ -94,7 +96,7 @@ function Checkout() {
         {!isSubmit && message && <h3>{message}</h3>}
         {!isSubmit && error && <h3>{error}</h3>}
         {!isSubmit && !cartProducts.length && (
-          <h1>Não há produtos no carrinho</h1>
+          <h3>Não há produtos no carrinho</h3>
         )}
         {!isSubmit
           && cartProducts.length > initialQuantity
