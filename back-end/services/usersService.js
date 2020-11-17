@@ -11,8 +11,8 @@ const getUserByEmail = async (email) => {
 
 const addUser = async (name, email, password, role) => {
   try {
-    // const user = await User.create(name, email, password, role);
-    // return user;
+    const user = await users.create(name, email, password, role);
+    return user;
   } catch (error) {
     throw new Error(error.message);
   }

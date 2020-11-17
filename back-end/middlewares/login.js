@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const { tokenConfig, SECRET } = require('./config');
-const { usersService } = require('../services');
+// const { usersService } = require('../services');
 const { generateError } = require('../utils');
 const { users } = require('../models');
 
