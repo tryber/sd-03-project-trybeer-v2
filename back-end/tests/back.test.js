@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { validateLogin, login, collectInfo } = require('../services/login');
+const { setNewName } = require('../services/profile');
 
 const { users } = require('../models');
 
@@ -31,9 +32,9 @@ describe('testing login service', () => {
     expect(returnedResponse).toEqual({ code: 401, message: 'senha incorreta' });
   });
   it('testing login with right password', async () => {
-    users.findAll.mockResolvedValue([{ id: 1, email: 'fab.emiliano@gmail.com', password: '12345678' }]);
+    users.findAll.mockResolvedValue([{ id: 1, email: 'fab.emiliano@gmail.com', password: '12345678', name: 'Fabiano', role: 'client' }]);
     const returnedResponse = await validateLogin('fab.emiliano@gmail.com', '12345678');
-    expect(returnedResponse).toEqual({ id: 1, email: 'fab.emiliano@gmail.com' });
+    expect(returnedResponse).toEqual({ id: 1, userEmail: 'fab.emiliano@gmail.com', name: 'Fabiano', role: 'client' });
   });
   it('testin collectInfo function', async () => {
     users.findAll.mockResolvedValue([{ id: 1, delivery_address: 'rua x', delivery_number: '32', delivery_city: 'Floripa', delivery_district: 'centro' }]);
@@ -55,5 +56,14 @@ describe('testing login service', () => {
     users.findAll.mockResolvedValue([{ code: 404, message: 'usuário não encontrado' }]);
     const returnedResponse = await login({ email: 'fab.emiliano@gmail.com', password: '12345678' });
     expect(returnedResponse).toEqual({ code: 404, message: 'usuário não encontrado' });
+  });
+});
+
+describe('testing profile service', () => {
+  test('testing setNewName function', async () => {
+    users.update = jest.fn().mockResolvedValue([{ name: 'Fabiano', email: 'zebirita@gmail.com' }]);
+    const returnedResponse = await setNewName({ name: 'Fabiano', email: 'zebirita@gmail.com' });
+    expect(returnedResponse).toEqual([{ name: 'Fabiano', email: 'zebirita@gmail.com' }]);
+    expect(users.update).toHaveBeenCalledTimes(1);
   });
 });
