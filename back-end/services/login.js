@@ -11,15 +11,16 @@ const validateLogin = async (email, pass) => {
   const regex = /^\S+@\S+$/;
   if (!email.match(regex)) return { code: 400, message: 'Email deve ter o formato tal' };
   if (pass.length < 6) return { code: 400, message: 'Senha no formato incorreto' };
-  const userInfo = (await users.findAll({ where: { email } }))[0];
+  const userInfo = (await users.findAll({ where: { email } }))[0] || {};
   if (!userInfo.id) return { code: 404, message: 'usuário não encontrado' };
   if (userInfo.password !== pass) return { code: 401, message: 'senha incorreta' };
-  const { password, ...info } = userInfo.dataValues;
-  return info;
+  console.log(userInfo.password, userInfo.email);
+  const { id, name, email: userEmail, role } = userInfo;
+  return { id, name, userEmail, role };
 };
 
 const login = async ({ email, password }) => {
-  const { code, message, id, name, email: userEmail, role } = await validateLogin(email, password);
+  const { code, message, id, name, userEmail, role } = await validateLogin(email, password);
   if (message) return { code, message };
   const token = jwt.sign({ id, role, userEmail, name }, secret, jwtConfig);
   return { name, email, token, role };
