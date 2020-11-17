@@ -9,3 +9,5 @@ export { default as AdminProfile } from './AdminProfile';
 export { default as AdminOrders } from './AdminOrders';
 export { default as AdminOrdersDetail } from './AdminOrdersDetail';
 export { default as ClientChat } from './ClientChat';
+export { default as AdminChatsPage } from './AdminChatList';
+export { default as AdminChatWindow } from './AdminChatWindow';

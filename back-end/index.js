@@ -11,6 +11,7 @@ const {
 } = require('./controllers/userController');
 
 const { getAllProducts } = require('./controllers/productController');
+const { getAllConvos } = require('./controllers/chatController');
 
 const {
   listSales,
@@ -36,6 +37,7 @@ app.get('/', (_req, res) => res.send());
 app.get('/products', auth(true), getAllProducts);
 app.get('/admin/orders', listSales);
 app.get('/admin/orders/:id', auth(true), saleDetails);
+app.get('/admin/chats', getAllConvos);
 app.get('/orders', auth(true), getSalesByUserId);
 
 app.post('/admin/orders/:id', auth(true), setOrderStatus);
