@@ -20,7 +20,7 @@ const registerSales = async (
     const registryProductsBySale = await Promise.all(
       products.map((product) => {
         const { id, quantity } = product;
-        return salesModel.addSalesProducts(registrySales.saleID, id, quantity);
+        return sales.addSalesProducts(registrySales.saleID, id, quantity);
       }),
     );
     const itemCount = await registryProductsBySale.reduce(
@@ -35,7 +35,7 @@ const registerSales = async (
 
 const updateSalesStatus = async (id, status) => {
   try {
-    const updateStatus = await salesModel.updateSaleStatus(id, status);
+    const updateStatus = await sales.updateSaleStatus(id, status);
 
     if (!updateStatus) throw new Error();
     return true;
