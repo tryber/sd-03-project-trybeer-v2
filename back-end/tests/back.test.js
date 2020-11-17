@@ -35,6 +35,16 @@ describe('testing login service', () => {
     const returnedResponse = await validateLogin('fab.emiliano@gmail.com', '12345678');
     expect(returnedResponse).toEqual({ id: 1, email: 'fab.emiliano@gmail.com' });
   });
+  it('testin collectInfo function', async () => {
+    users.findAll.mockResolvedValue([{ id: 1, delivery_address: 'rua x', delivery_number: '32', delivery_city: 'Floripa', delivery_district: 'centro' }]);
+    const returnedResponse = await collectInfo('fab.emiliano@gmail.com');
+    expect(returnedResponse).toEqual({ userId: 1, street: 'rua x', number: '32', city: 'Floripa', district: 'centro' });
+  });
+  it('testin collectInfo function when fails', async () => {
+    users.findAll.mockResolvedValue([{ code: 400, message: 'not found' }]);
+    const returnedResponse = await collectInfo('fab.emiliano@gmail.com');
+    expect(returnedResponse).toEqual({ code: 400, message: 'not found' });
+  });
   it('testin login function', async () => {
     users.findAll.mockResolvedValue([{ id: 1, email: 'fab.emiliano@gmail.com', password: '12345678', role: 'client', name: 'Fabiano' }]);
     const token = jwt.sign({ id: 1, role: 'client', userEmail: 'fab.emiliano@gmail.com', name: 'Fabiano' }, secret, jwtConfig);
@@ -45,15 +55,5 @@ describe('testing login service', () => {
     users.findAll.mockResolvedValue([{ code: 404, message: 'usuário não encontrado' }]);
     const returnedResponse = await login({ email: 'fab.emiliano@gmail.com', password: '12345678' });
     expect(returnedResponse).toEqual({ code: 404, message: 'usuário não encontrado' });
-  });
-  it('testin collectInfo function', async () => {
-    users.findAll.mockResolvedValue([{ id: 1, delivery_address: 'rua x', delivery_number: '32', delivery_city: 'Floripa', delivery_district: 'centro' }]);
-    const returnedResponse = await collectInfo('fab.emiliano@gmail.com');
-    expect(returnedResponse).toEqual({ userId: 1, street: 'rua x', number: '32', city: 'Floripa', district: 'centro' });
-  });
-  it('testin collectInfo function when fails', async () => {
-    users.findAll.mockResolvedValue([{ code: 400, message: 'not found' }]);
-    const returnedResponse = await collectInfo('fab.emiliano@gmail.com');
-    expect(returnedResponse).toEqual({ code: 400, message: 'not found' });
   });
 });
