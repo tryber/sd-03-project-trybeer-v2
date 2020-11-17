@@ -14,7 +14,14 @@ const appendMsgs = async (email, messages) => connection()
       .collection('chats')
       .updateOne({ clientEmail: email }, { $set: { messages } }));
 
+const getChatHistory = async (email) => connection()
+  .then((db) =>
+    db.collection('chats')
+    .find({ clientEmail: email })
+    .toArray());
+
 module.exports = {
   getAll,
   appendMsgs,
+  getChatHistory,
 };

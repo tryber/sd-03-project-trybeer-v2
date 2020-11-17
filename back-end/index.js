@@ -11,7 +11,7 @@ const {
 } = require('./controllers/userController');
 
 const { getAllProducts } = require('./controllers/productController');
-const { getAllConvos } = require('./controllers/chatController');
+const { getAllConvos, getConvoMsgs } = require('./controllers/chatController');
 
 const {
   listSales,
@@ -24,6 +24,7 @@ const {
 const auth = require('./middlewares/auth');
 /* const errorHandler = require('./middlewares/errorHandler'); */
 const chatController = require('./controllers/chatController');
+const { time } = require('console');
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.get('/products', auth(true), getAllProducts);
 app.get('/admin/orders', listSales);
 app.get('/admin/orders/:id', auth(true), saleDetails);
 app.get('/admin/chats', getAllConvos);
+app.get('/admin/chat/:email', getConvoMsgs);
 app.get('/orders', auth(true), getSalesByUserId);
 
 app.post('/admin/orders/:id', auth(true), setOrderStatus);
@@ -47,24 +49,22 @@ app.post('/profile', updateNameController);
 app.post('/checkout', auth(true), createSale);
 
 const server = app.listen(3001, () => console.log('Listening on port 3001!'));
+// Express e socket.io rodando na mesma porta por conta do bind
+
 const io = socketIo(server);
 io.on('connect', (socket) => {
-  console.log(`${socket.id}`);
+  console.log(`Nova conexão: ${socket.id}`);
 
-  socket.on('message', async (objMsg) => {
-    const { email, hora, msg } = objMsg;
-    console.log(`${email} ${hora} ${msg}`);
+  // socket.on('message', async (objMsg) => {
+  //   const { email, hora, msg } = objMsg;
+  //   console.log(`${email} ${hora} ${msg}`);
+  // });
+
+  socket.on('msgToServer', async (objMsg) => {
+    const { timeStamp, text, isClientMsg } = objMsg;
+    console.log(`${timeStamp} ${text} ${isClientMsg}`);
   });
-});
-
-// Express e socket.io rodando na mesma porta por conta desse bind
-io.on('connect', (socket) => {
-  console.log('Nova conexão:', socket.id);
-
-  socket.on('syncHistory', ({ chatHistory, clientEmail }) => {
-    chatController.updateConvo(clientEmail, chatHistory);
-  });
-
+  
   socket.on('disconnect', () => {
     console.log(socket.id, 'desconectou-se');
   });

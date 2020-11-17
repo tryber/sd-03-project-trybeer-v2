@@ -1,61 +1,62 @@
 import React, { useRef, useState, useEffect } from 'react';
-
-const moment = require('moment');
+import { getChatMessages } from '../../services/api_endpoints';
+import MenuBar from '../MenuBar';
+import './style.css';
 
 const { io } = window;
 
 const ClientChat = () => {
   const [message, setMessage] = useState('');
-  const [attMessage, setAttMessage] = useState('');
-  const [messages, setMessages] = useState([]);
+  const [textMessage, setTextMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
 
   const socket = useRef();
-  const getUser = localStorage.getItem('user');
-  const getEmail = JSON.parse(getUser);
-  const { email } = getEmail;
-  const hora = moment().format('HH:mm');
+  const { email } = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
+    const fetchChatHistory = async (email) => await getChatMessages(email);
+    fetchChatHistory().then((msgs) => setChatHistory(msgs || []));
     socket.current = io('http://localhost:3001');
-  }, []);
+  }, [email]);
 
-  useEffect(() => {
-    if (message !== '') {
-      setMessages((msgs) => [...msgs, message]);
-      const objMsg = {
-        email,
-        hora,
-        msg: message,
-      };
-
-      socket.current.emit('message', objMsg);
-    }
-  }, [message, email, hora]);
-
-  const clearPage = (event) => {
+  const submitMessage = (event) => {
     event.preventDefault();
+    setTextMessage('');
+    const msg = {
+      timeStamp: new Date().toLocaleString('pt-BR'),
+      text: textMessage,
+      isClientMsg: false,
+    };
+    setChatHistory((history) => [...history, msg]);
+    socket.current.emit('msgToServer', msg);
   };
 
   return (
     <div>
-      <form onSubmit={ clearPage }>
-        <h1>Estou funcionando</h1>
-        <div id="userName" data-testid="nickname">{ email }</div>
-        <div id="hours" data-testid="message-time">{ hora }</div>
-        <div id="message-text" data-testid="text-message">
-          <ul>{ messages.map((msg) => <li key={ msg }>{`${email} ${hora} ${msg}`}</li>) }</ul>
-        </div>
+      <MenuBar titleName="Atendimento online" />
+      <div id="message-text" data-testid="text-message">
+        <ul>{ chatHistory.map(
+          ({ timeStamp, text, isClientMsg }) => (
+          <li key={ text } className={ isClientMsg ? 'msg-customer' : 'msg-admin' }>
+            <div data-testid="nickname">{ isClientMsg ? email : 'Loja' }</div>
+            <div data-testid="message-time">{timeStamp}</div>
+            <div data-testid="text-message">{text}</div>
+          </li>
+          )) }
+        </ul>
+      </div>
+      <form>
         <input
-          onChange={ (event) => setAttMessage(event.target.value) }
-          value={ attMessage }
+          onChange={ (event) => setTextMessage(event.target.value) }
+          value={ textMessage }
           data-testid="message-input"
         />
         <button
           type="submit"
           data-testid="send-message"
-          onClick={ () => setMessage(attMessage) }
+          onClick={ submitMessage }
         >
-          ENVIAR
+          Enviar
         </button>
       </form>
     </div>

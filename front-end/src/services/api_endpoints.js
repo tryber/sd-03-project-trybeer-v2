@@ -85,6 +85,15 @@ export const getChatsList = async (token) => {
   return convos;
 };
 
+export const getChatMessages = async (email) => {
+  const msgs = await axios({
+    baseURL: `${url}admin/chat/${email}`,
+    method: 'get',
+  })
+    .then((result) => result.data);
+    return msgs;
+};
+
 export const getOrderList = async (token) => {
   const orders = await axios({
     baseURL: `${url}admin/orders`,

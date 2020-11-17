@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { getChatMessages } from '../../services/api_endpoints';
 import AdminSideBar from '../AdminSideBar/index';
 import './style.css';
 
@@ -10,15 +11,15 @@ const { io } = window;
 const AdminChat = () => {
   const socket = useRef();
   const location = useLocation();
-  // const { token } = JSON.parse(localStorage.getItem('user'));
   const { clientEmail, messages } = location.state;
 
   const [chatHistory, setChatHistory] = useState(messages);
   const [textMessage, seTextMessage] = useState('');
 
-  // useEffect(() => {
-  //   setChatHistory(messages);
-  // }, [token, messages]);
+  useEffect(() => {
+    const fetchChatHistory = async (clientEmail) => await getChatMessages(clientEmail);
+    fetchChatHistory().then((msgs) => setChatHistory(msgs || []));
+  }, [clientEmail]);
 
   // Conexão com o socket.io
   useEffect(() => {
@@ -26,9 +27,9 @@ const AdminChat = () => {
   }, []);
 
   // Envio do histórico atualizado
-  useEffect(() => {
-    socket.current.emit('syncHistory', { chatHistory, clientEmail });
-  }, [chatHistory, clientEmail]);
+  // useEffect(() => {
+  //   socket.current.emit('syncHistory', { chatHistory, clientEmail });
+  // }, [chatHistory, clientEmail]);
 
   // Recebimento de mensagem
   useEffect(() => {
@@ -59,9 +60,7 @@ const AdminChat = () => {
           ? 'Nenhuma conversa por aqui'
           : chatHistory.map(({ timeStamp, text, isClientMsg }) => (
             <article key={ text } className={ isClientMsg ? 'msg-customer' : 'msg-admin' }>
-              <div data-testid="nickname">
-                { isClientMsg ? clientEmail : 'Loja' }
-              </div>
+              <div data-testid="nickname">{ isClientMsg ? clientEmail : 'Loja' }</div>
               <div data-testid="message-time">{timeStamp}</div>
               <div data-testid="text-message">{text}</div>
             </article>
