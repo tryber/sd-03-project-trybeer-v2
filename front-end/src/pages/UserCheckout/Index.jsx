@@ -152,7 +152,7 @@ function UserCheckout() {
     const year = date.getFullYear();
     date = `${year}-${month}-${day}`;
     const registerResponse = await createSale(email, total, address, number, date);
-    setMessage('registerResponse.data.message');
+    setMessage('Compra realizada com sucesso!');
     savePurchase(registerResponse.data.id, purchase);
     localStorage.setItem('inProcessPurchase', JSON.stringify([]));
     setTimeout(() => {
