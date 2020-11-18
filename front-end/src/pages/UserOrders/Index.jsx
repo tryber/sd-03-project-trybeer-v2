@@ -20,6 +20,12 @@ const productsCards = (purchase, clickToCart) => (
           <p data-testid={`${index}-order-total-value`}>
             R$ {parseFloat(e.total).toFixed(2).replace('.', ',')}
           </p>
+          <p
+            data-testid={`${index}-order-status`}
+            className="order-status-pendente"
+          >
+            {e.status}
+          </p>
         </div>
       );
     })}

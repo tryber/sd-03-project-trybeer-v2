@@ -6,27 +6,31 @@ const finishSales = async (email, total, address, number, date) => {
   const { id } = await users.findOne({ where: { email } });
   const totalToInsert = total.replace(',', '.');
 
-  const { dataValues } = await sales.create({ user_id: id, total_price: totalToInsert, delivery_address: address, delivery_number: number, sale_date: date, status: 'pending' });
+  const { dataValues } = await sales.create({ user_id: id, total_price: totalToInsert, delivery_address: address, delivery_number: number, sale_date: date, status: 'Pendente' });
   const UserSales = await sales.findAll({ where: { user_id: id } });
-  console.log(UserSales)
   const positionSale = (UserSales.length - 1);
   const newSale = UserSales[positionSale];
 
   const saleResponse = {
-    ...dataValues,
+    userId: id,
+    totalPrice: totalToInsert,
+    deliveryAddress: address,
+    deliveryNumber: number,
+    saleDate: date,
+    status: 'Pendente',
     saleId: newSale.id,
   };
-console.log(saleResponse)
-  //return saleResponse;
+  return saleResponse;
 };
-// 
-// const changeStatus = async (id) => {
-//   await salesModel.changeStatus(id, 'Entregue');
-// 
-//   return 'ok';
-// };
+
+const changeStatus = async (id, newSatus) => {
+  await sales.update({ status: { newSatus } }, { where: { user_id: id } });
+
+  return 'ok';
+};
 
 module.exports = {
   allSales,
   finishSales,
+  changeStatus,
 };

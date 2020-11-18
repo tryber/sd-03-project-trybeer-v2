@@ -17,9 +17,9 @@ const finishSales = rescue(async (req, res) => {
 });
 
 const changeStatus = rescue(async (req, res) => {
-  const { id } = req.body;
+  const { id, status } = req.body;
 
-  const newSaleInfo = await salesService.changeStatus(id);
+  const newSaleInfo = await salesService.changeStatus(id, status);
 
   res.status(200).json(newSaleInfo);
 });
