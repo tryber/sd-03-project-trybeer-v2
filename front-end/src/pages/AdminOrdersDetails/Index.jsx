@@ -8,7 +8,7 @@ const productsCards = (purchase) => (
     {purchase.map((e, index) => {
       const totalProduct = (parseFloat(e.price) * parseInt(e.amount)).toFixed(2).replace('.', ',');
       return (
-        <div>
+        <div key={index}>
           <div className="products-card">
             <p data-testid={`${index}-product-qtd`}>{e.amount}</p>
             <p data-testid={`${index}-product-name`}>{e.name}</p>
@@ -21,7 +21,7 @@ const productsCards = (purchase) => (
   </div>
 );
 
-const renderButton = (funcCall, testId) => (
+const renderButton = (funcCall, testId, text) => (
   <div>
     <button
       type="button"
@@ -29,7 +29,7 @@ const renderButton = (funcCall, testId) => (
       data-testid={testId}
       onClick={() => funcCall()}
     >
-      Marcar como entregue
+      {text}
     </button>
   </div>
 );
@@ -42,8 +42,8 @@ const itensList = async (setPurchase, setTotal, id, setSale, setStatus) => {
   setSale(actualSale);
   setStatus(actualSale.status);
   const actualPurchase = await listSalesProducts.data.reduce((acc, elem) => {
-    if (elem.saleId === actualSale.id) {
-      const product = listProducts.data.filter((e) => e.id === elem.productId);
+    if (parseFloat(elem.sale_id) === actualSale.id) {
+      const product = listProducts.data.filter((e) => e.id === parseFloat(elem.product_id));
       const obj = {...product[0], amount: elem.quantity}
       acc = [...acc, obj];
       return acc;
@@ -93,9 +93,8 @@ function AdminOrdersDetails() {
       <h4 data-testid="order-total-value" className="order-total-value">
         Total: R$ {total}
       </h4>
-      {(status === 'Pendente') ? renderButton(clickToPreper, "mark-as-prepared-btn") : null}
-
-      {(status === 'Pendente') ? renderButton(clickToDeliver, "mark-as-delivered-btn") : null}
+      {(status === 'Pendente') ? renderButton(clickToPreper, "mark-as-prepared-btn", "Preparar pedido") : null}
+      {(status === 'Pendente' || status === 'Preparando') ? renderButton(clickToDeliver, "mark-as-delivered-btn", "Marcar como entregue") : null}
     </div>
   );
 }

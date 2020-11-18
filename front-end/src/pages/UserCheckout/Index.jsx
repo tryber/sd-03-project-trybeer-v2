@@ -152,14 +152,13 @@ function UserCheckout() {
     const year = date.getFullYear();
     date = `${year}-${month}-${day}`;
     const registerResponse = await createSale(email, total, address, number, date);
-    console.log(registerResponse)
-    setMessage(registerResponse.data.message);
-    savePurchase(registerResponse.data.saleId, purchase);
+    setMessage('registerResponse.data.message');
+    savePurchase(registerResponse.data.id, purchase);
     localStorage.setItem('inProcessPurchase', JSON.stringify([]));
-    // setTimeout(() => {
-    //   setMessage('');
-    //   history.push('/products');
-    // }, 4000);
+    setTimeout(() => {
+      setMessage('');
+      history.push('/products');
+    }, 4000);
   };
 
   const isDisabled = () => {

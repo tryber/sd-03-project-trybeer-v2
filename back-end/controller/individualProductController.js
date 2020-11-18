@@ -9,7 +9,6 @@ const allSalesProduct = rescue(async (_req, res) => {
 
 const registerProduct = rescue(async (req, res, next) => {
   const { saleId, productId, quantity } = req.body;
-
   const NewRegister = await individualProductService.registerProduct(saleId, productId, quantity);
 
   if (NewRegister.error) return next(NewRegister);

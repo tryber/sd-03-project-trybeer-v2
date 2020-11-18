@@ -26,12 +26,14 @@ const itensList = async (actualUser, setPurchase, setTotal, id, setDay, setMonth
   const listProducts = await allProducts();
   const listSales = await allSales();
   const listSalesProducts = await allSalesProducts();
-  const allSalesUser = listSales.data.filter((elem) => elem.userId === actualUser.data.id);
+  const allSalesUser = listSales.data.filter((elem) => elem.user_id === actualUser.data.id);
   const actualSale = allSalesUser[(parseInt(id) - 1)];
   setStatus(actualSale.status);
+  console.log(listSalesProducts)
   const actualPurchase = await listSalesProducts.data.reduce((acc, elem) => {
-    if (elem.saleId === actualSale.id) {
-      const product = listProducts.data.filter((e) => e.id === elem.productId);
+    console.log(elem)
+    if (parseFloat(elem.sale_id) === actualSale.id) {
+      const product = listProducts.data.filter((e) => e.id === parseFloat(elem.product_id));
       const obj = {...product[0], amount: elem.quantity}
       acc = [...acc, obj];
       return acc;
@@ -40,10 +42,11 @@ const itensList = async (actualUser, setPurchase, setTotal, id, setDay, setMonth
   }, []);
   setPurchase(actualPurchase);
   const actualTotal = actualPurchase.reduce((acc, elem) => {
+    console.log(elem)
     return (parseFloat(acc) + parseFloat(elem.price) * elem.amount).toFixed(2).replace('.', ',');
   }, 0);
-  setDay(new Date(actualSale.date).getUTCDate());
-  setMonth(new Date(actualSale.date).getMonth()+1);
+  setDay(new Date(actualSale.sale_date).getUTCDate());
+  setMonth(new Date(actualSale.sale_date).getMonth()+1);
   setTotal(actualTotal);
 };
 

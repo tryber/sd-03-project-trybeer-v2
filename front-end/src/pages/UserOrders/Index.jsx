@@ -6,10 +6,9 @@ import "./styles.css";
 
 const productsCards = (purchase, clickToCart) => (
   <div className="order-container-card">
-    {console.log(purchase)}
     {purchase.map((e, index) => {
-      const month = new Date(e.date).getMonth()+1;
-      const day = new Date(e.date).getUTCDate();
+      const month = new Date(e.sale_date).getMonth()+1;
+      const day = new Date(e.sale_date).getUTCDate();
       return (
         <div
           key={e.id}
@@ -19,7 +18,7 @@ const productsCards = (purchase, clickToCart) => (
           <p data-testid={`${index}-order-number`}>Pedido {(index + 1)}</p>
           <p data-testid={`${index}-order-date`}>{`${("0" + day).slice(-2)}/${("0" + (month)).slice(-2)}`}</p>
           <p data-testid={`${index}-order-total-value`}>
-            R$ {parseFloat(e.total).toFixed(2).replace('.', ',')}
+            R$ {parseFloat(e.total_price).toFixed(2).replace('.', ',')}
           </p>
           <p
             data-testid={`${index}-order-status`}
@@ -35,7 +34,7 @@ const productsCards = (purchase, clickToCart) => (
 
 const itensList = async (actualUser, setPurchase) => {
   const listSales = await allSales();
-  const actualPurchase = await listSales.data.filter((elem) => elem.userId === actualUser.data.id);
+  const actualPurchase = await listSales.data.filter((elem) => elem.user_id === actualUser.data.id);
   setPurchase(actualPurchase);
 };
 

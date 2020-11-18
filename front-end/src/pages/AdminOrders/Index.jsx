@@ -7,6 +7,7 @@ import "./styles.css";
 const productsCards = (purchase, clickToOrdersDetail) => (
   <div className="order-container-card">
     {purchase.map((e, index) => {
+      console.log(e)
       return (
         <div
           key={e.id}
@@ -14,9 +15,9 @@ const productsCards = (purchase, clickToOrdersDetail) => (
           data-testid={`${index}-order-card-container`}
         >
           <p data-testid={`${index}-order-number`}>Pedido {(index + 1)}</p>
-          <p data-testid={`${index}-order-address`}>{e.address}, {e.number}</p>
+          <p data-testid={`${index}-order-address`}>{e.delivery_address}, {e.delivery_number}</p>
           <p data-testid={`${index}-order-total-value`}>
-            R$ {parseFloat(e.total).toFixed(2).replace('.', ',')}
+            R$ {parseFloat(e.total_price).toFixed(2).replace('.', ',')}
           </p>
           <p
             data-testid={`${index}-order-status`}
