@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { allProducts, allSales, allSalesProducts, deliverySale } from "../../services/trybeerUserAPI";
+import { allProducts, allSales, allSalesProducts, changeStateSale } from "../../services/trybeerUserAPI";
 import SideMenuAdmin from '../../components/SideMenuAdmin';
 
 const productsCards = (purchase) => (
@@ -21,13 +21,13 @@ const productsCards = (purchase) => (
   </div>
 );
 
-const deliveredButton = (clickToDeliver, id) => (
+const renderButton = (funcCall, testId) => (
   <div>
     <button
       type="button"
-      className="mark-as-delivered-btn"
-      data-testid="mark-as-delivered-btn"
-      onClick={() => clickToDeliver()}
+      className={testId}
+      data-testid={testId}
+      onClick={() => funcCall()}
     >
       Marcar como entregue
     </button>
@@ -70,9 +70,13 @@ function AdminOrdersDetails() {
     itensList(setPurchase, setTotal, id, setSale, setStatus);
   }, []);
 
+  const clickToPreper = async () => {
+    await changeStateSale(sale.id, 'Preparando')
+    setStatus('Preparando');
+  };
 
   const clickToDeliver = async () => {
-    await deliverySale(sale.id)
+    await changeStateSale(sale.id, 'Entregue')
     setStatus('Entregue');
   };
 
@@ -89,7 +93,9 @@ function AdminOrdersDetails() {
       <h4 data-testid="order-total-value" className="order-total-value">
         Total: R$ {total}
       </h4>
-      {(status === 'Pendente') ? deliveredButton(clickToDeliver, id) : null}
+      {(status === 'Pendente') ? renderButton(clickToPreper, "mark-as-prepared-btn") : null}
+
+      {(status === 'Pendente') ? renderButton(clickToDeliver, "mark-as-delivered-btn") : null}
     </div>
   );
 }

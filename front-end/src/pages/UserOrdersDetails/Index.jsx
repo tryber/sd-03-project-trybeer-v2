@@ -22,12 +22,13 @@ const productsCards = (purchase) => (
   </div>
 );
 
-const itensList = async (actualUser, setPurchase, setTotal, id, setDay, setMonth) => {
+const itensList = async (actualUser, setPurchase, setTotal, id, setDay, setMonth, setStatus) => {
   const listProducts = await allProducts();
   const listSales = await allSales();
   const listSalesProducts = await allSalesProducts();
   const allSalesUser = listSales.data.filter((elem) => elem.userId === actualUser.data.id);
   const actualSale = allSalesUser[(parseInt(id) - 1)];
+  setStatus(actualSale.status);
   const actualPurchase = await listSalesProducts.data.reduce((acc, elem) => {
     if (elem.saleId === actualSale.id) {
       const product = listProducts.data.filter((e) => e.id === elem.productId);
@@ -51,6 +52,7 @@ const dateFunc = (time) => ("0" + time).slice(-2);
 function UserOrdersDetails() {
   const [purchase, setPurchase] = useState([]);
   const [total, setTotal] = useState(0);
+  const [status, setStatus] = useState('Pendente');
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const { id } = useParams();
@@ -58,7 +60,7 @@ function UserOrdersDetails() {
   useEffect(() => {
     const actualUser = JSON.parse(localStorage.getItem('user'));
     if(!actualUser) return window.location.assign('http://localhost:3000/login');
-    itensList(actualUser, setPurchase, setTotal, id, setDay, setMonth);
+    itensList(actualUser, setPurchase, setTotal, id, setDay, setMonth, setStatus);
   }, []);
 
   return (
@@ -66,6 +68,8 @@ function UserOrdersDetails() {
       {TopMenu('Detalhes de Pedido')}
       <div className="container-checkout-container-card">
         <p data-testid="order-number" className="order-number">Pedido {id}</p>
+        <p> - </p>
+        <p data-testid="order-status" className="order-status">{status}</p>
         <p data-testid="order-date" className="order-date">{dateFunc(day)}/{dateFunc(month)}</p>
         {productsCards(purchase)}
         <h4 data-testid="order-total-value" className="order-total-value">
