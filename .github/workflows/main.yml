@@ -28,6 +28,7 @@ jobs:
         uses: betrybe/eslint-linter-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - name: Evaluator step
         id: evaluator
         uses: betrybe/cypress-evaluator-action@v5
