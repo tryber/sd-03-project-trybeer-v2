@@ -76,7 +76,7 @@ export const registerSale = async (email, total, address, number, date) => {
 
 export { registerSale as createSale };
 
-export const callSales = async (id) => {
+export const callSales = async () => {
   const data = await axios.get('http://localhost:3001/sales')
     .then((response) => response);
   return data;
