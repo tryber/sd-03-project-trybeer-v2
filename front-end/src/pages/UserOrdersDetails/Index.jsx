@@ -29,9 +29,7 @@ const itensList = async (actualUser, setPurchase, setTotal, id, setDay, setMonth
   const allSalesUser = listSales.data.filter((elem) => elem.user_id === actualUser.data.id);
   const actualSale = allSalesUser[(parseInt(id) - 1)];
   setStatus(actualSale.status);
-  console.log(listSalesProducts)
   const actualPurchase = await listSalesProducts.data.reduce((acc, elem) => {
-    console.log(elem)
     if (parseFloat(elem.sale_id) === actualSale.id) {
       const product = listProducts.data.filter((e) => e.id === parseFloat(elem.product_id));
       const obj = {...product[0], amount: elem.quantity}
@@ -55,7 +53,7 @@ const dateFunc = (time) => ("0" + time).slice(-2);
 function UserOrdersDetails() {
   const [purchase, setPurchase] = useState([]);
   const [total, setTotal] = useState(0);
-  const [status, setStatus] = useState('Pendente');
+  const [status, setStatus] = useState('');
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const { id } = useParams();

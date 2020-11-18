@@ -34,7 +34,7 @@ const renderButton = (funcCall, testId, text) => (
   </div>
 );
 
-const itensList = async (setPurchase, setTotal, id, setSale, setStatus) => {
+const itensList = async (setPurchase, setTotal, id, setSale, setStatus = 'Pendente') => {
   const listProducts = await allProducts();
   const listSales = await allSales();
   const listSalesProducts = await allSalesProducts();
@@ -60,7 +60,7 @@ const itensList = async (setPurchase, setTotal, id, setSale, setStatus) => {
 function AdminOrdersDetails() {
   const [purchase, setPurchase] = useState([]);
   const [sale, setSale] = useState([]);
-  const [status, setStatus] = useState('Pendente');
+  const [status, setStatus] = useState('');
   const [total, setTotal] = useState(0);
   const { id } = useParams();
 
