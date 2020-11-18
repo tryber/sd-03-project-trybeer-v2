@@ -12,6 +12,6 @@ const app = httpFactory(express, routes, cors, bodyParser);
 
 const { ioServer } = socketFactory(connection, app);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3005;
 
 ioServer.listen(PORT, () => console.log(`listen on port: ${PORT}`));

@@ -6,6 +6,7 @@ import "./styles.css";
 
 const productsCards = (purchase, clickToCart) => (
   <div className="order-container-card">
+    {console.log(purchase)}
     {purchase.map((e, index) => {
       const month = new Date(e.date).getMonth()+1;
       const day = new Date(e.date).getUTCDate();
@@ -44,7 +45,7 @@ function UserOrders() {
 
   useEffect(() => {
     const actualUser = JSON.parse(localStorage.getItem('user'));
-    if(!actualUser) return window.location.assign('http://localhost:3000/login');
+    if (!actualUser) return window.location.assign('http://localhost:3000/login');
     itensList(actualUser, setPurchase);
   }, []);
 
