@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import moment from 'moment';
 import axios from 'axios';
 
 import Header from '../../components/MenuTop';
+
+const io = window.io;
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -10,7 +12,15 @@ const Chat = () => {
 
   const { email, token } = JSON.parse(localStorage.getItem('user'));
 
+  const socket = useRef();
+
   useEffect(() => {
+    socket.current = io('http://localhost:3001/');
+  }, []); 
+
+  useEffect(() => {
+    socket.current.emit('message', { messageValue });
+
     axios({
       method: 'POST',
       url: 'http://localhost:3001/chat',
