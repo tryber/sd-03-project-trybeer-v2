@@ -16,14 +16,16 @@ const AdminChat = () => {
   const [chatHistory, setChatHistory] = useState(messages);
   const [textMessage, seTextMessage] = useState('');
 
+  // Carregamento de mensagens já existentes no banco
   useEffect(() => {
     const fetchChatHistory = async (clientEmail) => await getChatMessages(clientEmail);
-    fetchChatHistory().then((msgs) => setChatHistory(msgs || []));
+    fetchChatHistory().then(({ messages }) => setChatHistory(messages || []));
   }, [clientEmail]);
 
-  // Conexão com o socket.io
+  // Conexão com o socket.io. Como back e front rodam em portas/endereços distintos, deve ser declarado com o endereço.
   useEffect(() => {
     socket.current = io('http://localhost:3001');
+    socket.current.emit('joinRoomAsAdmin', clientEmail);
   }, []);
 
   // Envio do histórico atualizado
@@ -44,7 +46,7 @@ const AdminChat = () => {
     const msg = {
       timeStamp: new Date().toLocaleString('pt-BR'),
       text: textMessage,
-      isClientMsg: false,
+      isAdminMsg: false,
     };
     setChatHistory((history) => [...history, msg]);
     socket.current.emit('msgToClient', msg);
@@ -58,9 +60,9 @@ const AdminChat = () => {
         {
         !chatHistory
           ? 'Nenhuma conversa por aqui'
-          : chatHistory.map(({ timeStamp, text, isClientMsg }) => (
-            <article key={ text } className={ isClientMsg ? 'msg-customer' : 'msg-admin' }>
-              <div data-testid="nickname">{ isClientMsg ? clientEmail : 'Loja' }</div>
+          : chatHistory.map(({ timeStamp, text, isAdminMsg }) => (
+            <article key={ text } className={ isAdminMsg ? 'msg-admin' : 'msg-customer' }>
+              <div data-testid="nickname">{ isAdminMsg ? 'Loja' : clientEmail }</div>
               <div data-testid="message-time">{timeStamp}</div>
               <div data-testid="text-message">{text}</div>
             </article>

@@ -1,34 +1,57 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { getChatMessages } from '../../services/api_endpoints';
+import {
+  createChatFile,
+  getChatMessages,
+  updateChatMessages,
+} from '../../services/api_endpoints';
 import MenuBar from '../MenuBar';
 import './style.css';
 
 const { io } = window;
 
 const ClientChat = () => {
-  const [message, setMessage] = useState('');
   const [textMessage, setTextMessage] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
 
   const socket = useRef();
   const { email } = JSON.parse(localStorage.getItem('user'));
+  // const email = 'zebirita@gmail.com';
 
+  // Carregamento de mensagens já existentes no banco
   useEffect(() => {
-    const fetchChatHistory = async (email) => await getChatMessages(email);
-    fetchChatHistory().then((msgs) => setChatHistory(msgs || []));
-    socket.current = io('http://localhost:3001');
-  }, [email]);
+    try {
+      const fetchChatHistory = async () => await getChatMessages(email);
+      fetchChatHistory().then((fetched) => {
+        setChatHistory(fetched.messages);
+      })
+    } catch (error) {
+      createChatFile(email);
+    }
 
+    socket.current = io('http://localhost:3001');
+    socket.current.emit('joinRoomAsCustomer', email);
+  }, []);
+
+  // Recebimento de mensagem
+  useEffect(() => {
+    socket.current.on('msgToCustomer', ({ msg }) => {
+      console.log(msg);
+      setChatHistory((history) => [...history, msg]);
+    });
+  }, [socket]);
+
+  // Formatação e envio de mensagens + salvamento no banco
   const submitMessage = (event) => {
     event.preventDefault();
     setTextMessage('');
     const msg = {
       timeStamp: new Date().toLocaleString('pt-BR'),
       text: textMessage,
-      isClientMsg: false,
+      isAdminMsg: true,
     };
     setChatHistory((history) => [...history, msg]);
-    socket.current.emit('msgToServer', msg);
+    updateChatMessages(email, chatHistory);
+    socket.current.emit('msgToAdmin', msg);
   };
 
   return (
@@ -36,9 +59,9 @@ const ClientChat = () => {
       <MenuBar titleName="Atendimento online" />
       <div id="message-text" data-testid="text-message">
         <ul>{ chatHistory.map(
-          ({ timeStamp, text, isClientMsg }) => (
-          <li key={ text } className={ isClientMsg ? 'msg-customer' : 'msg-admin' }>
-            <div data-testid="nickname">{ isClientMsg ? email : 'Loja' }</div>
+          ({ timeStamp, text, isAdminMsg }) => (
+          <li key={ text } className={ isAdminMsg ? 'msg-admin' : 'msg-customer' }>
+            <div data-testid="nickname">{ isAdminMsg ? 'Loja' : email }</div>
             <div data-testid="message-time">{timeStamp}</div>
             <div data-testid="text-message">{text}</div>
           </li>
@@ -53,6 +76,7 @@ const ClientChat = () => {
         />
         <button
           type="submit"
+          disabled={!textMessage}
           data-testid="send-message"
           onClick={ submitMessage }
         >

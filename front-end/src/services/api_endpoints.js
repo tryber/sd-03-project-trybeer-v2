@@ -91,7 +91,27 @@ export const getChatMessages = async (email) => {
     method: 'get',
   })
     .then((result) => result.data);
-    return msgs;
+    return msgs[0];
+};
+
+export const createChatFile = async (email) => {
+  const convo = await axios({
+    baseURL: `${url}admin/chat/${email}`,
+    method: 'post',
+  })
+    .then((result) => result.data);
+    return convo;
+};
+
+export const updateChatMessages = async (email, chatHistory) => {
+  await axios({
+    baseURL: `${url}admin/chat/${email}`,
+    method: 'put',
+    body: {
+      messages: chatHistory,
+    }
+  })
+    .then((result) => result.data);
 };
 
 export const getOrderList = async (token) => {
