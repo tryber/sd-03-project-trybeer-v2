@@ -19,6 +19,9 @@ function SideMenuAdmin() {
             <button data-testid="side-menu-item-profile" onClick={() => test(history, 'admin/profile')}>
                 Perfil
             </button>
+            <button data-testid="side-menu-item-chat" onClick={() => test(history, 'admin/chats')}>
+                Conversas
+            </button>
             <button data-testid="side-menu-item-logout" onClick={() => test(history, null)}>
                 Sair
             </button>

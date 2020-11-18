@@ -26,6 +26,7 @@ function Routes() {
         <Route exact path="/orders" component={ UserOrders } />
         <Route exact path="/admin/profile" component={ AdminProfile } />
         <Route exact path="/admin/orders" component={ AdminOrders } />
+        <Route exact path="/admin/chats" component={ AdminOrders } />
         <Route exact path="/chat" component={ UserChat } />
         <Route exact path="/admin/orders/:id" component={ AdminOrdersDetails } />
       </Switch>

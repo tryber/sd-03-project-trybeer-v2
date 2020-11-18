@@ -40,7 +40,6 @@ const itensList = async (actualUser, setPurchase, setTotal, id, setDay, setMonth
   }, []);
   setPurchase(actualPurchase);
   const actualTotal = actualPurchase.reduce((acc, elem) => {
-    console.log(elem)
     return (parseFloat(acc) + parseFloat(elem.price) * elem.amount).toFixed(2).replace('.', ',');
   }, 0);
   setDay(new Date(actualSale.sale_date).getUTCDate());
