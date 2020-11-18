@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import AdminMenu from './Menu/AdminMenu';
 import { useHistory } from 'react-router-dom';
-
 import axios from 'axios';
+import AdminMenu from './Menu/AdminMenu';
 
 const one = 1;
 
@@ -32,7 +31,7 @@ export default function AdminChats() {
   return (
     <div>
       <AdminMenu />
-      { !chats.length ? <h2>Nenhuma conversa por aqui</h2> :
+      { !chats.length && <h2>Nenhuma conversa por aqui</h2> }
       <ul>
         { !!chats.length && chats.map((chat) => (
           <li key={ chat.email }>
@@ -51,6 +50,6 @@ export default function AdminChats() {
             </button>
           </li>
         ))}
-      </ul> }
+      </ul>
     </div>);
 }
