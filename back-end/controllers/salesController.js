@@ -11,10 +11,8 @@ const listAllSales = async (_req, res, next) => {
 const updateSaleById = async (req, res, next) => {
   const { id } = req.params;
   const { status } = req.body;
-  console.log(status);
 
   const response = await updateSale(id, status);
-  console.log(response);
 
   if (response) return next(response.error);
 

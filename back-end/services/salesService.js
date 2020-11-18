@@ -44,6 +44,7 @@ const getSaleById = async (id) => {
   }
 
   const serializeSale = {
+    saleDate: sale.sale_date,
     total: sale.total_price,
     saleId: sale.id,
     number: sale.delivery_number,

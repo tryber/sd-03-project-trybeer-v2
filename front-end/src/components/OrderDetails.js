@@ -57,6 +57,7 @@ export default function Checkout() {
           {' '}
           { order.saleId }
         </h4>
+        <h4>{ order.status }</h4>
         <div>
           {
             order.saleProducts
