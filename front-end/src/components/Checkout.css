@@ -1,0 +1,8 @@
+body {
+  align-items: center;
+}
+.form {
+  display: flex;
+  align-content: flex-end;
+  justify-content: space-between;
+}

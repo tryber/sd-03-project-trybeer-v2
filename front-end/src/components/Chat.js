@@ -1,0 +1,102 @@
+import React, { useState, useEffect } from 'react';
+import { Redirect, Link } from 'react-router-dom';
+import axios from 'axios';
+import './Chat.css';
+import { ClientMenu, AdminMenu } from './Menu/index';
+
+const io = require('socket.io-client');
+
+const socket = io('http://localhost:3001', { transports: ['websocket'] });
+
+const connectWithBack = async () => {
+  const { token } = JSON.parse(localStorage.getItem('user'));
+  const response = await axios.get('http://localhost:3001/chat', {
+    headers: { authorization: token },
+  });
+  return response;
+};
+
+function ClientChat() {
+  const userChat = localStorage.getItem('userChat');
+  const [chat, setChat] = useState([]);
+  const localUser = JSON.parse(localStorage.getItem('user'));
+
+  function emitHistory() {
+    if (localUser.role === 'administrator') {
+      socket.emit('history', { email: userChat });
+    } else {
+      socket.emit('history', localUser);
+    }
+  }
+
+  useEffect(emitHistory, []);
+
+  socket.on('message', ({ newMessage }) => {
+    const { from, time, text } = newMessage;
+    setChat([...chat, { from, time, text }]);
+  });
+
+  socket.on('history', (previousMessages) => {
+    setChat(previousMessages);
+  });
+
+  const displayMessage = () => {
+    const message = document.getElementById('message-input').value;
+    if (localUser.role === 'administrator') {
+      socket.emit('message', { message, user: localUser, to: userChat });
+    } else {
+      socket.emit('message', { message, user: localUser, to: 'Loja' });
+      document.getElementById('message-input').value = '';
+    }
+  };
+
+  const getData = async () => {
+    try {
+      await connectWithBack();
+    } catch (e) {
+      return e;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return (
+    <div>
+      {localUser === null && <Redirect to="/login" />}
+      {localUser !== null && localUser.role === 'administrator' ? <AdminMenu /> : <ClientMenu />}
+      <p id="hidden-text">b</p>
+      {localUser !== null && localUser.role === 'administrator' && (
+        <Link to="/admin/chats">
+          <button data-testid="back-button" type="button">
+            Voltar
+          </button>
+        </Link>)}
+      <div className="chat-div">
+        {chat.length
+          && chat.map((item) => (
+            <div key={ item.time }>
+              <p data-testid="nickname">{item.from}</p>
+              <p data-testid="message-time">{item.time}</p>
+              <p data-testid="text-message">{item.text}</p>
+            </div>
+          ))}
+      </div>
+      <input
+        id="message-input"
+        data-testid="message-input"
+      />
+      <button
+        data-testid="send-message"
+        type="button"
+        onClick={ () => displayMessage() }
+      >
+        Enviar Mensagem
+      </button>
+    </div>
+  );
+}
+
+export default ClientChat;

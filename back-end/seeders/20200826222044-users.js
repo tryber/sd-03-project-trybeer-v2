@@ -13,7 +13,7 @@ module.exports = {
         password: '12345678',
         role: 'client',
       },
-    ], {});
+    ], { timestamp: false });
   },
 
   down: async (queryInterface, _Sequelize) => {

@@ -1,29 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
+import LoginScreen from './components/Login';
+import ProductsClient from './components/ProductsClient';
+import RegisterScreen from './components/Register';
+import ProfileScreen from './components/Profile';
+import CheckoutScreen from './components/Checkout';
+import OrdersScreen from './components/Orders';
+import OrderDetailsScreen from './components/OrderDetails';
+import AplicationProvider from './context/ContextAplication';
+import AdminOrders from './components/AdminOrders';
+import AdminDetails from './components/AdminDetails';
+import Chat from './components/Chat';
+import AdminChats from './components/AdminChats';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-        <p>
-          Edit
-          {' '}
-          <code>src/App.js</code>
-          {' '}
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AplicationProvider>
+      <Switch>
+        <Route exact path="/" component={ LoginScreen } />
+        <Route exact path="/login" component={ LoginScreen } />
+        <Route exact path="/products" component={ ProductsClient } />
+        <Route exact path="/register" component={ RegisterScreen } />
+        <Route exact path="/profile" component={ ProfileScreen } />
+        <Route exact path="/orders/:id" component={ OrderDetailsScreen } />
+        <Route exact path="/orders" component={ OrdersScreen } />
+        <Route exact path="/checkout" component={ CheckoutScreen } />
+        <Route exact path="/chat" component={ Chat } />
+        <Route exact path="/admin/orders" component={ AdminOrders } />
+        <Route exact path="/admin/profile" component={ ProfileScreen } />
+        <Route exact path="/admin/chat" component={ Chat } />
+        <Route exact path="/admin/orders/:id" component={ AdminDetails } />
+        {/*         <Route exact path="/admin/chat" component={ Chat } />
+ */}
+        {' '}
+        <Route exact path="/admin/chats" component={ AdminChats } />
+      </Switch>
+    </AplicationProvider>
   );
 }
 
