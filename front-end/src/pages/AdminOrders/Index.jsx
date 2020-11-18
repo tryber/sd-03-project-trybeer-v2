@@ -35,6 +35,8 @@ const itensList = async (setPurchase) => {
   return setPurchase(listSales.data);
 };
 
+// ok 
+
 function AdminOrders() {
   const [purchase, setPurchase] = useState([]);
   const history = useHistory();
