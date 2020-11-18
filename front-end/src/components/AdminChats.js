@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AdminMenu from './Menu/AdminMenu';
 import { useHistory } from 'react-router-dom';
 
 import axios from 'axios';
@@ -16,6 +17,7 @@ export default function AdminChats() {
 
       const response = await axios.get('http://localhost:3001/admin/chats', { headers: { authorization: token } });
       const chatsList = await response.data;
+
       if (isSubscribed) setChats(chatsList);
     };
     getChats();
@@ -27,8 +29,10 @@ export default function AdminChats() {
   //   }
   // }, [])
 
-  return !chats ? <h2>Nenhuma conversa por aqui</h2> : (
+  return (
     <div>
+      <AdminMenu />
+      { !chats.length ? <h2>Nenhuma conversa por aqui</h2> :
       <ul>
         { !!chats.length && chats.map((chat) => (
           <li key={ chat.email }>
@@ -36,7 +40,7 @@ export default function AdminChats() {
               type="button"
               onClick={ () => {
                 localStorage.setItem('userChat', chat.email);
-                history.push('/chat');
+                history.push('/admin/chat');
               } }
             >
 
@@ -47,6 +51,6 @@ export default function AdminChats() {
             </button>
           </li>
         ))}
-      </ul>
+      </ul> }
     </div>);
 }
