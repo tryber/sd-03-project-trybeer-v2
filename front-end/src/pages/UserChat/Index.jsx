@@ -42,7 +42,8 @@ const UserChat = () => {
         {arrMessages.map(({ message, strgTime, nick }, index) => {
           return (
             <div key={index}>
-              <p data-testid="nickname">{nick}</p><p> - </p><p data-testid="message-time">{strgTime}</p>
+              <h4 data-testid="nickname">{nick}</h4>
+              <h4 data-testid="message-time">{strgTime}</h4>
               <p data-testid="text-message">{message}</p>
             </div>
           );
