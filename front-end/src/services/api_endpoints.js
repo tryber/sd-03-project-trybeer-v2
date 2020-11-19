@@ -91,7 +91,7 @@ export const getChatMessages = async (email) => {
     method: 'get',
   })
     .then((result) => result.data);
-    return msgs[0];
+  return msgs[0];
 };
 
 export const createChatFile = async (email) => {
@@ -100,7 +100,7 @@ export const createChatFile = async (email) => {
     method: 'post',
   })
     .then((result) => result.data);
-    return convo;
+  return convo;
 };
 
 export const updateChatMessages = async (email, chatHistory) => {
@@ -109,7 +109,7 @@ export const updateChatMessages = async (email, chatHistory) => {
     method: 'put',
     data: {
       messages: chatHistory,
-    }
+    },
   })
     .then((result) => result.data);
 };

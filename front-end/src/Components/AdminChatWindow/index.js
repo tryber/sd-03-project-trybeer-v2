@@ -19,16 +19,17 @@ const AdminChat = () => {
   // Carregamento de mensagens já existentes no banco
   useEffect(() => {
     try {
-      const fetchChatHistory = async () => await getChatMessages(clientEmail);
+      const fetchChatHistory = async () => getChatMessages(clientEmail);
       fetchChatHistory().then((fetched) => {
         setChatHistory(fetched.messages);
-      })
+      });
     } catch (error) {
       console.log(error);
     }
   }, [clientEmail]);
 
-  // Conexão com o socket.io. Como back e front rodam em portas/endereços distintos, deve ser declarado com o endereço.
+  // Conexão com o socket.io. Como back e front rodam em portas/endereços distintos,
+  // deve ser declarado com o endereço.
   useEffect(() => {
     socket.current = io('http://localhost:3001');
     socket.current.emit('joinRoomAsAdmin', clientEmail);

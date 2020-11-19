@@ -20,10 +20,10 @@ const ClientChat = () => {
   // criação de nova conversa (caso ainda não exista)
   useEffect(() => {
     try {
-      const fetchChatHistory = async () => await getChatMessages(email);
+      const fetchChatHistory = async () => getChatMessages(email);
       fetchChatHistory().then((fetched) => {
         setChatHistory(fetched.messages);
-      })
+      });
     } catch (error) {
       createChatFile(email);
     }
@@ -60,14 +60,16 @@ const ClientChat = () => {
     <div>
       <MenuBar titleName="Atendimento online" />
       <div id="message-text" data-testid="text-message">
-        <ul>{ chatHistory.map(
-          ({ timeStamp, text, isAdminMsg }) => (
-          <li key={ text } className={ isAdminMsg ? 'msg-admin' : 'msg-customer' }>
-            <div data-testid="nickname">{ isAdminMsg ? 'Loja' : email }</div>
-            <div data-testid="message-time">{timeStamp}</div>
-            <div data-testid="text-message">{text}</div>
-          </li>
-          )) }
+        <ul>
+          { chatHistory.map(
+            ({ timeStamp, text, isAdminMsg }) => (
+              <li key={ text } className={ isAdminMsg ? 'msg-admin' : 'msg-customer' }>
+                <div data-testid="nickname">{ isAdminMsg ? 'Loja' : email }</div>
+                <div data-testid="message-time">{timeStamp}</div>
+                <div data-testid="text-message">{text}</div>
+              </li>
+            ),
+          ) }
         </ul>
       </div>
       <form>
@@ -78,7 +80,7 @@ const ClientChat = () => {
         />
         <button
           type="submit"
-          disabled={!textMessage}
+          disabled={ !textMessage }
           data-testid="send-message"
           onClick={ submitMessage }
         >

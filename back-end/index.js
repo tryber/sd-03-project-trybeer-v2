@@ -66,12 +66,12 @@ io.on('connect', (socket) => {
   socket.on('joinRoomAsCustomer', (email) => {
     socket.join(email);
     console.log('Cliente conectado na sala', email);
-  })
+  });
 
   socket.on('joinRoomAsAdmin', (email) => {
     socket.join(email);
     console.log('Admin conectado na sala', email);
-  })
+  });
 
   socket.on('msgToAdmin', async (objMsg) => {
     const { timeStamp, text, isAdminMsg } = objMsg;
@@ -84,7 +84,7 @@ io.on('connect', (socket) => {
     console.log(`Admin >>> ${timeStamp} ${text} ${isAdminMsg}`);
     socket.emit('msgToCustomer', objMsg);
   });
-  
+
   socket.on('disconnect', () => {
     console.log(socket.id, 'desconectou-se');
   });

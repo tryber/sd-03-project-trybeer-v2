@@ -19,24 +19,25 @@ const AdminChatsPage = () => {
       <AdminSideBar />
       <section className="admin-chats-aside">
         <h1>Conversas</h1>
+        {console.log(chatList)}
         {
-          chatList ?
-          chatList.map(({ clientEmail, messages }) => (
-            <Link
-              data-testid="containerChat"
-              key={ clientEmail }
-              to={ {
-                pathname: '/admin/chat/',
-                state: { clientEmail, messages },
-              } }
-            >
+          chatList
+            ? chatList.map(({ clientEmail, messages }) => (
+              <Link
+                data-testid="containerChat"
+                key={ clientEmail }
+                to={ {
+                  pathname: '/admin/chat/',
+                  state: { clientEmail, messages },
+                } }
+              >
                 <ChatTile
                   email={ clientEmail }
                   time={ messages[messages.length - 1].timeStamp }
                 />
               </Link>
-            )) :
-          <h2 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</h2>
+            ))
+            : <h2 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</h2>
         }
       </section>
     </div>
