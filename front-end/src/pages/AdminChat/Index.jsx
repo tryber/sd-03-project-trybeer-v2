@@ -20,14 +20,19 @@ const UserChat = () => {
   useEffect(() => {
     if (socket.current) {
       socket.current.emit('joinChat', email);
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (socket.current) {
       socket.current.on('history', (messages) => setArrMessages(messages));
-      socket.current.on('message', (message) => setArrMessages([...arrMessages, message]));
+      socket.current.on('message', (message) => setArrMessages((oldArr) => [...oldArr, message]));
     }
   }, [socket]);
 
   const sendMessage = async (userMessage) => {
     const role = 'administrador'
-    socket.emit('newMessage', { email, userMessage, role });
+    socket.current.emit('newMessage', { email, userMessage, role });
     setMessage('');
   };
 
@@ -35,10 +40,10 @@ const UserChat = () => {
     <div>
       {SideMenuAdmin()}
       <div>
-        {arrMessages.map(({nick, newEntry, message}, index) => {
+        {arrMessages.map(({nick, strgTime, message}, index) => {
           return (
             <div key={index}>
-              <p data-testid="nickname">{nick}</p><p> - </p><p data-testid="message-time">{newEntry}</p>
+              <p data-testid="nickname">{nick}</p><p> - </p><p data-testid="message-time">{strgTime}</p>
               <p data-testid="text-message">{message}</p>
             </div>
           );

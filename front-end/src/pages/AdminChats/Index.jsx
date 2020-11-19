@@ -16,7 +16,7 @@ const chatsCards = (chats, clickToChatDetail) => {
     <div>
       {chats.map((e, index) => {
         const length = e.messages.length;
-        const time = e.messages[(length - 1)].newEntry
+        const time = e.messages[(length - 1)].strgTime
         return (
           <div
             key={index}

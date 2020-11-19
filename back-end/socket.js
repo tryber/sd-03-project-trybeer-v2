@@ -9,11 +9,13 @@ const newMessage = (_socket, io) => async ({ email, message, role }) => {
   const strgTime = `${time}`;
   const nick = (role === 'administrador') ? 'Loja' : email;
   const newEntry = { nick, strgTime, message };
+  const actualChat = chat.filter((e) => e.email === email);
 
-  if (chat.some((e) => e.email === email)) {
-    await messageModel.saveMessage(email, newEntry, chat);
+  if (actualChat.length > 0) {
+    const newChat = [...actualChat[0].messages, newEntry];
+    await messageModel.saveMessage(email, newChat);
   } else {
-    await messageModel.createChat(email, newEntry);
+    await messageModel.createChat(email, [newEntry]);
   }
 
   io.to(email).emit('message', { nick, newEntry, message });
@@ -26,9 +28,10 @@ module.exports = (connection, app) => {
   io.on('connection', async (socket) => {
     socket.on('joinChat', async (email) => {
       socket.join(email);
-      const chat = await messageModel.getAllChats() || [];
+      const chat = await messageModel.getAllChats();
       const history = chat.filter((e) => e.email === email);
-      socket.emit('history', history.messages);
+      const message = (chat.length === 0) ? [] : history[0].messages;
+      socket.emit('history', message);
     });
     socket.on('newMessage', newMessage(socket, io));
   });

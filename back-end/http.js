@@ -8,6 +8,8 @@ module.exports = (express, routes, cors, bodyParser) => {
   app.use('/profile', routes.profileRoute);
   app.use('/products', routes.productsRoute);
   app.use('/sales', routes.salesRoute);
+  app.use('/message', routes.messageRoute);
+
   app.use('/individualProduct', routes.individualProductRoute);
   app.use('/images', express.static('images'));
 
