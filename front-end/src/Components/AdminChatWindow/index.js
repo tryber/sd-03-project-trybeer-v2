@@ -18,14 +18,10 @@ const AdminChat = () => {
 
   // Carregamento de mensagens já existentes no banco
   useEffect(() => {
-    try {
-      const fetchChatHistory = async () => getChatMessages(clientEmail);
-      fetchChatHistory().then((fetched) => {
-        setChatHistory(fetched.messages);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const fetchChatHistory = async () => getChatMessages(clientEmail);
+    fetchChatHistory().then((fetched) => {
+      setChatHistory(fetched.messages);
+    });
   }, [clientEmail]);
 
   // Conexão com o socket.io. Como back e front rodam em portas/endereços distintos,

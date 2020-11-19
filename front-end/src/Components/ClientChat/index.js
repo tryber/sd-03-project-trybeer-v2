@@ -19,15 +19,14 @@ const ClientChat = () => {
   // Carregamento de mensagens já existentes no banco, ou
   // criação de nova conversa (caso ainda não exista)
   useEffect(() => {
-    try {
-      const fetchChatHistory = async () => getChatMessages(email);
-      fetchChatHistory().then((fetched) => {
+    const fetchChatHistory = async () => getChatMessages(email);
+    fetchChatHistory()
+      .then((fetched) => {
         setChatHistory(fetched.messages);
+      })
+      .catch(() => {
+        createChatFile(email);
       });
-    } catch (error) {
-      createChatFile(email);
-    }
-
     socket.current = io('http://localhost:3001');
     socket.current.emit('joinRoomAsCustomer', email);
   }, [email]);
@@ -40,7 +39,8 @@ const ClientChat = () => {
   }, [socket]);
 
   useEffect(() => {
-    updateChatMessages(email, chatHistory);
+    const updateMsg = async () => updateChatMessages(email, chatHistory);
+    updateMsg();
   }, [email, chatHistory]);
 
   // Formatação e envio de mensagens + salvamento no banco

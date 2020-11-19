@@ -10,7 +10,7 @@
     "start": "node index.js",
     "test": "jest --watchAll",
     "test-band": "jest --watchAll --runInBand --detectOpenHandles",
-    "test-coverage": "jest --coverage",
+    "test-coverage": "jest --coverage --forceExit --watchAll=false",
     "debug": "nodemon index.js",
     "start:watch": "nodemon index.js",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."

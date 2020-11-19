@@ -7,7 +7,8 @@ import './style.css';
 
 const AdminChatsPage = () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
-  const [chatList, setChatList] = useState([]);
+  const [chatList, setChatList] = useState();
+  const randomNumber = parseInt(Math.random(), 10);
 
   useEffect(() => {
     const fetchChatList = async () => await getChatsList(token) || [];
@@ -15,32 +16,33 @@ const AdminChatsPage = () => {
   }, [token]);
 
   return (
-    <div className="admin-chats">
+    <>
       <AdminSideBar />
-      <section className="admin-chats-aside">
-        <h1>Conversas</h1>
-        {console.log(chatList)}
-        {
-          chatList
-            ? chatList.map(({ clientEmail, messages }) => (
-              <Link
-                data-testid="containerChat"
-                key={ clientEmail }
-                to={ {
-                  pathname: '/admin/chat/',
-                  state: { clientEmail, messages },
-                } }
-              >
-                <ChatTile
-                  email={ clientEmail }
-                  time={ messages[messages.length - 1].timeStamp }
-                />
-              </Link>
-            ))
-            : <h2 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</h2>
-        }
-      </section>
-    </div>
+      <div className="admin-chats">
+        <section className="admin-chats-aside">
+          <h1>Conversas</h1>
+          {
+            chatList
+              ? chatList.map(({ clientEmail, messages }) => (
+                <Link
+                  data-testid="containerChat"
+                  key={ randomNumber }
+                  to={ {
+                    pathname: '/admin/chat/',
+                    state: { clientEmail, messages },
+                  } }
+                >
+                  <ChatTile
+                    email={ clientEmail }
+                    time={ messages[messages.length - 1].timeStamp }
+                  />
+                </Link>
+              ))
+              : <h2 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</h2>
+          }
+        </section>
+      </div>
+    </>
   );
 };
 
