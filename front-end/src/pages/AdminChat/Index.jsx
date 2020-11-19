@@ -39,7 +39,7 @@ const UserChat = () => {
     setMessage('');
   };
 
-  const clickToBack = async (email) => {
+  const clickToBack = async () => {
     history.push(`/admin/chats`);
   };
 
