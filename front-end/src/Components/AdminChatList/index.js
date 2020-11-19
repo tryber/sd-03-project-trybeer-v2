@@ -16,9 +16,9 @@ const AdminChatsPage = () => {
   }, [token]);
 
   return (
-    <div  className="admin-orders">
+    <div className="">
       <AdminSideBar />
-      <div className="admin-orders-aside">
+      <div className="">
         <section className="admin-chats-aside">
           <h1>Conversas</h1>
           {
@@ -42,7 +42,7 @@ const AdminChatsPage = () => {
           }
         </section>
       </div>
-    </div >
+    </div>
   );
 };
 
