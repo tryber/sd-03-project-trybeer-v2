@@ -7,22 +7,22 @@ import './style.css';
 
 const AdminChatsPage = () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
-  const [chatList, setChatList] = useState();
+  const [chatList, setChatList] = useState([]);
   const randomNumber = parseInt(Math.random(), 10);
-
+  const zero = 0;
   useEffect(() => {
     const fetchChatList = async () => getChatsList(token) || [];
     fetchChatList().then((chats) => setChatList(chats));
   }, [token]);
 
   return (
-    <div className="">
+    <div className="admin-orders">
       <AdminSideBar />
-      <div className="">
+      <div className="admin-orders-aside">
         <section className="admin-chats-aside">
           <h1>Conversas</h1>
           {
-            chatList
+            chatList.length > zero
               ? chatList.map(({ clientEmail, messages }) => (
                 <Link
                   data-testid="containerChat"
