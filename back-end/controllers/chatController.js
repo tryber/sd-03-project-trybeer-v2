@@ -18,7 +18,6 @@ const createConvo = async (req, res) => {
 const updateConvo = async (req, _res) => {
   const { email } = req.params;
   const { messages } = req.body;
-  console.log(req.body);
   await chatModel.appendMsgs(email, messages);
 };
 

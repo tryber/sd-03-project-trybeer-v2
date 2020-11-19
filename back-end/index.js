@@ -76,12 +76,13 @@ io.on('connect', (socket) => {
   socket.on('msgToAdmin', async (objMsg) => {
     const { timeStamp, text, isAdminMsg } = objMsg;
     console.log(`Cliente >>> ${timeStamp} ${text} ${isAdminMsg}`);
-    socket.to()
+    socket.emit('msgToAdmin', objMsg);
   });
 
-  socket.on('msgToClient', async (objMsg) => {
+  socket.on('msgToCustomer', async (objMsg) => {
     const { timeStamp, text, isAdminMsg } = objMsg;
     console.log(`Admin >>> ${timeStamp} ${text} ${isAdminMsg}`);
+    socket.emit('msgToCustomer', objMsg);
   });
   
   socket.on('disconnect', () => {

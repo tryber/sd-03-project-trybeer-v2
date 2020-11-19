@@ -107,7 +107,7 @@ export const updateChatMessages = async (email, chatHistory) => {
   await axios({
     baseURL: `${url}admin/chat/${email}`,
     method: 'put',
-    body: {
+    data: {
       messages: chatHistory,
     }
   })

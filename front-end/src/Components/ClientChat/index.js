@@ -10,14 +10,14 @@ import './style.css';
 const { io } = window;
 
 const ClientChat = () => {
+  const socket = useRef();
   const [textMessage, setTextMessage] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
 
-  const socket = useRef();
   const { email } = JSON.parse(localStorage.getItem('user'));
-  // const email = 'zebirita@gmail.com';
 
-  // Carregamento de mensagens já existentes no banco
+  // Carregamento de mensagens já existentes no banco, ou
+  // criação de nova conversa (caso ainda não exista)
   useEffect(() => {
     try {
       const fetchChatHistory = async () => await getChatMessages(email);
@@ -30,15 +30,18 @@ const ClientChat = () => {
 
     socket.current = io('http://localhost:3001');
     socket.current.emit('joinRoomAsCustomer', email);
-  }, []);
+  }, [email]);
 
   // Recebimento de mensagem
   useEffect(() => {
     socket.current.on('msgToCustomer', ({ msg }) => {
-      console.log(msg);
       setChatHistory((history) => [...history, msg]);
     });
   }, [socket]);
+
+  useEffect(() => {
+    updateChatMessages(email, chatHistory);
+  }, [email, chatHistory]);
 
   // Formatação e envio de mensagens + salvamento no banco
   const submitMessage = (event) => {
@@ -47,10 +50,9 @@ const ClientChat = () => {
     const msg = {
       timeStamp: new Date().toLocaleString('pt-BR'),
       text: textMessage,
-      isAdminMsg: true,
+      isAdminMsg: false,
     };
     setChatHistory((history) => [...history, msg]);
-    updateChatMessages(email, chatHistory);
     socket.current.emit('msgToAdmin', msg);
   };
 

@@ -11,7 +11,6 @@ const AdminChatsPage = () => {
 
   useEffect(() => {
     const fetchChatList = async () => await getChatsList(token) || [];
-
     fetchChatList().then((chats) => setChatList(chats));
   }, [token]);
 
@@ -21,9 +20,8 @@ const AdminChatsPage = () => {
       <section className="admin-chats-aside">
         <h1>Conversas</h1>
         {
-        !chatList
-          ? <h2 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</h2>
-          : chatList.map(({ clientEmail, messages }) => (
+          chatList ?
+          chatList.map(({ clientEmail, messages }) => (
             <Link
               data-testid="containerChat"
               key={ clientEmail }
@@ -32,13 +30,14 @@ const AdminChatsPage = () => {
                 state: { clientEmail, messages },
               } }
             >
-              <ChatTile
-                email={ clientEmail }
-                time={ messages[messages.length - 1].timeStamp }
-              />
-            </Link>
-          ))
-}
+                <ChatTile
+                  email={ clientEmail }
+                  time={ messages[messages.length - 1].timeStamp }
+                />
+              </Link>
+            )) :
+          <h2 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</h2>
+        }
       </section>
     </div>
   );
