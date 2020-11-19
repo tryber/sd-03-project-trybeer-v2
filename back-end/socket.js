@@ -6,7 +6,7 @@ const newMessage = (_socket, io) => async ({ email, message, role }) => {
   const chat = await messageModel.getAllChats();
   const date = new Date();
   const time = date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-  const strgTime = `${time}`;
+  const strgTime = time;
   const nick = (role === 'administrador') ? 'Loja' : email;
   const newEntry = { nick, strgTime, message };
   const actualChat = chat.filter((e) => e.email === email);
