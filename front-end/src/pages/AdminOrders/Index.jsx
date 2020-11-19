@@ -7,7 +7,6 @@ import "./styles.css";
 const productsCards = (purchase, clickToOrdersDetail) => (
   <div className="order-container-card">
     {purchase.map((e, index) => {
-      console.log(e)
       return (
         <div
           key={e.id}

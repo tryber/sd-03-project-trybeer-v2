@@ -6,7 +6,7 @@ import "./styles.css";
 
 const inputs = (userValue, setUserValue, focus, setFocus, testidClass, type, placeholder, write) => {
   return (
-    <div className={`${focus ? "focu" : "txtb"}`}>
+    <div className={`${focus ? "focus" : "txtb"}`}>
       <label htmlFor={type}>
         {write}
         <input
