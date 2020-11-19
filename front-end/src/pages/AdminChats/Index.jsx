@@ -13,7 +13,7 @@ const chatsCards = (chats, clickToChatDetail) => {
   }
   
   return (
-    <div>
+    <div data-testid="containerChat">
       {chats.map((e, index) => {
         const length = e.messages.length;
         const time = e.messages[(length - 1)].strgTime

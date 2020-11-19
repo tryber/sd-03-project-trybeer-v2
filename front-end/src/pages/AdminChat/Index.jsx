@@ -59,7 +59,7 @@ const UserChat = () => {
       </div>
       <div className="products-container-card">
         <input
-          data-testid="chat-message"
+          data-testid="message-input"
           type="text" value={ message }
           onChange={ (e) => setMessage(e.target.value) }
           placeholder="Digite..."
