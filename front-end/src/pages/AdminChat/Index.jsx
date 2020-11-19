@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import TopMenu from '../../components/TopMenu/Index';
+import SideMenuAdmin from '../../components/SideMenuAdmin';
 
 const { io } = window;
 
@@ -12,7 +12,8 @@ const UserChat = () => {
   useEffect(() => {
     const actualUser = JSON.parse(localStorage.getItem('user'));
     if(!actualUser) return window.location.assign('http://localhost:3000/login');
-    setEmail(actualUser.data.email);
+    const chatUser = JSON.parse(localStorage.getItem('chat'));
+    setEmail(chatUser.data.email);
     socket.current = io('http://localhost:3001');
   }, []);
 
@@ -25,14 +26,14 @@ const UserChat = () => {
   }, [socket]);
 
   const sendMessage = async (userMessage) => {
-    const role = 'user'
+    const role = 'administrador'
     socket.emit('newMessage', { email, userMessage, role });
     setMessage('');
   };
 
   return (
     <div>
-      {TopMenu('TryBeer')}
+      {SideMenuAdmin()}
       <div>
         {arrMessages.map(({nick, newEntry, message}, index) => {
           <div key={index}>

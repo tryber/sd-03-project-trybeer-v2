@@ -111,3 +111,11 @@ export const changeState = async (id, status) => {
 };
 
 export { changeState as changeStateSale };
+
+export const getChats = async () => {
+  const data = await axios.get('http://localhost:3001/message')
+    .then((response) => response);
+  return data;
+};
+
+export { getChats as allChats };
