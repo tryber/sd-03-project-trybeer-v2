@@ -21,7 +21,7 @@ const chatsCards = (chats, clickToChatDetail) => {
           <div
             key={index}
             onClick={() => clickToChatDetail(e.email)}
-            data-testid="containerChat"
+            data-testid="last-message"
           >
             <p data-testid="profile-name">{e.email}</p>
             <p
