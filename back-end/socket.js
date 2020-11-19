@@ -26,7 +26,7 @@ module.exports = (connection, app) => {
   io.on('connection', async (socket) => {
     socket.on('joinChat', async (email) => {
       socket.join(email);
-      const chat = await messageModel.getAllChats();
+      const chat = await messageModel.getAllChats() || [];
       const history = chat.filter((e) => e.email === email);
       socket.emit('history', history.messages);
     });
