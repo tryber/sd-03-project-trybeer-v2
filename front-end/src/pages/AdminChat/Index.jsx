@@ -64,7 +64,7 @@ const UserChat = () => {
           onChange={ (e) => setMessage(e.target.value) }
           placeholder="Digite..."
         />
-        <button type="submit" data-testid="send-message-btn" onClick={ () => sendMessage(message) }>
+        <button type="submit" data-testid="send-message" onClick={ () => sendMessage(message) }>
           Enviar
         </button>
         <button type="button" data-testid="back-button" onClick={ () => clickToBack() }>
