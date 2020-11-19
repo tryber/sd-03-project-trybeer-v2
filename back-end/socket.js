@@ -5,8 +5,8 @@ const messageModel = require('./MongoModel/messageModel');
 const newMessage = (_socket, io) => async ({ email, message, role }) => {
   const chat = await messageModel.getAllChats();
   const date = new Date();
-  //const time = await date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-  //const strgTime = `${time}`;
+  // const time = await date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  // const strgTime = `${time}`;
   const hours = date.getHours().toString().padStart(2, 0);
   const minutes = date.getMinutes().toString().padStart(2, 0);
   const strgTime = `${hours}:${minutes}`;
