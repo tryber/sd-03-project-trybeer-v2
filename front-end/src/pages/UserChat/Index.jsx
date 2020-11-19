@@ -40,8 +40,6 @@ const UserChat = () => {
       {TopMenu('TryBeer')}
       <div>
         {arrMessages.map(({ message, strgTime, nick }, index) => {
-          console.log(strgTime === "15:52")
-
           return (
             <div key={index}>
               <p data-testid="nickname">{nick}</p><p> - </p><p data-testid="message-time">{strgTime}</p>
