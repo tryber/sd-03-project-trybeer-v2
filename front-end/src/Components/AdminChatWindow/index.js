@@ -55,28 +55,28 @@ const AdminChat = () => {
   };
 
   return (
-    <div className="admin-chat">
+    <div className="admin-orders">
       <AdminSideBar />
-      <section className="admin-chats-aside">
+      <section className="admin-orders-aside">
         <h1>{`Conversa com ${clientEmail}`}</h1>
         {
           chatHistory.map(({ timeStamp, text, isAdminMsg }) => (
-            <article key={ text } className={ isAdminMsg ? 'msg-admin' : 'msg-customer' }>
+            <div key={ text } className={ isAdminMsg ? 'msg-admin' : 'msg-customer' }>
               <div data-testid="nickname">{ isAdminMsg ? 'Loja' : clientEmail }</div>
               <div data-testid="message-time">{timeStamp}</div>
               <div data-testid="text-message">{text}</div>
-            </article>
+            </div>
           ))
         }
         <form>
           <input
-            data-testid="chat-message"
+            data-testid="message-input"
             onChange={ (e) => setTextMessage(e.target.value) }
             value={ textMessage }
           />
           <button
             type="submit"
-            data-testid="send-message-btn"
+            data-testid="send-message"
             onClick={ submitMessage }
           >
             Enviar

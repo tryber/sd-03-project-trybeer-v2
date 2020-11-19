@@ -11,14 +11,14 @@ const AdminChatsPage = () => {
   const randomNumber = parseInt(Math.random(), 10);
 
   useEffect(() => {
-    const fetchChatList = async () => await getChatsList(token) || [];
+    const fetchChatList = async () => getChatsList(token) || [];
     fetchChatList().then((chats) => setChatList(chats));
   }, [token]);
 
   return (
-    <>
+    <div  className="admin-orders">
       <AdminSideBar />
-      <div className="admin-chats">
+      <div className="admin-orders-aside">
         <section className="admin-chats-aside">
           <h1>Conversas</h1>
           {
@@ -42,7 +42,7 @@ const AdminChatsPage = () => {
           }
         </section>
       </div>
-    </>
+    </div >
   );
 };
 
