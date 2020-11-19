@@ -16,7 +16,6 @@ const UserChat = () => {
     socket.current = io('http://localhost:3001');
   }, []);
 
-
   useEffect(() => {
     if (socket.current) {
       socket.current.emit('joinChat', email);
@@ -54,7 +53,7 @@ const UserChat = () => {
           data-testid="message-input"
           type="text" value={ message }
           onChange={ (e) => setMessage(e.target.value) }
-          placeholder="Digite..."
+          placeholder="Digite......."
         />
         <button type="submit" data-testid="send-message" onClick={ () => sendMessage(message) }>
           Enviar
