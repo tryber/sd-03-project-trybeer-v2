@@ -18,7 +18,7 @@ const newMessage = (_socket, io) => async ({ email, message, role }) => {
     await messageModel.createChat(email, [newEntry]);
   }
 
-  io.to(email).emit('message', { nick, newEntry, message });
+  io.to(email).emit('message', { nick, strgTime, message });
 };
 
 module.exports = (connection, app) => {

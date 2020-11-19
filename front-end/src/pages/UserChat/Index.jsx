@@ -39,7 +39,7 @@ const UserChat = () => {
   return (
     <div>
       {TopMenu('TryBeer')}
-      <div className="products-container-card">
+      <div>
         {arrMessages.map(({ message, strgTime, nick }, index) => {
           return (
             <div key={index}>

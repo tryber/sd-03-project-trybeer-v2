@@ -7,7 +7,7 @@ function TopMenu(title) {
   const [sideMenuState, setSideMenuState] = useState(false);
   return (
     <div>
-      <header className="header">
+      <header>
         <div className="header__img">
           <img
             onClick={() => setSideMenuState(!sideMenuState)}

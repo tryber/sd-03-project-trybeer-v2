@@ -52,7 +52,7 @@ function AdminChats() {
   }, []);
 
   const clickToChatDetail = async (email) => {
-    localStorage.setItem('chat', email);
+    localStorage.setItem('chat', JSON.stringify(email));
     history.push(`/admin/chat`);
   };
 
