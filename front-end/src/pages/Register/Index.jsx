@@ -4,7 +4,6 @@ import { postNewUser } from "../../services/trybeerUserAPI";
 import bigBangBeerLogo from "../../assets/images/bigBangBeerLogo.gif";
 import "./styles.css";
 
-
 const formErrors = (testidClass, newUserValue) => {
   let validReturn;
   const emailTest = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;

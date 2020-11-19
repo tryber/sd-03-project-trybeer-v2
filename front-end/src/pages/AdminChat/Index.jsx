@@ -36,10 +36,12 @@ const UserChat = () => {
       {SideMenuAdmin()}
       <div>
         {arrMessages.map(({nick, newEntry, message}, index) => {
-          <div key={index}>
-            <p data-testid="nickname">{nick}</p><p> - </p><p data-testid="message-time">{newEntry}</p>
-            <p data-testid="text-message">{message}</p>
-          </div>
+          return (
+            <div key={index}>
+              <p data-testid="nickname">{nick}</p><p> - </p><p data-testid="message-time">{newEntry}</p>
+              <p data-testid="text-message">{message}</p>
+            </div>
+          );
         })}
       </div>
       <div className="products-container-card">

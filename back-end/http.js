@@ -9,7 +9,6 @@ module.exports = (express, routes, cors, bodyParser) => {
   app.use('/products', routes.productsRoute);
   app.use('/sales', routes.salesRoute);
   app.use('/individualProduct', routes.individualProductRoute);
-  app.use('/message', routes.messageRoute);
   app.use('/images', express.static('images'));
 
   app.use((error, _req, res, _next) => {

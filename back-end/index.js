@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const httpFactory = require('./http');
 const socketFactory = require('./socket');
 const routes = require('./routes');
-const connection = require('./models/mongoConnection');
+const connection = require('./MongoModel/mongoConnection');
 
 const app = httpFactory(express, routes, cors, bodyParser);
 
