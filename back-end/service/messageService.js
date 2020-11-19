@@ -1,4 +1,4 @@
-const messageModel = require('../models/messageModel');
+const messageModel = require('../MongoModel/messageModel');
 
 const getAllChats = async () => {
   const chat = await messageModel.getAllChats();

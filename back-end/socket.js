@@ -1,6 +1,6 @@
 const http = require('http');
 const socketIo = require('socket.io');
-const messageModel = require('./models/messageModel');
+const messageModel = require('./MongoModel/messageModel');
 
 const newMessage = (_socket, io) => async ({ email, message, role }) => {
   const chat = await messageModel.getAllChats();
