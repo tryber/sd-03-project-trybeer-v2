@@ -1,61 +1,90 @@
 import React, { useRef, useState, useEffect } from 'react';
-
-const moment = require('moment');
+import {
+  createChatFile,
+  getChatMessages,
+  updateChatMessages,
+} from '../../services/api_endpoints';
+import MenuBar from '../MenuBar';
+import './style.css';
 
 const { io } = window;
 
 const ClientChat = () => {
-  const [message, setMessage] = useState('');
-  const [attMessage, setAttMessage] = useState('');
-  const [messages, setMessages] = useState([]);
-
   const socket = useRef();
-  const getUser = localStorage.getItem('user');
-  const getEmail = JSON.parse(getUser);
-  const { email } = getEmail;
-  const hora = moment().format('HH:mm');
+  const [textMessage, setTextMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
 
+  const { email } = JSON.parse(localStorage.getItem('user'));
+
+  // Carregamento de mensagens já existentes no banco, ou
+  // criação de nova conversa (caso ainda não exista)
   useEffect(() => {
+    const fetchChatHistory = async () => getChatMessages(email);
+    fetchChatHistory()
+      .then((fetched) => {
+        setChatHistory(fetched.messages);
+      })
+      .catch(() => {
+        createChatFile(email);
+      });
     socket.current = io('http://localhost:3001');
-  }, []);
+    socket.current.emit('joinRoomAsCustomer', email);
+  }, [email]);
+
+  // Recebimento de mensagem
+  useEffect(() => {
+    socket.current.on('msgToCustomer', ({ msg }) => {
+      setChatHistory((history) => [...history, msg]);
+    });
+  }, [socket]);
 
   useEffect(() => {
-    if (message !== '') {
-      setMessages((msgs) => [...msgs, message]);
-      const objMsg = {
-        email,
-        hora,
-        msg: message,
-      };
+    const updateMsg = async () => updateChatMessages(email, chatHistory);
+    updateMsg();
+  }, [email, chatHistory]);
 
-      socket.current.emit('message', objMsg);
-    }
-  }, [message, email, hora]);
-
-  const clearPage = (event) => {
+  // Formatação e envio de mensagens + salvamento no banco
+  const submitMessage = (event) => {
     event.preventDefault();
+    setTextMessage('');
+    const msg = {
+      timeStamp: new Date().toLocaleString('pt-BR'),
+      text: textMessage,
+      isAdminMsg: false,
+    };
+    setChatHistory((history) => [...history, msg]);
+    socket.current.emit('msgToAdmin', msg);
   };
 
   return (
     <div>
-      <form onSubmit={ clearPage }>
-        <h1>Estou funcionando</h1>
-        <div id="userName" data-testid="nickname">{ email }</div>
-        <div id="hours" data-testid="message-time">{ hora }</div>
-        <div id="message-text" data-testid="text-message">
-          <ul>{ messages.map((msg) => <li key={ msg }>{`${email} ${hora} ${msg}`}</li>) }</ul>
-        </div>
+      <MenuBar titleName="Atendimento online" />
+      <div id="message-text" data-testid="text-message">
+        <ul>
+          { chatHistory.map(
+            ({ timeStamp, text, isAdminMsg }) => (
+              <li key={ text } className={ isAdminMsg ? 'msg-admin' : 'msg-customer' }>
+                <div data-testid="nickname">{ isAdminMsg ? 'Loja' : email }</div>
+                <div data-testid="message-time">{timeStamp}</div>
+                <div data-testid="text-message">{text}</div>
+              </li>
+            ),
+          ) }
+        </ul>
+      </div>
+      <form>
         <input
-          onChange={ (event) => setAttMessage(event.target.value) }
-          value={ attMessage }
+          onChange={ (event) => setTextMessage(event.target.value) }
+          value={ textMessage }
           data-testid="message-input"
         />
         <button
           type="submit"
+          disabled={ !textMessage }
           data-testid="send-message"
-          onClick={ () => setMessage(attMessage) }
+          onClick={ submitMessage }
         >
-          ENVIAR
+          Enviar
         </button>
       </form>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { getChatMessages, updateChatMessages } from '../../services/api_endpoints';
 import AdminSideBar from '../AdminSideBar/index';
 import './style.css';
 
@@ -10,72 +11,72 @@ const { io } = window;
 const AdminChat = () => {
   const socket = useRef();
   const location = useLocation();
-  // const { token } = JSON.parse(localStorage.getItem('user'));
   const { clientEmail, messages } = location.state;
 
   const [chatHistory, setChatHistory] = useState(messages);
-  const [textMessage, seTextMessage] = useState('');
+  const [textMessage, setTextMessage] = useState('');
 
-  // useEffect(() => {
-  //   setChatHistory(messages);
-  // }, [token, messages]);
+  // Carregamento de mensagens já existentes no banco
+  useEffect(() => {
+    const fetchChatHistory = async () => getChatMessages(clientEmail);
+    fetchChatHistory().then((fetched) => {
+      setChatHistory(fetched.messages);
+    });
+  }, [clientEmail]);
 
-  // Conexão com o socket.io
+  // Conexão com o socket.io. Como back e front rodam em portas/endereços distintos,
+  // deve ser declarado com o endereço.
   useEffect(() => {
     socket.current = io('http://localhost:3001');
-  }, []);
-
-  // Envio do histórico atualizado
-  useEffect(() => {
-    socket.current.emit('syncHistory', { chatHistory, clientEmail });
-  }, [chatHistory, clientEmail]);
+    socket.current.emit('joinRoomAsAdmin', clientEmail);
+  }, [clientEmail]);
 
   // Recebimento de mensagem
   useEffect(() => {
-    socket.current.on('msgToServer', ({ msg }) => {
+    socket.current.on('msgToAdmin', ({ msg }) => {
       setChatHistory((history) => [...history, msg]);
     });
   }, [socket]);
 
+  useEffect(() => {
+    updateChatMessages(clientEmail, chatHistory);
+  }, [clientEmail, chatHistory]);
+
   const submitMessage = (event) => {
     event.preventDefault();
-    seTextMessage('');
+    setTextMessage('');
     const msg = {
       timeStamp: new Date().toLocaleString('pt-BR'),
       text: textMessage,
-      isClientMsg: false,
+      isAdminMsg: true,
     };
     setChatHistory((history) => [...history, msg]);
-    socket.current.emit('msgToClient', msg);
+    socket.current.emit('msgToCustomer', msg);
   };
 
   return (
-    <div className="admin-chat">
+    <div className="admin-orders">
       <AdminSideBar />
-      <section className="admin-chats-aside">
+      <section className="admin-orders-aside">
         <h1>{`Conversa com ${clientEmail}`}</h1>
         {
-        !chatHistory
-          ? 'Nenhuma conversa por aqui'
-          : chatHistory.map(({ timeStamp, text, isClientMsg }) => (
-            <article key={ text } className={ isClientMsg ? 'msg-customer' : 'msg-admin' }>
-              <div data-testid="nickname">
-                { isClientMsg ? clientEmail : 'Loja' }
-              </div>
+          chatHistory.map(({ timeStamp, text, isAdminMsg }) => (
+            <div key={ text } className={ isAdminMsg ? 'msg-admin' : 'msg-customer' }>
+              <div data-testid="nickname">{ isAdminMsg ? 'Loja' : clientEmail }</div>
               <div data-testid="message-time">{timeStamp}</div>
               <div data-testid="text-message">{text}</div>
-            </article>
+            </div>
           ))
         }
         <form>
           <input
-            data-testid="chat-message"
-            onChange={ (e) => seTextMessage(e.target.value) }
+            data-testid="message-input"
+            onChange={ (e) => setTextMessage(e.target.value) }
             value={ textMessage }
           />
           <button
             type="submit"
-            data-testid="send-message-btn"
+            data-testid="send-message"
             onClick={ submitMessage }
           >
             Enviar

@@ -85,6 +85,35 @@ export const getChatsList = async (token) => {
   return convos;
 };
 
+export const getChatMessages = async (email) => {
+  const msgs = await axios({
+    baseURL: `${url}admin/chat/${email}`,
+    method: 'get',
+  })
+    .then((result) => result.data);
+  return msgs[0];
+};
+
+export const createChatFile = async (email) => {
+  const convo = await axios({
+    baseURL: `${url}admin/chat/${email}`,
+    method: 'post',
+  })
+    .then((result) => result.data);
+  return convo;
+};
+
+export const updateChatMessages = async (email, chatHistory) => {
+  await axios({
+    baseURL: `${url}admin/chat/${email}`,
+    method: 'put',
+    data: {
+      messages: chatHistory,
+    },
+  })
+    .then((result) => result.data);
+};
+
 export const getOrderList = async (token) => {
   const orders = await axios({
     baseURL: `${url}admin/orders`,

@@ -8,38 +8,40 @@ import './style.css';
 const AdminChatsPage = () => {
   const { token } = JSON.parse(localStorage.getItem('user'));
   const [chatList, setChatList] = useState([]);
-
+  const randomNumber = parseInt(Math.random(), 10);
+  const zero = 0;
   useEffect(() => {
-    const fetchChatList = async () => await getChatsList(token) || [];
-
+    const fetchChatList = async () => getChatsList(token) || [];
     fetchChatList().then((chats) => setChatList(chats));
   }, [token]);
 
   return (
-    <div className="admin-chats">
+    <div className="admin-orders">
       <AdminSideBar />
-      <section className="admin-chats-aside">
-        <h1>Conversas</h1>
-        {
-        !chatList
-          ? <h2 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</h2>
-          : chatList.map(({ clientEmail, messages }) => (
-            <Link
-              data-testid="containerChat"
-              key={ clientEmail }
-              to={ {
-                pathname: '/admin/chat/',
-                state: { clientEmail, messages },
-              } }
-            >
-              <ChatTile
-                email={ clientEmail }
-                time={ messages[messages.length - 1].timeStamp }
-              />
-            </Link>
-          ))
-}
-      </section>
+      <div className="admin-orders-aside">
+        <section className="admin-chats-aside">
+          <h1>Conversas</h1>
+          {
+            chatList.length > zero
+              ? chatList.map(({ clientEmail, messages }) => (
+                <Link
+                  data-testid="containerChat"
+                  key={ randomNumber }
+                  to={ {
+                    pathname: '/admin/chat/',
+                    state: { clientEmail, messages },
+                  } }
+                >
+                  <ChatTile
+                    email={ clientEmail }
+                    time={ messages[messages.length - 1].timeStamp }
+                  />
+                </Link>
+              ))
+              : <h2 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</h2>
+          }
+        </section>
+      </div>
     </div>
   );
 };

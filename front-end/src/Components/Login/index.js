@@ -11,6 +11,7 @@ function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [userRole, setUserRole] = useState('');
   const { email, password } = form;
+  const seconds = 500;
 
   useEffect(() => {
     localStorage.clear();
@@ -71,7 +72,9 @@ function LoginPage() {
             disabled={ email === '' || password === '' }
             type="button"
             data-testid="signin-btn"
-            onClick={ () => getUserData(email, password) }
+            onClick={ () => setTimeout(() => {
+              getUserData(email, password);
+            }, seconds) }
           >
             ENTRAR
           </button>

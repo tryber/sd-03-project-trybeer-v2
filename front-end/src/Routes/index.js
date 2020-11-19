@@ -12,6 +12,8 @@ import {
   adminProfile,
   adminOrders,
   adminOrdersDetail,
+  adminChatList,
+  adminChatWindow,
 } from '../pages';
 
 const { ClientChat } = require('../Components');
@@ -30,6 +32,8 @@ const Routes = () => (
         <Route exact path="/checkout" component={ checkout } />
         <Route exact path="/orders/:id" component={ ordersDetails } />
         <Route exact path="/admin/orders" component={ adminOrders } />
+        <Route exact path="/admin/chats" component={ adminChatList } />
+        <Route exact path="/admin/chat" component={ adminChatWindow } />
         <Route exact path="/admin/orders/:id" component={ adminOrdersDetail } />
         <Route exact path="/admin/profile" component={ adminProfile } />
       </BeerProvider>
