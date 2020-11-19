@@ -21,6 +21,8 @@ const newMessage = (_socket, io) => async ({ email, message, role }) => {
   io.to(email).emit('message', { nick, strgTime, message });
 };
 
+// ok
+
 module.exports = (connection, app) => {
   const httpServer = http.createServer(app);
   const io = socketIo(httpServer);
