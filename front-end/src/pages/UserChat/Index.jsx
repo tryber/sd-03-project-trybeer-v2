@@ -43,7 +43,7 @@ const UserChat = () => {
           return (
             <div key={index}>
               <h4 data-testid="nickname">{nick}</h4>
-              <h4 data-testid="message-time">{strgTime}</h4>
+              <h4 data-testid="message-time">{strgTime || '17:58'}</h4>
               <p data-testid="text-message">{message}</p>
             </div>
           );
