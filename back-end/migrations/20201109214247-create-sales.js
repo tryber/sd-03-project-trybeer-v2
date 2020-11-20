@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const UsersTable = queryInterface.createTable('sales', {
+    const salesTabe = queryInterface.createTable('sales', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,12 +10,12 @@ module.exports = {
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
         references: {
           model: 'users',
           key: 'id',
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
       },
       total_price: {
         allowNull: false,
@@ -28,14 +28,16 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       sale_date: {
+        allowNull: false,
         type: Sequelize.DATE,
       },
       status: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
     });
 
-    return UsersTable;
+    return salesTabe;
   },
 
   down: async (queryInterface) => queryInterface.dropTable('sales'),

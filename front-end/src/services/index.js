@@ -1,5 +1,5 @@
 const userLogin = async (email, password) => {
-  const request = fetch('http://localhost:3001/user/login', {
+  const request = fetch('http://localhost:3001/login', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -16,7 +16,7 @@ const userLogin = async (email, password) => {
 };
 
 const registerUser = async (name, email, password, role) => {
-  const request = fetch('http://localhost:3001/user/register', {
+  const request = fetch('http://localhost:3001/register', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -38,8 +38,8 @@ const registerUser = async (name, email, password, role) => {
 };
 
 const updateUser = async (name, email) => {
-  const request = fetch('http://localhost:3001/user/profile', {
-    method: 'PUT',
+  const request = fetch('http://localhost:3001/profile', {
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ const registerOrder = async (
   deliveryNumber,
   products = [],
 ) => {
-  const request = fetch('http://localhost:3001/sales/register', {
+  const request = fetch('http://localhost:3001/register', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -86,7 +86,7 @@ const registerOrder = async (
 };
 
 const userOrders = async (userId) => {
-  const request = fetch(`http://localhost:3001/sales/search?userId=${encodeURIComponent(userId)}`, {
+  const request = fetch(`http://localhost:3001/orderDetails/Id=${encodeURIComponent(userId)}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',

@@ -2,8 +2,9 @@ const zero = 0;
 
 const fetchProducts = async () => {
   try {
-    const result = await fetch('http://localhost:3001/products/all');
+    const result = await fetch('http://localhost:3001/products');
     const json = await result.json();
+    console.log(json)
     return json;
   } catch (error) {
     return (error.message);

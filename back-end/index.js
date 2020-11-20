@@ -1,32 +1,54 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-require('dotenv').config();
+const socketIo = require('socket.io');
 
-const controllers = require('./controllers');
+// https://stackoverflow.com/questions/50968152/cross-origin-request-blocked-with-react-and-express
+const cors = require('cors');
+const login = require('./controllers/login');
+const profile = require('./controllers/profile');
+const userRegister = require('./controllers/userRegister');
+const products = require('./controllers/products');
+const productList = require('./controllers/productList');
+const checkout = require('./controllers/checkout');
+const orderDetails = require('./controllers/orderDetails');
+const userInfo = require('./controllers/userInfo');
+const admin = require('./controllers/admin');
+const adminOrders = require('./controllers/adminOrders');
+const chat = require('./controllers/chat');
+const { saveMessage } = require('./dbMongo/modelSaveMessage');
 
 const app = express();
+app.use(cors(), bodyParser.json());
 
-app.use(cors());
-app.use(bodyParser.json());
-console.log(process.env.HOSTNAME);
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/', bodyParser.json());
 
-app.use('/user', controllers.usersController);
-app.use('/products', controllers.productsController);
-app.use('/sales', controllers.salesController);
+app.use('/admin', admin);
+app.use('/checkout', checkout);
+app.use('/login', login);
+app.use('/userInfo', userInfo);
+app.use('/profile', profile);
+app.use('/register', userRegister);
+app.use('/productList', productList);
+app.use('/orderDetails', orderDetails);
+app.use('/chat', chat);
 
-app.get('/', async (_req, res) => res.send('Hello, Trybeer'));
+app.use('/images', express.static(path.join(__dirname, '/images')));
+app.use('/products', products);
+app.use('/adminOrders', adminOrders);
 
-app.use((err, _req, res, _next) => {
-  if (err.payload) return res.status(err.status).json(err.payload);
-  if (err.message.match(/^duplicate./i)) {
-    return res.status(400).json({ message: 'E-mail already in database.' });
-  }
-  return res.status(500).json({ message: 'Internal Error' });
+const PORT = process.env.PORT || 3001;
+
+// socket
+const server = app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
+
+const io = socketIo(server);
+
+io.on('connect', (socket) => {
+  console.log(`Socket ${socket.id}`);
+
+  socket.on('message', ({ message, email, time }) => {
+    io.emit('message', { message, time });
+    saveMessage(message, email, time);
+  });
 });
-
-const { PORT = 3001 } = process.env;
-
-app.listen(PORT, () => console.log(`Escutando porta nr. ${PORT}`));

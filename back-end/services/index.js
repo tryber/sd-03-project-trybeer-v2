@@ -1,9 +1,11 @@
-const usersService = require('./usersService');
-const productsService = require('./productsService');
-const salesService = require('./salesService');
+const login = require('./login');
+const profile = require('./profile');
+const productList = require('./productList.js');
+const orderDetails = require('./orderDetails');
 
 module.exports = {
-  usersService,
-  productsService,
-  salesService,
+  login,
+  profile,
+  productList,
+  orderDetails,
 };
