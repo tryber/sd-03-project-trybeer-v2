@@ -1,32 +1,41 @@
-const { sales, sequelize } = require('../models');
+const { sales, sales_products, sequelize } = require('../models');
 
 const registerSales = async (
   userId,
   totalPrice,
   deliveryAddress,
   deliveryNumber,
-  products = [],
+  products,
 ) => {
   try {
     // registra evento de venda
-    const registrySales = await sales.create({
-      user_id: userId,
-      total_price: totalPrice,
-      delivery_address: deliveryAddress,
-      delivery_number: deliveryNumber,
-    });
+    const registrySales = await sales
+      .create({
+        user_id: userId,
+        total_price: totalPrice,
+        delivery_address: deliveryAddress,
+        delivery_number: deliveryNumber,
+      })
+      .then((data) => data.dataValues)
+      .then((values) => (products.map((product) => sales_products.create({
+        sale_id: values.id,
+        product_id: product.id,
+        quantity: product.quantity,
+      }))));
 
     // registro dos produtos por evento de venda
-    const registryProductsBySale = await Promise.all(
-      products.map((product) => {
-        const { id, quantity } = product;
-        return sales.addSalesProducts(registrySales.saleID, id, quantity);
-      }),
-    );
-    const itemCount = await registryProductsBySale.reduce(
-      (acc, item) => acc + item,
-      0,
-    );
+    // const registryProductsBySale = () => {
+    // const createProducts = products.map((product) => sales_products.create({
+    //   sale_id: userId,
+    //   product_id: id,
+    //   quantity,
+    // }));
+    // };
+
+    // const itemCount = await registryProductsBySale.reduce(
+    //   (acc, item) => acc + item,
+    //   0,
+    // );
     return { ...registrySales, soldItems: itemCount };
   } catch (error) {
     throw new Error(error.message);

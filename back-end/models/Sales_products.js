@@ -2,6 +2,8 @@ module.exports = (sequelize, DataTypes) => {
   const SalesProductsObject = sequelize.define(
     'sales_products',
     {
+      sale_id: { type: DataTypes.INTEGER },
+      product_id: { type: DataTypes.INTEGER },
       quantity: { type: DataTypes.STRING },
     },
     {
@@ -21,12 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'sale_id',
       otherKey: 'id',
     });
-    // UserObject.associate = (models) => {
-    //   UserObject.hasOne(models.Post, {
-    //     foreignKey: 'id',
-    //     as: 'addressesuser',
-    //   });
-    // };
   };
   return SalesProductsObject;
 };
