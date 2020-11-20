@@ -90,7 +90,7 @@ const LoginPage = () => {
               minLength={6}
             />
           </label>
-          {error && <p style={{fontSize: "10px"}}>{error}</p>}
+          {/* {error && <p style={{fontSize: "10px"}}>{error}</p>} */}
         </div>
         <div>
           <button
