@@ -16,7 +16,6 @@ export default function OrderDetailsPage() {
     try {
       const result = await fetch(url);
       const json = await result.json();
-      console.log(json.sale);
       return setSale(json.sale);
     } catch (error) {
       return error.message;

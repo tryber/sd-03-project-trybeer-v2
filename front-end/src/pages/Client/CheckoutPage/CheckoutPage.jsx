@@ -39,7 +39,7 @@ function Checkout() {
 
   const submitOrder = useCallback(
     () => registerOrder(
-      userData.id,
+      userData.dataValues.id,
       totalPrice,
       deliveryAddress,
       deliveryNumber,
@@ -57,7 +57,7 @@ function Checkout() {
       },
     ),
     [
-      userData.id,
+      userData.dataValues.id,
       totalPrice,
       deliveryAddress,
       deliveryNumber,
@@ -83,11 +83,9 @@ function Checkout() {
       clearTimeout(timer);
     };
   }, [isSubmit, message]);
-
-  if (!userData.name) return <Redirect to="/login" />;
+  if (!userData.dataValues.name) return <Redirect to="/login" />;
 
   if (redirect) return <Redirect to="/products" />;
-
   return (
     <div>
       <ClientNavBar title="Finalizar Pedido" />

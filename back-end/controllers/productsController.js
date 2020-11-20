@@ -11,6 +11,7 @@ products.route('/all').get(async (_req, res, next) => {
     const productsList = await productsService.getAllProducts();
     return res.status(200).json([...productsList]);
   } catch (error) {
+    console.log('Catch', error);
     return next(generateError(401, error));
   }
 });

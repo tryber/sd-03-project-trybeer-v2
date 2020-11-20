@@ -10,18 +10,27 @@ module.exports = {
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       total_price: {
         allowNull: false,
-        unique: true,
         type: Sequelize.DECIMAL(9, 2),
       },
-      password: {
-        allowNull: false,
+      delivery_address: {
         type: Sequelize.STRING,
       },
-      role: {
-        allowNull: false,
+      delivery_number: {
+        type: Sequelize.INTEGER,
+      },
+      sale_date: {
+        type: Sequelize.DATE,
+      },
+      status: {
         type: Sequelize.STRING,
       },
     });

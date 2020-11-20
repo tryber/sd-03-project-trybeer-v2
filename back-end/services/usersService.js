@@ -1,10 +1,8 @@
-const { usersModel } = require('../models');
-const { User } = require('../models');
+const { users } = require('../models');
 
 const getUserByEmail = async (email) => {
   try {
-    const user = await usersModel.findByEmail(email);
-
+    const user = await users.findAll({ where: { email } });
     return user ? { ...user } : null;
   } catch (error) {
     throw new Error(error.message);
@@ -13,7 +11,7 @@ const getUserByEmail = async (email) => {
 
 const addUser = async (name, email, password, role) => {
   try {
-    const user = await User.create(name, email, password, role);
+    const user = await users.create(name, email, password, role);
     return user;
   } catch (error) {
     throw new Error(error.message);
@@ -22,8 +20,9 @@ const addUser = async (name, email, password, role) => {
 
 const updateUser = async (name, email) => {
   try {
-    const updatedUser = await usersModel.updateUser(name, email);
-    return updatedUser;
+    const user = await users.update({ name }, { where: { email } });
+
+    return user;
   } catch (error) {
     throw new Error(error.message);
   }
