@@ -25,7 +25,7 @@ function Orders() {
   const { token } = JSON.parse(localStorage.getItem('user')) || [];
 
   useEffect(() => {
-    axios.get('http://localhost:3001/productList', {
+    axios.get('https://trybeerback.herokuapp.com//productList', {
       headers: {
         Authorization: token,
       },

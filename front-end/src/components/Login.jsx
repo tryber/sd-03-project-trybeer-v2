@@ -6,7 +6,7 @@ import logo from '../img/irish.png'
 import beer from '../img/green-beer.png'
 
 const doLogin = (password, email, setMessage, setRedirectToHome, setRedirectToAdminHome) => {
-  axios.post('http://localhost:3001/login', { password, email })
+  axios.post('https://trybeerback.herokuapp.com/login', { password, email })
     .then(({
       data: {
         token, name, email: _email, role,

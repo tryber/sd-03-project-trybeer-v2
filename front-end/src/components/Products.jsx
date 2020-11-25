@@ -7,7 +7,7 @@ import MenuTop from './MenuTop';
 import CardProducts from './CardProducts';
 import lupa from '../img/loupe.svg';
 
-const instance = axios.create({ baseURL: 'http://localhost:3001' });
+const instance = axios.create({ baseURL: 'https://trybeerback.herokuapp.com/' });
 
 const addTobascket = (price, name, setCart) => {
   const item = { name, price };

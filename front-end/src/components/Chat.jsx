@@ -20,13 +20,13 @@ function Chat() {
 
   useEffect(() => {
     if (nickname) {
-      axios.post('http://localhost:3001/chat/findOne', { nickname })
+      axios.post('https://trybeerback.herokuapp.com/chat/findOne', { nickname })
       .then(({ data }) => setMessages(data));
     }
   }, [nickname]);
 
   useEffect(() => {
-    socket.current = io('http://localhost:3001');
+    socket.current = io('https://trybeerback.herokuapp.com');
   },[]);
 
   useEffect(() => {

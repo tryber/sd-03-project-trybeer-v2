@@ -5,7 +5,7 @@ import axios from 'axios';
 function AdminChat() {
   const [chats, setChats] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:3001/chat').then(({ data }) => setChats(data));
+    axios.get('https://trybeerback.herokuapp.com/chat').then(({ data }) => setChats(data));
   }, []);
 
   const chatWithNickAndTime = chats.map((e) => {

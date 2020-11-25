@@ -18,7 +18,7 @@ function ChatClient() {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io('http://localhost:3001');
+    socket.current = io('https://trybeerback.herokuapp.com');
   }, []);
 
   let renderMessage;
@@ -37,7 +37,7 @@ function ChatClient() {
   }, [renderMessage]);
 
   useEffect(() => {
-    axios.post('http://localhost:3001/chat/findOne', { nickname: userEmail })
+    axios.post('https://trybeerback.herokuapp.com/chat/findOne', { nickname: userEmail })
       .then(({ data }) => {
         if (data) {
           setOldMessages(data);
