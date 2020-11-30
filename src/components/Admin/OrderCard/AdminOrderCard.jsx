@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './adminOrderCard.css';
-/* eslint react/prop-types: 0 */
 
 export default function AdminOrderCard(props) {
   const {
