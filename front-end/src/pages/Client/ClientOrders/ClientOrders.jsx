@@ -31,7 +31,7 @@ function ClientOrders() {
       setErrors(null);
       setIsFetching(false);
     };
-  }, [userId, userData.id]);
+  }, [userId, userData.id, userData.token]);
 
   if (!userData.name) return <Redirect to="/login" />;
 
@@ -39,8 +39,7 @@ function ClientOrders() {
     <div style={ { display: 'flex', flexDirection: 'column', width: '360px' } }>
       <ClientNavBar title="Meus Pedidos" />
       <div style={ { overflowY: 'scroll', height: '560px' } }>
-        {console.log(orders.products)}
-        {/* {errors && <h4>{errors}</h4>} */}
+        {errors && <h4>{errors}</h4>}
         {!isFetching && orders.products && orders.products.map((order, index) => (
           <ClientOrderCard
             key={ order.id }
