@@ -6,10 +6,9 @@ const getDetails = async (orderNumber, userEmail) => {
   const orderDetails = await salesProducts.findAll({ where: { sale_id: orderNumber } });
   const findId = await users.findAll({ where: { email: userEmail } });
   const { id } = findId[0];
-  console.log(id);
 
   await sales.findAll({ where: { user_id: id } }).then((result) => result.map((e) => {
-    statusClient = e.status;
+    statusClient = e.dataValues.status;
     return statusClient;
   }));
 
@@ -20,5 +19,13 @@ const getDetails = async (orderNumber, userEmail) => {
   const promise = await Promise.all(details);
   return promise;
 };
+
+// const getAll = async (id, userEmail) => {
+//   const findId = await users.findAll({ where: { email: userEmail } });
+//   return findId;
+//   // const allSales = await sales.findAll({ where: { user_id: id } })
+//   //   .then((result) => result.map((e) => console.log(e)));
+//   // return allSales;
+// };
 
 module.exports = { getDetails };

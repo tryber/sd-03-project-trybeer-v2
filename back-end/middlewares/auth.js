@@ -7,8 +7,9 @@ module.exports = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, secret);
     req.userEmail = decoded.userEmail;
+    console.log(req.userEmail);
     next();
   } catch (err) {
-    return res.status(400).send('não logado');
+    return res.status(400).send(err.message);
   }
 };

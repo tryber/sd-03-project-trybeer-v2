@@ -17,12 +17,15 @@ const convertMySQLDatetime = (date = '') => {
   return extractDayAndMonth;
 };
 
-const OrderCard = ({ index, id, saleDate, totalPrice }) => {
+const OrderCard = ({
+  index, id, saleDate, totalPrice,
+}) => {
   const orderDayAndMonth = convertMySQLDatetime(saleDate);
+
   return (
     <div className="order-card" data-testid={ `${index}-order-card-container` }>
       <Link to={ `/orders/${id}` }>
-        <h4 data-testid={ `${index}-order-number`}>{`Pedido ${id}` }</h4>
+        <h4 data-testid={ `${index}-order-number` }>{`Pedido ${id}`}</h4>
       </Link>
       <div>
         <div className="order-info">
@@ -32,7 +35,9 @@ const OrderCard = ({ index, id, saleDate, totalPrice }) => {
         <div className="order-info">
           <p>Valor: </p>
           <p data-testid={ `${index}-order-total-value` }>
-            { `R$ ${totalPrice.toFixed(initialFloat).replace('.', ',')}` }
+            R$
+            {' '}
+            {`${parseFloat(totalPrice).toFixed(initialFloat).replace('.', ',')}`}
           </p>
         </div>
       </div>
@@ -44,7 +49,7 @@ OrderCard.propTypes = {
   index: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
   saleDate: PropTypes.string.isRequired,
-  totalPrice: PropTypes.number.isRequired,
+  totalPrice: PropTypes.string.isRequired,
 };
 
 export default OrderCard;
