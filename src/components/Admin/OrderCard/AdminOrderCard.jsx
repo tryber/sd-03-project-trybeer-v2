@@ -4,8 +4,9 @@ import './adminOrderCard.css';
 /* eslint react/prop-types: 0 */
 
 export default function AdminOrderCard(props) {
-
-  const { id, address, totalPrice, status } = props;
+  const {
+    id, address, totalPrice, status,
+  } = props;
   const fixed = 2;
 
   return (

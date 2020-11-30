@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ClientSideBar from './ClientSideBar';
-import './ClientBar.css'
+import './ClientBar.css';
 
 function renderNavBar(showBar, setShowBar) {
   return showBar === true ? setShowBar(false) : setShowBar(true);
@@ -11,8 +11,8 @@ function ClientNavBar({ title }) {
   const [showBar, setShowBar] = useState(false);
   return (
     <div style={ { width: '360px' } }>
-      <div className="top-bar" >
-        <button
+      <div className="top-bar">
+        <input
           className="top-icon"
           data-testid="top-hamburguer"
           type="button"
