@@ -15,8 +15,9 @@ const isValidName = (name) => name.length >= minimumNameLength;
 function ClientProfile() {
   const { setToken } = useContext(AuthContext);
   const userData = JSON.parse(localStorage.getItem('user'));
-  const [user, setUser] = useState({ name: '', email: '' });
-  const { name, email } = user || userData;
+  const [user, setUser] = useState({ name: '', userEmail: '' });
+  const { name, userEmail } = user || userData;
+  console.log(userData);
   const [updatedName, setUpdatedName] = useState(userData.name);
   const [isValid, setIsValid] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -34,7 +35,7 @@ function ClientProfile() {
   useEffect(() => {
     if (!user.name) setUser((previousUser) => ({ ...previousUser, ...userData }));
     if (!isSubmit) return undefined;
-    updateUser(updatedName, email).then(
+    updateUser(updatedName, userEmail).then(
       (response) => {
         setToken(response);
         setMessage('Atualização concluída com sucesso');
@@ -49,7 +50,7 @@ function ClientProfile() {
       setIsValid(false);
       setIsSubmit(false);
     };
-  }, [isSubmit, setToken, updatedName, email, userData, user]);
+  }, [isSubmit, setToken, updatedName, userEmail, userData, user]);
 
   if (!userData.name) return <Redirect to="/login" />;
   return (
@@ -93,7 +94,7 @@ function ClientProfile() {
               id="email"
               data-testid="profile-email-input"
               type="email"
-              value={ email }
+              value={ userEmail }
               readOnly
             />
           </label>
