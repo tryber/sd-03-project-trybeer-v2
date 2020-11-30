@@ -91,11 +91,11 @@ function Checkout() {
       <ClientNavBar title="Finalizar Pedido" />
       <div style={ { overflowY: 'scroll', height: '560px' } }>
         <h1>Produtos</h1>
-        {/* {!isSubmit && message && <h3>{message}</h3>}
+        {!isSubmit && message && <h3>{message}</h3>}
         {!isSubmit && error && <h3>{error}</h3>}
         {!isSubmit && !cartProducts.length && (
           <h1>Não há produtos no carrinho</h1>
-        )} */}
+        )}
         {!isSubmit
           && cartProducts.length > initialQuantity
           && cartProducts.map((product, index) => (
