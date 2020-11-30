@@ -7,6 +7,7 @@ export default function AdminOrderCard(props) {
   const {
     id, address, totalPrice, status,
   } = props;
+
   const fixed = 2;
 
   return (
@@ -18,13 +19,13 @@ export default function AdminOrderCard(props) {
         <p data-testid={ `${id - 1}-order-address` }>{`${address}`}</p>
         <div className="admin-order-info">
           <p className="order-value" data-testid={ `${id - 1}-order-total-value` }>
-            { `R$ ${totalPrice.toFixed(fixed).replace('.', ',')}` }
+            {`R$ ${totalPrice.toFixed(fixed).replace('.', ',')}`}
           </p>
           <p
             className={ status === 'Entregue' ? 'status-entregue' : 'status-pendente' }
             data-testid={ `${id - 1}-order-status` }
           >
-            { status }
+            {status}
           </p>
         </div>
       </div>

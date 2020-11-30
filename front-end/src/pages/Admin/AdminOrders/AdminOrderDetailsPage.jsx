@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
 import { Redirect, useParams, Link } from 'react-router-dom';
 import AdminNavBar from '../../../components/Admin/AdminBar/AdminNavBar';
@@ -9,6 +11,8 @@ export default function OrderDetailsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [pending, setPending] = useState(true);
   const userData = JSON.parse(localStorage.getItem('user'));
+
+  const fixed = 2;
 
   const { id } = useParams();
   const url = `http://localhost:3001/sales/search/${id}`;
@@ -52,26 +56,38 @@ export default function OrderDetailsPage() {
       <AdminNavBar title="TryBeer" />
       <div className="admin-details-order-info">
         <h1 data-testid="order-number">
-          Pedido {sale.saleID ? sale.saleID : ''}
-          <span data-testid="order-status"> - {sale.status ? sale.status : ''}</span>
+          Pedido
+          {' '}
+          {sale.saleID ? sale.saleID : ''}
+          <span data-testid="order-status">
+            {' '}
+            -
+            {' '}
+            {sale.status ? sale.status : ''}
+          </span>
         </h1>
         <div>
           {sale.products ? (
             sale.products.map((ele, i) => (
-              <div key={i}>
+              <div key={ ele }>
                 <li className="admin-order-details-li">
                   <div className="admin-details-card">
-                    <span className="details-span-sq" data-testid={`${i}-product-qtd`}>
+                    <span className="details-span-sq" data-testid={ `${i}-product-qtd` }>
                       {ele.soldQuantity}
                     </span>
-                    <span className="details-span-pn" data-testid={`${i}-product-name`}>
+                    <span className="details-span-pn" data-testid={ `${i}-product-name` }>
                       {ele.productName}
                     </span>
-                    <span className="details-span-tp" data-testid={`${i}-product-total-value`}>
-                      R$ {(ele.productPrice * ele.soldQuantity).toFixed(2).replace('.', ',')}
+                    <span className="details-span-tp" data-testid={ `${i}-product-total-value` }>
+                      R$
+                      {' '}
+                      {(ele.productPrice * ele.soldQuantity).toFixed(fixed).replace('.', ',')}
                     </span>
-                    <span className="details-span-up" data-testid={`${i}-order-unit-price`}>
-                      (R$ {ele.productPrice.toFixed(2).replace('.', ',')})
+                    <span className="details-span-up" data-testid={ `${i}-order-unit-price` }>
+                      (R$
+                      {' '}
+                      {ele.productPrice.toFixed(fixed).replace('.', ',')}
+                      )
                     </span>
                   </div>
                 </li>
@@ -81,21 +97,23 @@ export default function OrderDetailsPage() {
             <p>Loading...</p>
           )}
           <p className="details-total-price" data-testid="order-total-value">
-            Total: R$ {sale.orderValue ? sale.orderValue.toFixed(2).replace('.', ',') : ''}
+            Total: R$
+            {' '}
+            {sale.orderValue ? sale.orderValue.toFixed(fixed).replace('.', ',') : ''}
           </p>
         </div>
         {pending ? (
           <div>
-            <button className="status-btn" onClick={() => alterPrepared(id, sale.status)} data-testid="mark-as-prepared-btn">
+            <button type="button" className="status-btn" onClick={ () => alterPrepared(id, sale.status) } data-testid="mark-as-prepared-btn">
               Preparar pedido
             </button>
-            <button className="status-btn" onClick={() => alterDelivered(id, sale.status)} data-testid="mark-as-delivered-btn">
+            <button type="button" className="status-btn" onClick={ () => alterDelivered(id, sale.status) } data-testid="mark-as-delivered-btn">
               Marcar como entregue
             </button>
           </div>
         ) : (
           <Link to="/admin/orders">
-            <button className="status-btn">Voltar</button>
+            <button type="button" className="status-btn">Voltar</button>
           </Link>
         )}
       </div>

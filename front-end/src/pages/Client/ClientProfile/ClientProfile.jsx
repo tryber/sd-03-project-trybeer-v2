@@ -17,7 +17,6 @@ function ClientProfile() {
   const userData = JSON.parse(localStorage.getItem('user'));
   const [user, setUser] = useState({ name: '', userEmail: '' });
   const { name, userEmail } = user || userData;
-  console.log(userData);
   const [updatedName, setUpdatedName] = useState(userData.name);
   const [isValid, setIsValid] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import ClientNavBar from '../../../components/Client/ClientNavBar/ClientNavBar';
@@ -29,7 +30,7 @@ function OrderDetail() {
   };
 
   const requestDetails = async () => getDetails(setDetails);
-  
+
   useEffect(() => {
     if (details.saleID) return undefined;
     setLoading(false);
