@@ -12,7 +12,7 @@ function Button(title, link, testId) {
         } }
       >
         <button className="buttons" data-testid={ testId } type="button">
-          <p style={{ textAlign: 'left' }}>{`${ title }`}</p>
+          <p style={{ textAlign: 'left' }}>{ `${title}` }</p>
         </button>
       </Link>
     </div>
