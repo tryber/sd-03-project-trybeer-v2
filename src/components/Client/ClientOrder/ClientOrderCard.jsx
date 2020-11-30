@@ -20,20 +20,20 @@ const convertMySQLDatetime = (date = '') => {
 const OrderCard = ({ index, id, saleDate, totalPrice }) => {
   const orderDayAndMonth = convertMySQLDatetime(saleDate);
   return (
-    <div className="order-card" data-testid={`${index}-order-card-container`}>
-      <Link to={`/orders/${id}`}>
-        <h4 data-testid={`${index}-order-number`}>{`Pedido ${id}`}</h4>
+    <div className="order-card" data-testid={ `${index}-order-card-container` }>
+      <Link to={ `/orders/${id}` }>
+        <h4 data-testid={ `${index}-order-number`}>{`Pedido ${id}` }</h4>
       </Link>
       <div>
         <div className="order-info">
           <p>Data:</p>
-          <p data-testid={`${index}-order-date`}>{orderDayAndMonth}</p>
+          <p data-testid={ `${index}-order-date` }>{orderDayAndMonth}</p>
         </div>
         <div className="order-info">
           <p>Valor: </p>
-          <p data-testid={`${index}-order-total-value`}>{`R$ ${totalPrice
-            .toFixed(initialFloat)
-            .replace('.', ',')}`}</p>
+          <p data-testid={ `${index}-order-total-value` }>
+            { `R$ ${totalPrice.toFixed(initialFloat).replace('.', ',')}` }
+          </p>
         </div>
       </div>
     </div>
