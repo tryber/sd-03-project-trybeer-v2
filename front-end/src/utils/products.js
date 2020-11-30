@@ -4,10 +4,9 @@ const fetchProducts = async () => {
   try {
     const result = await fetch('http://localhost:3001/products');
     const json = await result.json();
-    console.log(json)
     return json;
   } catch (error) {
-    return (error.message);
+    return error.message;
   }
 };
 
@@ -34,9 +33,7 @@ const createProductAtCart = (product, productList, callback) => {
 };
 
 const addProductToCart = (product, productList, callback) => {
-  const isProductAlreadyAtCart = productList.find(
-    (element) => element.id === product.id,
-  );
+  const isProductAlreadyAtCart = productList.find((element) => element.id === product.id);
   return isProductAlreadyAtCart
     ? raiseProductQuantity(product, productList, callback)
     : createProductAtCart(product, productList, callback);
@@ -59,15 +56,10 @@ const getQuantityFromCart = (productId, productList) => {
   return product ? product.quantity : zero;
 };
 
-const formatPrice = (price) => price.toLocaleString('pt-BR', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
+const formatPrice = (price) => price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const getCartTotal = (productList) => {
-  const total = productList.reduce(
-    (acc, product) => acc + (product.price * product.quantity), zero,
-  );
+  const total = productList.reduce((acc, product) => acc + product.price * product.quantity, zero);
   const formatedTotal = total.toLocaleString('pt-BR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
