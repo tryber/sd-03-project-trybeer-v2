@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import './orderDetailsCard.css';
 
@@ -10,20 +11,26 @@ function OrderDetailsCard({ object, date }) {
         <h3 data-testid="order-number">{`Pedido ${object.saleID}`}</h3>
         <span className="details-order-date">
           <p>Data: </p>
-          <p data-testid="order-date"> {date}</p>
+          <p data-testid="order-date">
+            {' '}
+            {date}
+          </p>
         </span>
       </div>
-      {object.products &&
-        object.products.map((order, index) => (
-          <div className="details-card" key={index}>
+      {object.products
+        && object.products.map((order, index) => (
+          <div className="details-card" key={ `${order} card` }>
             <span className="details-info">
-              <p data-testid={`${index}-product-qtd`}>{`${order.soldQuantity}`}</p>
+              <p data-testid={ `${index}-product-qtd` }>{`${order.soldQuantity}`}</p>
               <p>X</p>
-              <p data-testid={`${index}-product-name`}>{`${order.productName}`}</p>
+              <p data-testid={ `${index}-product-name` }>{`${order.productName}`}</p>
               <p>-</p>
-              <p data-testid={`${index}-product-total-value`}>{`R$ ${order.productPrice
-                .toFixed(initialFloat)
-                .replace('.', ',')}`}</p>
+              <p data-testid={ `${index}-product-total-value` }>
+                {`R$ ${order.productPrice
+                  .toFixed(initialFloat)
+                  .replace('.', ',')}`}
+
+              </p>
               <p>(uni.)</p>
             </span>
             <span className="details-total-price">

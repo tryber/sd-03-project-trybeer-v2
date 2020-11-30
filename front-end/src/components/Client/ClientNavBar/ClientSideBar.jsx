@@ -1,6 +1,6 @@
 import React from 'react';
 import ClientButtons from './ClientButtons';
-import './ClientBar.css'
+import './ClientBar.css';
 
 const ClientSideBar = () => (
   <div className="side-menu-container">
