@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ProductContext from '../../../context/ProductContext';
@@ -44,12 +45,12 @@ export default function ProductCard({ product, index }) {
             data-testid={ `${index}-product-minus` }
             type="button"
             onClick={
-              getQuantityFromCart(id, productCart) < 1 ? null : () => {
-                removeProductFromCart(product, productCart, setProductCart);
-                setUpdate(!update);
-                // eslint-disable-next-line indent
-                // eslint-disable-next-line react/jsx-indent
-              }
+              getQuantityFromCart(id, productCart) < 1
+                ? null
+                : () => {
+                  removeProductFromCart(product, productCart, setProductCart);
+                  setUpdate(!update);
+                }
             }
           >
             -
