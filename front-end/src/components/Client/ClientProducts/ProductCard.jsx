@@ -73,7 +73,7 @@ ProductCard.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    urlImage: PropTypes.string.isRequired,
+    url_image: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,

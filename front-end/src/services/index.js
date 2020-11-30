@@ -62,9 +62,11 @@ const registerOrder = async (
   totalPrice,
   deliveryAddress,
   deliveryNumber,
-  products = [],
+  store = [],
+  sale_date = new Date(),
+  status = 'Pendente',
 ) => {
-  const request = fetch('http://localhost:3001/register', {
+  const request = fetch('http://localhost:3001/checkout', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -75,7 +77,9 @@ const registerOrder = async (
       totalPrice,
       deliveryAddress,
       deliveryNumber,
-      products,
+      store,
+      sale_date,
+      status,
     }),
   }).then((response) => response
     .json()

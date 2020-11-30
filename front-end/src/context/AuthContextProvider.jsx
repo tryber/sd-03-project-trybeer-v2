@@ -15,7 +15,8 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (!token) return undefined;
     const decodedData = jwt(token);
-    const userData = { ...decodedData.data, token };
+    const userData = { ...decodedData, token };
+    console.log(userData)
     localStorage.setItem('user', JSON.stringify(userData));
     setUser((previousUser) => ({ ...previousUser, ...userData }));
     setLoggedIn(true);

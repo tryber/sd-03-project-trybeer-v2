@@ -1,16 +1,15 @@
 const { sales, products, salesProducts } = require('../models');
 
 const checkoutService = async (req, res) => {
+  console.log('body aqui', req.body);
   const {
     userId,
     totalPrice,
     deliveryAddress,
     deliveryNumber,
-    deliveryDistrict,
-    deliveryCity,
-    saleDate,
-    status,
     store,
+    sale_date,
+    status,
   } = req.body;
 
   const finalStore = store.reduce((acc, e) => {
@@ -26,9 +25,8 @@ const checkoutService = async (req, res) => {
     total_price: totalPrice,
     delivery_address: deliveryAddress,
     delivery_number: deliveryNumber,
-    delivery_district: deliveryDistrict,
-    delivery_city: deliveryCity,
-    sale_date: saleDate,
+    store,
+    sale_date,
     status,
   });
   const { id: saleId } = response;
