@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './Button';
-import './ClientBar.css'
+import './ClientBar.css';
 
 function ClientButtons() {
   return (
