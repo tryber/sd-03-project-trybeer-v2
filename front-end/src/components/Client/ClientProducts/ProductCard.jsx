@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ProductContext from '../../../context/ProductContext';
@@ -49,7 +50,6 @@ export default function ProductCard({ product, index }) {
                 : () => {
                   removeProductFromCart(product, productCart, setProductCart);
                   setUpdate(!update);
-                // eslint-disable-next-line indent
             }
             }
           >
