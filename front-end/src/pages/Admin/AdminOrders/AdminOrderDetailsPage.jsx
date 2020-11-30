@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-shadow */
+// eslint-disable no-shadow react/jsx-indent
+
 import React, { useState, useEffect } from 'react';
 import { Redirect, useParams, Link } from 'react-router-dom';
 import AdminNavBar from '../../../components/Admin/AdminBar/AdminNavBar';
