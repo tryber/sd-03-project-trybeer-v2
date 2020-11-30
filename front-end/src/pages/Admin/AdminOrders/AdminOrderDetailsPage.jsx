@@ -22,8 +22,14 @@ export default function OrderDetailsPage() {
     }
   };
 
-  const alterStatus = async (id, status) => {
+  const alterDelivered = async (id, status) => {
     status = 'Entregue';
+    await orderFinished(id, status);
+    return getDetails();
+  };
+
+  const alterPrepared = async (id, status) => {
+    status = 'Preparando';
     await orderFinished(id, status);
     return getDetails();
   };
@@ -79,9 +85,14 @@ export default function OrderDetailsPage() {
           </p>
         </div>
         {pending ? (
-          <button className="status-btn" onClick={() => alterStatus(id, sale.status)} data-testid="mark-as-delivered-btn">
-            Marcar como entregue
-          </button>
+          <div>
+            <button className="status-btn" onClick={() => alterPrepared(id, sale.status)} data-testid="mark-as-prepared-btn">
+              Preparar pedido
+            </button>
+            <button className="status-btn" onClick={() => alterDelivered(id, sale.status)} data-testid="mark-as-delivered-btn">
+              Marcar como entregue
+            </button>
+          </div>
         ) : (
           <Link to="/admin/orders">
             <button className="status-btn">Voltar</button>
