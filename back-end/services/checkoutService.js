@@ -19,6 +19,7 @@ const checkoutService = async (req, res) => {
     }
     return [...acc, { name: e.name, quantity: 1 }];
   }, []);
+  console.log('finalStore', finalStore);
 
   const response = await sales.create({
     user_id: userId,

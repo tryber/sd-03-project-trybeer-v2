@@ -18,16 +18,32 @@ function OrderDetail() {
   };
 
   const { id } = useParams();
-  const url = `http://localhost:3001/sales/search/${id}`;
+  const { token } = userData;
   const getDetails = async () => {
-    try {
-      const result = await fetch(url);
-      const json = await result.json();
-      return setDetails(json.sale);
-    } catch (error) {
-      return error.message;
-    }
+    const request = await fetch(`http://localhost:3001/orderDetails/${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    }).then((response) => response
+      .json()
+      .then((data) => (response.ok ? Promise.resolve(data) : Promise.reject(data.message))));
+    console.log(request);
+    return request;
   };
+
+  // const url = `http://localhost:3001/orderDetails/${id}`;
+  // const getDetails = async () => {
+  //   try {
+  //     const result = await fetch(url);
+  //     const json = await result.json();
+  //     return setDetails(json.sale);
+  //   } catch (error) {
+  //     return error.message;
+  //   }
+  // };
 
   const requestDetails = async () => getDetails(setDetails);
 
