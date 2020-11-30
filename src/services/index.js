@@ -6,12 +6,9 @@ const userLogin = async (email, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.token)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.token) : Promise.reject(data.message))));
   return request;
 };
 
@@ -28,12 +25,9 @@ const registerUser = async (name, email, password, role) => {
       password,
       role,
     }),
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.token)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.token) : Promise.reject(data.message))));
   return request;
 };
 
@@ -48,12 +42,9 @@ const updateUser = async (name, email) => {
       name,
       email,
     }),
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.token)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.token) : Promise.reject(data.message))));
   return request;
 };
 
@@ -83,25 +74,21 @@ const registerOrder = async (
     }),
   }).then((response) => response
     .json()
-    .then((data) => (response.ok
-      ? Promise.resolve(data.saleID)
-      : Promise.reject(data.message))));
+    .then((data) => (response.ok ? Promise.resolve(data.saleID) : Promise.reject(data.message))));
   return request;
 };
 
-const userOrders = async (userId) => {
-  const request = fetch(`http://localhost:3001/orderDetails/Id=${encodeURIComponent(userId)}`, {
+const userOrders = async (token) => {
+  const request = fetch('http://localhost:3001/productList', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      authorization: token,
     },
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.sales)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data) : Promise.reject(data.message))));
   return request;
 };
 
@@ -112,12 +99,9 @@ const ordersList = async () => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.sales)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.sales) : Promise.reject(data.message))));
   return request;
 };
 
@@ -128,12 +112,9 @@ const orderDetails = async (orderId) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.sales)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.sales) : Promise.reject(data.message))));
   return request;
 };
 
@@ -147,12 +128,9 @@ const orderFinished = async (orderId, status) => {
     body: JSON.stringify({
       status,
     }),
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.sales)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.sales) : Promise.reject(data.message))));
   return request;
 };
 
