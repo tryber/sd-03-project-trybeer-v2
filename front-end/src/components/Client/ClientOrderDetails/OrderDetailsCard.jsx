@@ -8,7 +8,7 @@ import ProductContext from '../../../context/ProductContext';
 const initialFloat = 2;
 
 function OrderDetailsCard({ object = {} }) {
-  const { id, data } = useParams();
+  const { id } = useParams();
   // const date = object[0] === undefined ? '' : object[0].status.sale_date;
   const { date } = useContext(ProductContext);
 
