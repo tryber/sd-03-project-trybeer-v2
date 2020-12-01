@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './clientOrderCard.css';
+import ProductContext from '../../../context/ProductContext';
 
 const initialFloat = 2;
 
@@ -21,10 +22,22 @@ const OrderCard = ({
   index, id, saleDate, totalPrice,
 }) => {
   const orderDayAndMonth = convertMySQLDatetime(saleDate);
+  const { setDate } = useContext(ProductContext);
+
+  const saveDate = useCallback(
+    () => {
+      setDate(orderDayAndMonth);
+    },
+    [setDate, orderDayAndMonth],
+  );
+
+  useEffect(() => {
+    saveDate();
+  }, [saveDate]);
 
   return (
     <div className="order-card" data-testid={ `${index}-order-card-container` }>
-      <Link to={ `/orders/${id}` }>
+      <Link to={ { pathname: `/orders/${id}`, state: { date: orderDayAndMonth } } }>
         <h4 data-testid={ `${index}-order-number` }>{`Pedido ${id}`}</h4>
       </Link>
       <div>
