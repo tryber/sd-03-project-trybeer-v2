@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './orderDetailsCard.css';
 import ProductContext from '../../../context/ProductContext';
 
@@ -55,5 +56,14 @@ function OrderDetailsCard({ object = {} }) {
     </div>
   );
 }
+
+OrderDetailsCard.propTypes = {
+  object: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    price: PropTypes.string,
+    quantity: PropTypes.string,
+  })).isRequired,
+  date: PropTypes.string.isRequired,
+};
 
 export default OrderDetailsCard;
