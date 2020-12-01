@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Redirect } from 'react-router-dom';
-import openSocket from 'socket.io-client';
+import { io } from 'socket.io-client';
 import ClientNavBar from '../../../components/Client/ClientNavBar/ClientNavBar';
 
 function ClientChatPage() {
   const {
     id, token, email, name,
   } = JSON.parse(localStorage.getItem('user') || '{}');
-  const socket = openSocket('http://localhost:3001');
   const time = new Date().toLocaleTimeString('pt-br');
+  const socket = useRef();
 
   const [message, setMessage] = useState();
 
-  useEffect(() => () => {
+  useEffect(() => {
+    socket.current = io('http://localhost:3001', { transports: ['websocket'] });
+    console.log('retorno de socket', socket);
   }, [id, token]);
 
   if (!name) return <Redirect to="/login" />;
@@ -20,10 +22,10 @@ function ClientChatPage() {
   return (
     <div style={ { display: 'flex', flexDirection: 'column', width: '360px' } }>
       <ClientNavBar title="Chat" />
-      <input data-testid="message-input" onChange={ (e) => setMessage(e.target.value) } value={ message } />
+      <input type="text" data-testid="message-input" onChange={ (e) => setMessage(e.target.value) } value={ message } />
       <button
         type="button"
-        onClick={ () => socket.emit('message', { message, email, time }) }
+        onClick={ () => socket.current.emit('message', { message, email, time }) }
         data-testid="send-message"
       >
         Enviar

@@ -49,6 +49,7 @@ io.on('connect', (socket) => {
 
   socket.on('message', ({ message, email, time }) => {
     io.emit('message', { message, time });
+    console.log(`mensagem recebida no backend: ${message}`);
     saveMessage(message, email, time);
   });
 });
