@@ -16,7 +16,7 @@ const userInfo = require('./controllers/userInfo');
 const admin = require('./controllers/admin');
 const adminOrders = require('./controllers/adminOrders');
 const chat = require('./controllers/chat');
-const { saveMessage } = require('./dbMongo/modelSaveMessage');
+const { saveMessage, getMessagesByUser } = require('./dbMongo/modelSaveMessage');
 
 const app = express();
 app.use(cors(), bodyParser.json());
@@ -51,5 +51,12 @@ io.on('connect', (socket) => {
     io.emit('message', { message, time });
     console.log(`mensagem recebida no backend: ${message}`);
     saveMessage(message, email, time);
+  });
+
+  socket.on('history', async (data) => {
+    const { userEmail } = data;
+    const messageHistory = await getMessagesByUser(userEmail);
+    console.log(`historico de mensagens do usuario ${userEmail} recebido: ${messageHistory}`);
+    io.emit('history', { messageHistory });
   });
 });
