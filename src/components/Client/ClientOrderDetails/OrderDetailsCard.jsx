@@ -5,6 +5,7 @@ import './orderDetailsCard.css';
 const initialFloat = 2;
 
 function OrderDetailsCard({ object, date }) {
+  console.log('obj', object);
   return (
     <div className="details-order-info">
       <div className="details-order-text">
