@@ -47,10 +47,10 @@ const io = socketIo(server);
 io.on('connect', (socket) => {
   console.log(`Socket ${socket.id}`);
 
-  socket.on('message', ({ message, email, time }) => {
+  socket.on('message', ({ message, userEmail, time }) => {
     io.emit('message', { message, time });
     console.log(`mensagem recebida no backend: ${message}`);
-    saveMessage(message, email, time);
+    saveMessage(message, userEmail, time);
   });
 
   socket.on('history', async (data) => {
