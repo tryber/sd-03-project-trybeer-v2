@@ -1,28 +1,36 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './orderDetailsCard.css';
-import ProductContext from '../../../context/ProductContext';
 
 const initialFloat = 2;
 
 function OrderDetailsCard({ object = {} }) {
-  const { id, data } = useParams();
-  console.log(data);
-  // const date = object[0] === undefined ? '' : object[0].status.sale_date;
-  const { date } = useContext(ProductContext);
+  const { id } = useParams();
+  const date = object[0] === undefined ? '' : object[0].status.sale_date;
+  const convertMySQLDatetime = () => {
+    const initialDateIndex = 5;
+    const finalDateIndex = 10;
+    const extractDayAndMonth = date
+      .slice(initialDateIndex, finalDateIndex)
+      .split('-')
+      .reverse()
+      .join('/');
+    return extractDayAndMonth;
+  };
+
+  const formDate = convertMySQLDatetime();
 
   return (
     <div className="details-order-info">
-      {console.log(object.map((e) => e))}
       <div className="details-order-text">
         <h3 data-testid="order-number">{`Pedido ${id}`}</h3>
         <span className="details-order-date">
           <p>Data: </p>
           <p data-testid="order-date">
             {' '}
-            {date}
+            {formDate}
           </p>
         </span>
       </div>
@@ -61,9 +69,9 @@ OrderDetailsCard.propTypes = {
   object: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     price: PropTypes.string,
-    quantity: PropTypes.string,
+    quantity: PropTypes.number,
   })).isRequired,
-  date: PropTypes.string.isRequired,
+  // date: PropTypes.string.isRequired,
 };
 
 export default OrderDetailsCard;

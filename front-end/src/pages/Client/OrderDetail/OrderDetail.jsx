@@ -40,9 +40,7 @@ function OrderDetail() {
       <ClientNavBar title="Detalhes de Pedido" />
       {/* {console.log('details', details.map((e) => e.status.sale_date))} */}
       {details === undefined ? <h1>Loading...</h1>
-        : <OrderDetailsCard
-            object={ details }
-        />}
+        : <OrderDetailsCard object={ details } />}
     </div>
   );
 }
