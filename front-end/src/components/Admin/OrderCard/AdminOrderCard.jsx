@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import './adminOrderCard.css';
 
 export default function AdminOrderCard(props) {
@@ -32,3 +32,10 @@ export default function AdminOrderCard(props) {
     </div>
   );
 }
+
+AdminOrderCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  address: PropTypes.string.isRequired,
+  totalPrice: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+};
