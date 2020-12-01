@@ -50,7 +50,8 @@ export default function ProductCard({ product, index }) {
                 : () => {
                   removeProductFromCart(product, productCart, setProductCart);
                   setUpdate(!update);
-            }}
+              }
+            }
           >
             -
           </button>

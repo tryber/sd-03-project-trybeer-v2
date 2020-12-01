@@ -43,7 +43,7 @@ export default function OrderDetailsPage() {
   useEffect(() => {
     getDetails();
     setIsLoading(false);
-  });
+  }, [isLoading]);
 
   useEffect(() => {
     if (sale.status === 'Entregue') setPending(false);
