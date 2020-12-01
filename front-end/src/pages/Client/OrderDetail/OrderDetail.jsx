@@ -27,7 +27,7 @@ function OrderDetail() {
   const { token } = userData;
 
   const requestDetails = useCallback(
-    async () => setDetails(await getDetails(id, token)), [getDetails],
+    async () => setDetails(await getDetails(id, token)), [id, token],
   );
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function OrderDetail() {
     <div>
       <ClientNavBar title="Detalhes de Pedido" />
       {/* {console.log('details', details.map((e) => e.status.sale_date))} */}
-      {details === undefined ? <h1>Loading...</h1>
+      {loading ? <h1>Loading...</h1>
         : <OrderDetailsCard
             object={ details }
         />}

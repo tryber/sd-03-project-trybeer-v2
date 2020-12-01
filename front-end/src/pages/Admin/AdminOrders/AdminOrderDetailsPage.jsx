@@ -28,26 +28,26 @@ export default function OrderDetailsPage() {
     }
   };
 
-  const alterDelivered = async (id, status) => {
+  const alterDelivered = async (idParam, status) => {
     status = 'Entregue';
-    await orderFinished(id, status);
+    await orderFinished(idParam, status);
     return getDetails();
   };
 
-  const alterPrepared = async (id, status) => {
+  const alterPrepared = async (idParam, status) => {
     status = 'Preparando';
-    await orderFinished(id, status);
+    await orderFinished(idParam, status);
     return getDetails();
   };
 
   useEffect(() => {
     getDetails();
     setIsLoading(false);
-  }, [setPending]);
+  }, [setPending, getDetails]);
 
   useEffect(() => {
     if (sale.status === 'Entregue') setPending(false);
-  });
+  }, [sale.status]);
 
   if (!userData) return <Redirect to="/login" />;
 
