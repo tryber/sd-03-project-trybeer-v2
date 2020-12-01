@@ -1,7 +1,7 @@
 const { salesProducts, products, sales, users } = require('../models');
 
 const getDetails = async (orderNumber, userEmail) => {
-  let statusClient;
+  let saleInfo;
 
   const orderDetails = await salesProducts.findAll({ where: { sale_id: orderNumber } });
   const findId = await users.findAll({ where: { email: userEmail } });
@@ -9,13 +9,13 @@ const getDetails = async (orderNumber, userEmail) => {
   console.log(id);
 
   await sales.findAll({ where: { user_id: id } }).then((result) => result.map((e) => {
-    statusClient = e.dataValues.status;
-    return statusClient;
+    saleInfo = e.dataValues;
+    return saleInfo;
   }));
 
   const details = orderDetails.map(async ({ quantity, product_id: productId }) => {
     const { name, price } = await products.findByPk(productId);
-    return { quantity, name, price, statusClient };
+    return { quantity, name, price, saleInfo };
   });
   const promise = await Promise.all(details);
   return promise;
