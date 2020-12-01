@@ -1,7 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 import { Redirect } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import ClientNavBar from '../../../components/Client/ClientNavBar/ClientNavBar';
+
+const getMessageHistory = async (userEmail) => {
+  const messages = await fetch('http://localhost:3001/chat/history', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ userEmail }),
+  });
+  return messages;
+};
 
 function ClientChatPage() {
   const { userEmail } = JSON.parse(localStorage.getItem('user') || '{}');
@@ -9,11 +23,16 @@ function ClientChatPage() {
   const socket = useRef();
 
   const [message, setMessage] = useState();
+  const [messageHistory, setMessageHistory] = useState();
+
+  const fetchMessageHistory = useCallback(
+    async () => setMessageHistory(await getMessageHistory(userEmail)), [userEmail],
+  );
 
   useEffect(() => {
     socket.current = io('http://localhost:3001', { transports: ['websocket'] });
-    socket.current.emit('history', { userEmail });
-  }, [userEmail]);
+    fetchMessageHistory();
+  }, [userEmail, fetchMessageHistory]);
 
   if (!userEmail) return <Redirect to="/login" />;
 
