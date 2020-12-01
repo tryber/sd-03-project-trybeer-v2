@@ -9,13 +9,11 @@ const initialFloat = 2;
 
 function OrderDetailsCard({ object = {} }) {
   const { id, data } = useParams();
-  console.log(data);
   // const date = object[0] === undefined ? '' : object[0].status.sale_date;
   const { date } = useContext(ProductContext);
 
   return (
     <div className="details-order-info">
-      {console.log(object.map((e) => e))}
       <div className="details-order-text">
         <h3 data-testid="order-number">{`Pedido ${id}`}</h3>
         <span className="details-order-date">
