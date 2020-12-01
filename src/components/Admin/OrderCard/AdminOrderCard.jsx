@@ -36,6 +36,6 @@ export default function AdminOrderCard(props) {
 AdminOrderCard.propTypes = {
   id: PropTypes.number.isRequired,
   address: PropTypes.string.isRequired,
-  totalPrice: PropTypes.string.isRequired,
+  totalPrice: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
 };

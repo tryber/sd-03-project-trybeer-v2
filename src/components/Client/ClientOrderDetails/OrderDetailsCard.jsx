@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import './orderDetailsCard.css';
 
 const initialFloat = 2;
 
 function OrderDetailsCard({ object, date }) {
-  console.log('obj', object);
   return (
     <div className="details-order-info">
       <div className="details-order-text">
@@ -48,5 +47,14 @@ function OrderDetailsCard({ object, date }) {
     </div>
   );
 }
+
+OrderDetailsCard.propTypes = {
+  object: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    price: PropTypes.string,
+    quantity: PropTypes.string,
+  })).isRequired,
+  date: PropTypes.string.isRequired,
+};
 
 export default OrderDetailsCard;
