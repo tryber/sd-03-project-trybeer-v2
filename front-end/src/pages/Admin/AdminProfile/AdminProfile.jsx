@@ -13,7 +13,7 @@ function AdminProfile() {
         <h2>Perfil</h2>
         <div className="profile-info">
           <p data-testid="profile-name">{`Nome: ${userData.name}`}</p>
-          <p data-testid="profile-email">{`Email: ${userData.email}`}</p>
+          <p data-testid="profile-email">{`Email: ${userData.userEmail}`}</p>
         </div>
       </div>
     </div>
