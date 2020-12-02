@@ -19,7 +19,6 @@ const convertMySQLDatetime = (date = []) => {
 };
 
 const OrderDetailsCard = ({ details, saleDate }) => {
-  console.log(details);
   const orderDayAndMonth = convertMySQLDatetime(saleDate);
   const totalPrice = details.map((e) => e.saleInfo[0].total_price);
 
