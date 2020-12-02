@@ -76,10 +76,12 @@ const RegisterPage = () => {
     };
   }, [isSubmit, isAdmin, name, email, password, setToken]);
 
-  if (redirect) {
-    const { role } = JSON.parse(localStorage.getItem('user'));
-    return role === 'administrator' ? <Redirect to="/admin/orders" /> : <Redirect to="/products" />;
-  }
+  const changeRedirect = (role = 'client') => {
+    if (role === 'administrator') {
+      return <Redirect to="/admin/orders" />;
+    }
+    return <Redirect to="/products" />;
+  };
 
   return (
     <div style={ { margin: 'auto', height: '640px', display: 'flex' } }>
@@ -158,6 +160,7 @@ const RegisterPage = () => {
             disabled={ !isValid }
             style={ { width: '150px', margin: 'auto' } }
             data-testid="signup-btn"
+            onSubmit={ () => changeRedirect(isAdmin) }
           >
             Cadastrar
           </button>
