@@ -21,6 +21,7 @@ const convertMySQLDatetime = (date = []) => {
 const OrderDetailsCard = ({ details, saleDate }) => {
   const orderDayAndMonth = convertMySQLDatetime(saleDate);
   const totalPrice = details.map((e) => e.saleInfo[0].total_price);
+  const saleStatus = details.map((e) => e.saleInfo[0].status);
 
   const { id } = useParams();
 
@@ -34,6 +35,9 @@ const OrderDetailsCard = ({ details, saleDate }) => {
             {orderDayAndMonth}
           </p>
         </span>
+        <p data-testid="order-status" className={ `${saleStatus}-details` }>
+          {saleStatus}
+        </p>
       </div>
       {details
         && details.map((order, index) => (

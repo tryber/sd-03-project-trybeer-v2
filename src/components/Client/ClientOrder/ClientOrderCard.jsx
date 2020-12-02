@@ -17,7 +17,7 @@ const convertMySQLDatetime = (date = '') => {
 };
 
 const OrderCard = ({
-  index, id, saleDate, totalPrice,
+  index, id, saleDate, totalPrice, status,
 }) => {
   const orderDayAndMonth = convertMySQLDatetime(saleDate);
 
@@ -25,6 +25,7 @@ const OrderCard = ({
     <div className="order-card" data-testid={ `${index}-order-card-container` }>
       <Link to={ `/orders/${id}` }>
         <h4 data-testid={ `${index}-order-number` }>{`Pedido ${id}`}</h4>
+        <p className={ status }>{status}</p>
       </Link>
       <div>
         <div className="order-info">
@@ -49,6 +50,7 @@ OrderCard.propTypes = {
   id: PropTypes.number.isRequired,
   saleDate: PropTypes.string.isRequired,
   totalPrice: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 export default OrderCard;

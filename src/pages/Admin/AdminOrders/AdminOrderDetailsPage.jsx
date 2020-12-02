@@ -39,13 +39,13 @@ export default function OrderDetailsPage() {
   const alterDelivered = async (idParam, status) => {
     status = 'Entregue';
     await orderFinished(idParam, status);
-    return getDetails();
+    return requestDetails();
   };
 
   const alterPrepared = async (idParam, status) => {
     status = 'Preparando';
     await orderFinished(idParam, status);
-    return getDetails();
+    return requestDetails();
   };
 
   useEffect(() => {

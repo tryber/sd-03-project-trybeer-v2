@@ -34,6 +34,8 @@ function OrderDetail() {
   }, [requestDetails, details.saleID]);
 
   const date = details.map((e) => e.saleInfo[0].sale_date);
+  console.log(details);
+
   return (
     <div>
       <ClientNavBar title="Detalhes de Pedido" />
