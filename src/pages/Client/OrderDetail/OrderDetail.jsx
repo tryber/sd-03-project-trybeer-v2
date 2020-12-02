@@ -26,7 +26,7 @@ function OrderDetail() {
   const { token } = userData;
 
   const requestDetails = useCallback(
-    async () => setDetails(await getDetails(id, token)), [getDetails],
+    async () => setDetails(await getDetails(id, token)), [id, token],
   );
 
   useEffect(() => {
