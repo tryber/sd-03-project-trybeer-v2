@@ -59,8 +59,6 @@ export default function OrderDetailsPage() {
 
   if (!userData) return <Redirect to="/login" />;
 
-  console.log(sale);
-
   return isLoading || !sale ? (
     <h1>Carregando...</h1>
   ) : (
