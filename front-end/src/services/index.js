@@ -119,7 +119,7 @@ const orderDetails = async (orderId) => {
 };
 
 const orderFinished = async (orderId, status) => {
-  const request = fetch(`http://localhost:3001/sales/search/${encodeURIComponent(orderId)}`, {
+  const request = fetch(`http://localhost:3001/admin/orders/${encodeURIComponent(orderId)}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',

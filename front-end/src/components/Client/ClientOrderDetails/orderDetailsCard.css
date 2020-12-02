@@ -10,6 +10,18 @@
   justify-content: space-evenly;
 }
 
+.Pendente-details {
+  color: red;
+}
+
+.Preparando-details {
+  color: blue;
+}
+
+.Entregue-details {
+  color: green;
+}
+
 .details-order-date {
   display: flex;
   justify-content: space-evenly;
