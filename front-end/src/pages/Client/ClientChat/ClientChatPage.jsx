@@ -6,7 +6,6 @@ import { io } from 'socket.io-client';
 import ClientNavBar from '../../../components/Client/ClientNavBar/ClientNavBar';
 
 const getMessageHistory = async (userEmail) => {
-  console.log('iniciando fetch');
   const messages = await fetch('http://localhost:3001/chat/history', {
     method: 'POST',
     headers: {
@@ -38,7 +37,6 @@ function ClientChatPage() {
   }, [userEmail, fetchMessageHistory, refreshMessages]);
 
   if (!userEmail) return <Redirect to="/login" />;
-  console.log();
 
   return (
     <div style={ { display: 'flex', flexDirection: 'column', width: '360px' } }>
