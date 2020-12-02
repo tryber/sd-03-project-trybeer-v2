@@ -22,6 +22,7 @@ const OrderDetailsCard = ({ details, saleDate }) => {
   const orderDayAndMonth = convertMySQLDatetime(saleDate);
   const totalPrice = details.map((e) => e.saleInfo[0].total_price);
   const saleStatus = details.map((e) => e.saleInfo[0].status);
+  console.log(saleStatus[0]);
 
   const { id } = useParams();
 
@@ -35,8 +36,8 @@ const OrderDetailsCard = ({ details, saleDate }) => {
             {orderDayAndMonth}
           </p>
         </span>
-        <p data-testid="order-status" className={ `${saleStatus}-details` }>
-          {saleStatus}
+        <p data-testid="order-status" className={ `${saleStatus[0]}-details` }>
+          {saleStatus[0]}
         </p>
       </div>
       {details
