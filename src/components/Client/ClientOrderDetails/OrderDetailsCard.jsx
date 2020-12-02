@@ -6,21 +6,24 @@ import './orderDetailsCard.css';
 
 const initialFloat = 2;
 
-function OrderDetailsCard({ object = {} }) {
-  const { id } = useParams();
-  const date = object[0] === undefined ? '' : object[0].status.sale_date;
-  const convertMySQLDatetime = () => {
-    const initialDateIndex = 5;
-    const finalDateIndex = 10;
-    const extractDayAndMonth = date
-      .slice(initialDateIndex, finalDateIndex)
-      .split('-')
-      .reverse()
-      .join('/');
-    return extractDayAndMonth;
-  };
+const convertMySQLDatetime = (date = []) => {
+  const initialDateIndex = 5;
+  const finalDateIndex = 10;
+  const extractDayAndMonth = date
+    .toString()
+    .slice(initialDateIndex, finalDateIndex)
+    .split('-')
+    .reverse()
+    .join('/');
+  return extractDayAndMonth;
+};
 
-  const formDate = convertMySQLDatetime();
+const OrderDetailsCard = ({ details, saleDate }) => {
+  console.log(details);
+  const orderDayAndMonth = convertMySQLDatetime(saleDate);
+  const totalPrice = details.map((e) => e.saleInfo[0].total_price);
+
+  const { id } = useParams();
 
   return (
     <div className="details-order-info">
@@ -29,13 +32,12 @@ function OrderDetailsCard({ object = {} }) {
         <span className="details-order-date">
           <p>Data: </p>
           <p data-testid="order-date">
-            {' '}
-            {formDate}
+            {orderDayAndMonth}
           </p>
         </span>
       </div>
-      {object
-        && object.map((order, index) => (
+      {details
+        && details.map((order, index) => (
           <div className="details-card" key={ `${order.name} card` }>
             <span className="details-info">
               <p data-testid={ `${index}-product-qtd` }>{`${order.quantity}`}</p>
@@ -61,17 +63,23 @@ function OrderDetailsCard({ object = {} }) {
             </span>
           </div>
         ))}
+      <h3>
+        <strong>
+          Total: R$
+          {' '}
+          {` ${parseFloat(totalPrice).toFixed(initialFloat).replace('.', ',')}`}
+        </strong>
+      </h3>
     </div>
   );
-}
+};
 
 OrderDetailsCard.propTypes = {
-  object: PropTypes.arrayOf(PropTypes.shape({
+  details: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     price: PropTypes.string,
     quantity: PropTypes.number,
   })).isRequired,
-  // date: PropTypes.string.isRequired,
 };
 
 export default OrderDetailsCard;

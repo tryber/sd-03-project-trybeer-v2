@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useCallback } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './clientOrderCard.css';
-import ProductContext from '../../../context/ProductContext';
 
 const initialFloat = 2;
 
-// Baseado em: https://stackoverflow.com/questions/3075577/convert-mysql-datetime-stamp-into-javascripts-date-format
 const convertMySQLDatetime = (date = '') => {
   const initialDateIndex = 5;
   const finalDateIndex = 10;
@@ -22,22 +20,10 @@ const OrderCard = ({
   index, id, saleDate, totalPrice,
 }) => {
   const orderDayAndMonth = convertMySQLDatetime(saleDate);
-  const { setDate } = useContext(ProductContext);
-
-  const saveDate = useCallback(
-    () => {
-      setDate(orderDayAndMonth);
-    },
-    [setDate, orderDayAndMonth],
-  );
-
-  useEffect(() => {
-    saveDate();
-  }, [saveDate]);
 
   return (
     <div className="order-card" data-testid={ `${index}-order-card-container` }>
-      <Link to={ { pathname: `/orders/${id}`, state: { date: orderDayAndMonth } } }>
+      <Link to={ `/orders/${id}` }>
         <h4 data-testid={ `${index}-order-number` }>{`Pedido ${id}`}</h4>
       </Link>
       <div>

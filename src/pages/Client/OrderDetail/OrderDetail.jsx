@@ -21,7 +21,6 @@ const getDetails = async (id, token) => {
 function OrderDetail() {
   const userData = JSON.parse(localStorage.getItem('user') || '{}');
   const [details, setDetails] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
   const { token } = userData;
@@ -31,16 +30,18 @@ function OrderDetail() {
   );
 
   useEffect(() => {
-    setLoading(false);
     requestDetails();
   }, [requestDetails, details.saleID]);
 
+  const date = details.map((e) => e.saleInfo[0].sale_date);
   return (
     <div>
       <ClientNavBar title="Detalhes de Pedido" />
-      {/* {console.log('details', details.map((e) => e.status.sale_date))} */}
       {details === undefined ? <h1>Loading...</h1>
-        : <OrderDetailsCard object={ details } />}
+        : <OrderDetailsCard
+            details={ details }
+            saleDate={ date }
+        />}
     </div>
   );
 }
