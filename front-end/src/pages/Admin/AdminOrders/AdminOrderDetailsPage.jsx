@@ -55,7 +55,7 @@ export default function OrderDetailsPage() {
 
   useEffect(() => {
     if (sale.orderStatus === 'Entregue') setPending(false);
-  });
+  }, [sale.orderStatus]);
 
   if (!userData) return <Redirect to="/login" />;
 
