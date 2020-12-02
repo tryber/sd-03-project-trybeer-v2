@@ -23,6 +23,15 @@ export default function ProductCard({ product, index }) {
     saveCartAtLocalStorage(productCart);
   }, [productCart, update]);
 
+  const minusButton = (id, productCart) => {
+    getQuantityFromCart(id, productCart) < 1
+      ? null
+      : () => {
+        removeProductFromCart(product, productCart, setProductCart);
+        setUpdate(!update);
+    }
+  }
+
   return (
     <div className="products-display" key={ name }>
       <div>
@@ -44,14 +53,7 @@ export default function ProductCard({ product, index }) {
             className="qty-btn minus"
             data-testid={ `${index}-product-minus` }
             type="button"
-            onClick={
-              getQuantityFromCart(id, productCart) < 1
-                ? null
-                : () => {
-                  removeProductFromCart(product, productCart, setProductCart);
-                  setUpdate(!update);
-                }
-            }
+            onClick={ () => minusButton(id, productCart) }
           >
             -
           </button>
