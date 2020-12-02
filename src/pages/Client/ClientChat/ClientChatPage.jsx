@@ -6,6 +6,7 @@ import { io } from 'socket.io-client';
 import ClientNavBar from '../../../components/Client/ClientNavBar/ClientNavBar';
 
 const getMessageHistory = async (userEmail) => {
+  console.log('iniciando fetch');
   const messages = await fetch('http://localhost:3001/chat/history', {
     method: 'POST',
     headers: {
@@ -14,11 +15,13 @@ const getMessageHistory = async (userEmail) => {
     },
     body: JSON.stringify({ userEmail }),
   });
+  const res = await messages.json();
+  console.log(`retorno de getMessageHistory: ${res.history.nickname}`);
   return messages;
 };
 
 function ClientChatPage() {
-  const { userEmail } = JSON.parse(localStorage.getItem('user') || '{}');
+  const { userEmail } = JSON.parse(localStorage.getItem('user'));
   const time = new Date().toLocaleTimeString('pt-br');
   const socket = useRef();
 
@@ -32,12 +35,8 @@ function ClientChatPage() {
   useEffect(() => {
     socket.current = io('http://localhost:3001', { transports: ['websocket'] });
     fetchMessageHistory();
+    console.log(`historico de mensagens ${messageHistory}`);
   }, [userEmail, fetchMessageHistory]);
-  
-  if (messageHistory !== undefined) {
-    const {nickname} = messageHistory;
-    console.log(`historico de mensagens ${nickname}`);
-  }
 
   if (!userEmail) return <Redirect to="/login" />;
 
