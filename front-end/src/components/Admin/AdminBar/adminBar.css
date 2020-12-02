@@ -7,6 +7,17 @@
   top: 55px;
 }
 
+.top-icon-b {
+  width: 45px;
+  height: 45px;
+  border-radius: 50px;
+  background-size: cover;
+  background-image: url('./beer-top-icon.png');
+  position: absolute;
+  left: 30px;
+  top: -45px;
+}
+
 .admin-nav-bar {
   display: flex;
   justify-content: space-around;

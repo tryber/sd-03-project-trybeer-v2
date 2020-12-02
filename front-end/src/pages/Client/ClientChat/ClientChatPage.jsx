@@ -21,12 +21,10 @@ const getMessageHistory = async (userEmail) => {
 function ClientChatPage() {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const { userEmail } = user;
-  console.log(localStorage.getItem('user'));
-  console.log('user', userEmail);
   const time = new Date().toLocaleTimeString('pt-br');
   const socket = useRef();
-  // const formatEmail = userEmail.split('.');
-  // const formatUser = formatEmail[0].split('@')[0];
+  const formatEmail = userEmail.split('.');
+  const formatUser = formatEmail[0].split('@')[0];
 
   const sliceInit = 0;
   const sliceEnd = 2;
@@ -59,7 +57,7 @@ function ClientChatPage() {
             ? messageHistory.history.sent.map((item) => (
               <li style={ { textAlign: 'left', padding: '0', margin: '0' } } key={ item.timestamp }>
                 <p style={ { padding: '0', margin: '0' } }>
-                  {userEmail}
+                  {formatUser}
                 </p>
                 <div
                   style={ {
