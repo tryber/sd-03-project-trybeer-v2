@@ -23,7 +23,6 @@ export default function OrdersPage() {
   ) : (
     <div style={ { } }>
       <AdminNavBar title="TryBeer" />
-      {console.log(sales)}
       <h1>Pedidos pendentes</h1>
       <div className="admin-orders-page-container">
         {sales
