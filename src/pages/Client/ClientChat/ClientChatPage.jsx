@@ -16,8 +16,7 @@ const getMessageHistory = async (userEmail) => {
     body: JSON.stringify({ userEmail }),
   });
   const res = await messages.json();
-  console.log(`retorno de getMessageHistory: ${res.history.nickname}`);
-  return messages;
+  return res;
 };
 
 function ClientChatPage() {
@@ -27,6 +26,7 @@ function ClientChatPage() {
 
   const [message, setMessage] = useState();
   const [messageHistory, setMessageHistory] = useState();
+  const [refreshMessages, setRefreshMessages] = useState(false);
 
   const fetchMessageHistory = useCallback(
     async () => setMessageHistory(await getMessageHistory(userEmail)), [userEmail],
@@ -35,18 +35,32 @@ function ClientChatPage() {
   useEffect(() => {
     socket.current = io('http://localhost:3001', { transports: ['websocket'] });
     fetchMessageHistory();
-    console.log(`historico de mensagens ${messageHistory}`);
-  }, [userEmail, fetchMessageHistory]);
+  }, [userEmail, fetchMessageHistory, refreshMessages]);
 
   if (!userEmail) return <Redirect to="/login" />;
+  console.log();
 
   return (
     <div style={ { display: 'flex', flexDirection: 'column', width: '360px' } }>
       <ClientNavBar title="Chat" />
+      <ul>
+        {messageHistory && messageHistory.history
+          ? messageHistory.history.sent.map((item) => (
+            <li key={ item.timestamp }>
+              {userEmail}
+              :
+              { item.chatMessage }
+              -
+              {item.timestamp}
+            </li>)) : 'Loading messages...'}
+      </ul>
       <input type="text" data-testid="message-input" onChange={ (e) => setMessage(e.target.value) } value={ message } />
       <button
         type="button"
-        onClick={ () => { socket.current.emit('message', { message, userEmail, time }); } }
+        onClick={ () => {
+          socket.current.emit('message', { message, userEmail, time });
+          setRefreshMessages(!refreshMessages);
+        } }
         data-testid="send-message"
       >
         Enviar
