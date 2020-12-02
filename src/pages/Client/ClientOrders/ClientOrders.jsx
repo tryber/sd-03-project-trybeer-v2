@@ -47,6 +47,7 @@ function ClientOrders() {
             id={ order.id }
             saleDate={ order.saleDate }
             totalPrice={ order.totalPrice }
+            status={ order.status }
           />
         ))}
       </div>
