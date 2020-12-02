@@ -33,18 +33,18 @@ export default function OrderDetailsPage() {
   const { token } = userData;
 
   const requestDetails = useCallback(
-    async () => setSale(await getDetails(id, token)), [getDetails],
+    async () => setSale(await getDetails(id, token)), [id, token],
   );
 
-  const alterDelivered = async (id, status) => {
+  const alterDelivered = async (idParam, status) => {
     status = 'Entregue';
-    await orderFinished(id, status);
+    await orderFinished(idParam, status);
     return getDetails();
   };
 
-  const alterPrepared = async (id, status) => {
+  const alterPrepared = async (idParam, status) => {
     status = 'Preparando';
-    await orderFinished(id, status);
+    await orderFinished(idParam, status);
     return getDetails();
   };
 
@@ -58,8 +58,6 @@ export default function OrderDetailsPage() {
   // });
 
   if (!userData) return <Redirect to="/login" />;
-
-  console.log(sale);
 
   return isLoading || !sale ? (
     <h1>Carregando...</h1>
