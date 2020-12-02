@@ -51,11 +51,11 @@ export default function OrderDetailsPage() {
   useEffect(() => {
     setIsLoading(false);
     requestDetails();
-  }, [setPending]);
+  }, [setPending, requestDetails]);
 
-  // useEffect(() => {
-  //   if (sale.status === 'Entregue') setPending(false);
-  // });
+  useEffect(() => {
+    if (sale.orderStatus === 'Entregue') setPending(false);
+  });
 
   if (!userData) return <Redirect to="/login" />;
 

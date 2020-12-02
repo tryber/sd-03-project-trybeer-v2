@@ -23,11 +23,13 @@ export default function ProductCard({ product, index }) {
     saveCartAtLocalStorage(productCart);
   }, [productCart, update]);
 
-  const minusButton = (idParam, productCartParam) => {
-    if (getQuantityFromCart(idParam, productCartParam) < 1) return null;
+  function minusButton(idParam, productCartParam) {
+    if (getQuantityFromCart(idParam, productCartParam) < 1) {
+      return null;
+    }
     removeProductFromCart(product, productCartParam, setProductCart);
-    setUpdate(!update);
-  };
+    return setUpdate(!update);
+  }
 
   return (
     <div className="products-display" key={ name }>

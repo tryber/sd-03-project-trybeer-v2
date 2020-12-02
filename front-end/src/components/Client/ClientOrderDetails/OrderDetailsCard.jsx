@@ -79,6 +79,7 @@ OrderDetailsCard.propTypes = {
     price: PropTypes.string,
     quantity: PropTypes.number,
   })).isRequired,
+  saleDate: PropTypes.string.isRequired,
 };
 
 export default OrderDetailsCard;
