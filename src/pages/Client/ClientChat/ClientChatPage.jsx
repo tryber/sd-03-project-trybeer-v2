@@ -33,6 +33,11 @@ function ClientChatPage() {
     socket.current = io('http://localhost:3001', { transports: ['websocket'] });
     fetchMessageHistory();
   }, [userEmail, fetchMessageHistory]);
+  
+  if (messageHistory !== undefined) {
+    const {nickname} = messageHistory;
+    console.log(`historico de mensagens ${nickname}`);
+  }
 
   if (!userEmail) return <Redirect to="/login" />;
 
