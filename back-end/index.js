@@ -35,7 +35,7 @@ app.use('/chat', chat);
 
 app.use('/images', express.static(path.join(__dirname, '/images')));
 app.use('/products', products);
-app.use('/adminOrders', adminOrders);
+app.use('/admin/orders', adminOrders);
 
 const PORT = process.env.PORT || 3001;
 

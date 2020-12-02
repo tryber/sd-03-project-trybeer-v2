@@ -2,31 +2,39 @@
 /* eslint-disable no-shadow */
 // eslint-disable no-shadow react/jsx-indent
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Redirect, useParams, Link } from 'react-router-dom';
 import AdminNavBar from '../../../components/Admin/AdminBar/AdminNavBar';
 import { orderFinished } from '../../../services';
 import './adminOrderDetailsPage.css';
 
+const fixed = 2;
+
+const getDetails = async (id, token) => {
+  const request = await fetch(`http://localhost:3001/admin/orders/${id}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: token,
+    },
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data) : Promise.reject(data.message))));
+  return request;
+};
+
 export default function OrderDetailsPage() {
+  const userData = JSON.parse(localStorage.getItem('user') || '{}');
   const [sale, setSale] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [pending, setPending] = useState(true);
-  const userData = JSON.parse(localStorage.getItem('user'));
-
-  const fixed = 2;
-
   const { id } = useParams();
-  const url = `http://localhost:3001/sales/search/${id}`;
-  const getDetails = async () => {
-    try {
-      const result = await fetch(url);
-      const json = await result.json();
-      return setSale(json.sale);
-    } catch (error) {
-      return error.message;
-    }
-  };
+  const { token } = userData;
+
+  const requestDetails = useCallback(
+    async () => setSale(await getDetails(id, token)), [getDetails],
+  );
 
   const alterDelivered = async (id, status) => {
     status = 'Entregue';
@@ -41,22 +49,24 @@ export default function OrderDetailsPage() {
   };
 
   useEffect(() => {
-    getDetails();
     setIsLoading(false);
+    requestDetails();
   }, [setPending]);
 
-  useEffect(() => {
-    if (sale.status === 'Entregue') setPending(false);
-  });
+  // useEffect(() => {
+  //   if (sale.status === 'Entregue') setPending(false);
+  // });
 
   if (!userData) return <Redirect to="/login" />;
+
+  console.log(sale);
 
   return isLoading || !sale ? (
     <h1>Carregando...</h1>
   ) : (
     <div>
       <AdminNavBar title="TryBeer" />
-      <div className="admin-details-order-info">
+      <div style={ { marginTop: '80px' } } className="admin-details-order-info">
         <h1 data-testid="order-number">
           Pedido
           {' '}
@@ -65,30 +75,30 @@ export default function OrderDetailsPage() {
             {' '}
             -
             {' '}
-            {sale.status ? sale.status : ''}
+            {sale.orderStatus ? sale.orderStatus : ''}
           </span>
         </h1>
         <div>
-          {sale.products ? (
-            sale.products.map((ele, i) => (
+          {sale.orderProducts ? (
+            sale.orderProducts.map((ele, i) => (
               <div key={ ele }>
                 <li className="admin-order-details-li">
                   <div className="admin-details-card">
                     <span className="details-span-sq" data-testid={ `${i}-product-qtd` }>
-                      {ele.soldQuantity}
+                      {ele.quantity}
                     </span>
                     <span className="details-span-pn" data-testid={ `${i}-product-name` }>
-                      {ele.productName}
+                      {ele.name}
                     </span>
                     <span className="details-span-tp" data-testid={ `${i}-product-total-value` }>
                       R$
                       {' '}
-                      {(ele.productPrice * ele.soldQuantity).toFixed(fixed).replace('.', ',')}
+                      {(ele.price * ele.quantity).toFixed(fixed).replace('.', ',')}
                     </span>
                     <span className="details-span-up" data-testid={ `${i}-order-unit-price` }>
                       (R$
                       {' '}
-                      {ele.productPrice.toFixed(fixed).replace('.', ',')}
+                      {ele.price.toFixed(fixed).replace('.', ',')}
                       )
                     </span>
                   </div>
@@ -101,15 +111,15 @@ export default function OrderDetailsPage() {
           <p className="details-total-price" data-testid="order-total-value">
             Total: R$
             {' '}
-            {sale.orderValue ? sale.orderValue.toFixed(fixed).replace('.', ',') : ''}
+            {sale.total_price ? parseFloat(sale.total_price).toFixed(fixed).replace('.', ',') : ''}
           </p>
         </div>
         {pending ? (
           <div>
-            <button type="button" className="status-btn" onClick={ () => alterPrepared(id, sale.status) } data-testid="mark-as-prepared-btn">
+            <button type="button" className="status-btn" onClick={ () => alterPrepared(id, sale.orderStatus) } data-testid="mark-as-prepared-btn">
               Preparar pedido
             </button>
-            <button type="button" className="status-btn" onClick={ () => alterDelivered(id, sale.status) } data-testid="mark-as-delivered-btn">
+            <button type="button" className="status-btn" onClick={ () => alterDelivered(id, sale.orderStatus) } data-testid="mark-as-delivered-btn">
               Marcar como entregue
             </button>
           </div>
