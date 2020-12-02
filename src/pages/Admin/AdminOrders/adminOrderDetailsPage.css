@@ -45,10 +45,11 @@
 }
 
 .status-btn {
-  width: 250px;
+  width: 200px;
   height: 30px;
   border-radius: 5px;
   margin-bottom: 15px;
+  margin-left: 15px;
   border: none;
   background-color: rgba(0, 139, 0, 0.767);
   font-size: 15px;
@@ -56,7 +57,7 @@
 }
 
 .status-btn:hover {
-  width: 250px;
+  width: 200px;
   height: 30px;
   border-radius: 5px;
   margin-bottom: 15px;
