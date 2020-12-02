@@ -13,7 +13,6 @@ const validateLogin = async (email, pass) => {
   if (!email.match(regex)) return { code: 400, message: 'Email deve ter o formato tal' };
   if (pass.length < 6) return { code: 400, message: 'Senha no formato incorreto' };
   const userInfo = (await users.findAll({ where: { email } }))[0];
-  console.log(userInfo);
   if (!userInfo) return { code: 404, message: 'usuário não encontrado' };
   if (userInfo.password !== pass) return { code: 401, message: 'senha incorreta' };
   const { password, ...info } = userInfo.dataValues;
