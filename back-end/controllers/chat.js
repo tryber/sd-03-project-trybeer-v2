@@ -11,9 +11,8 @@ chat.get('/', async (req, res) => {
 
 chat.post('/history', async (req, res) => {
   const { userEmail } = req.body;
-  console.log('userEmail', req.body);
   const messages = await getMessagesByUser(userEmail);
-  res.status(200).json(messages);
+  res.status(200).json({ history: messages });
 });
 
 module.exports = chat;
