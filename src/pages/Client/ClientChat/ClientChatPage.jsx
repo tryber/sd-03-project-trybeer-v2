@@ -23,13 +23,11 @@ function ClientChatPage() {
   const { userEmail } = user;
   const time = new Date().toLocaleTimeString('pt-br');
   const socket = useRef();
-  const formatEmail = userEmail.split('.');
-  const formatUser = formatEmail[0].split('@')[0];
 
   const sliceInit = 0;
   const sliceEnd = 2;
 
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState('');
   const [messageHistory, setMessageHistory] = useState();
   const [refreshMessages, setRefreshMessages] = useState(false);
 
@@ -56,19 +54,19 @@ function ClientChatPage() {
           {messageHistory && messageHistory.history
             ? messageHistory.history.sent.map((item) => (
               <li style={ { textAlign: 'left', padding: '0', margin: '0' } } key={ item.timestamp }>
-                <p style={ { padding: '0', margin: '0' } }>
-                  {formatUser}
+                <p data-testid="nickname" style={ { padding: '0', margin: '0' } }>
+                  {userEmail}
                 </p>
                 <div
                   style={ {
                     display: 'flex', border: '1px solid black', width: '250px', padding: '15px', borderRadius: '15px', background: '#00af9c', borderTopLeftRadius: '0',
                   } }
                 >
-                  <p>
+                  <p data-testid="message-time">
                     {item.timestamp.split(':').slice(sliceInit, sliceEnd).join(':')}
 
                   </p>
-                  <p style={ { marginLeft: '20px' } }>
+                  <p data-testid="text-message" style={ { marginLeft: '20px' } }>
                     {item.chatMessage}
                   </p>
                 </div>
@@ -84,12 +82,12 @@ function ClientChatPage() {
         <button
           style={ { width: '70px', height: '31px', marginLeft: '4px' } }
           type="button"
+          data-testid="send-message"
           onClick={ () => {
             socket.current.emit('message', { message, userEmail, time });
             setRefreshMessages(!refreshMessages);
             setMessage('');
           } }
-          data-testid="send-message"
         >
           Enviar
         </button>
