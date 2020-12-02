@@ -32,7 +32,7 @@ function App() {
               <Route path="/admin/profile" component={ AdminProfile } />
               <Route path="/admin/orders/:id" component={ OrderDetailsPage } />
               <Route path="/admin/orders" component={ AdminOrdersPage } />
-              <Route path="/admin/chat" component={ AdminChatPage } />
+              <Route path="/admin/chats" component={ AdminChatPage } />
               <Route path="/profile" component={ ClientProfile } />
               <Route path="/orders/:id" component={ OrderDetail } />
               <Route path="/orders" component={ ClientOrders } />
