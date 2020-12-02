@@ -22,7 +22,6 @@ const OrderDetailsCard = ({ details, saleDate }) => {
   const orderDayAndMonth = convertMySQLDatetime(saleDate);
   const totalPrice = details.map((e) => e.saleInfo[0].total_price);
   const saleStatus = details.map((e) => e.saleInfo[0].status);
-  console.log(saleStatus[0]);
 
   const { id } = useParams();
 
