@@ -1,9 +1,9 @@
 const connect = require('./connection');
 
-const saveMessage = async (chatMessage, nickname, timestamp) => connect()
+const saveClientMessage = async (chatMessage, nickname, timestamp) => connect()
   .then((db) => db
     .collection('messages')
-    .update({ nickname }, { $push: { history: { chatMessage, timestamp } } }, { upsert: true }))
+    .updateMany({ nickname }, { $push: { sent: { chatMessage, timestamp } } }, { upsert: true }))
   .then(({ insertedId }) => ({ _id: insertedId, chatMessage, nickname, timestamp }))
   .catch((error) => error);
 
@@ -12,7 +12,12 @@ const getAllMessages = async () => connect()
     .toArray())
   .catch((error) => error);
 
+const getMessagesByUser = async (nickname) => connect()
+  .then((db) => db.collection('messages').findOne({ nickname }))
+  .catch((error) => error);
+
 module.exports = {
-  saveMessage,
+  saveClientMessage,
   getAllMessages,
+  getMessagesByUser,
 };

@@ -14,6 +14,7 @@ import ClientOrders from './pages/Client/ClientOrders/ClientOrders';
 import OrderDetail from './pages/Client/OrderDetail/OrderDetail';
 import CheckoutPage from './pages/Client/CheckoutPage/CheckoutPage';
 import AdminChatPage from './pages/Admin/AdminChat/AdminChatPage';
+import ClientChat from './pages/Client/ClientChat/ClientChatPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route exact path="/products" component={ ProductsPage } />
               <Route path="/checkout" component={ CheckoutPage } />
               <Route path="/register" component={ RegisterPage } />
+              <Route path="/chat" component={ ClientChat } />
               <Route path="/admin/profile" component={ AdminProfile } />
               <Route path="/admin/orders/:id" component={ OrderDetailsPage } />
               <Route path="/admin/orders" component={ AdminOrdersPage } />

@@ -16,11 +16,10 @@ const userInfo = require('./controllers/userInfo');
 const admin = require('./controllers/admin');
 const adminOrders = require('./controllers/adminOrders');
 const chat = require('./controllers/chat');
-const { saveMessage } = require('./dbMongo/modelSaveMessage');
+const { saveClientMessage } = require('./dbMongo/modelSaveMessage');
 
 const app = express();
 app.use(cors(), bodyParser.json());
-
 app.use('/', bodyParser.json());
 
 app.use('/admin', admin);
@@ -47,8 +46,9 @@ const io = socketIo(server);
 io.on('connect', (socket) => {
   console.log(`Socket ${socket.id}`);
 
-  socket.on('message', ({ message, email, time }) => {
+  socket.on('message', ({ message, userEmail, time }) => {
     io.emit('message', { message, time });
-    saveMessage(message, email, time);
+    console.log(`mensagem recebida no backend: ${message}`);
+    saveClientMessage(message, userEmail, time);
   });
 });
