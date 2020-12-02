@@ -52,7 +52,7 @@ export default function ProductCard({ product, index }) {
             className="qty-btn minus"
             data-testid={ `${index}-product-minus` }
             type="button"
-            onClick={ minusButton(id, productCart) }
+            onClick={ () => minusButton(id, productCart) }
           >
             -
           </button>
