@@ -46,9 +46,9 @@ const io = socketIo(server);
 io.on('connect', (socket) => {
   console.log(`Socket ${socket.id}`);
 
-  socket.on('message', ({ message, userEmail, time }) => {
+  socket.on('message', ({ message, userEmail, time, from }) => {
     io.emit('message', { message, time });
     console.log(`mensagem recebida no backend: ${message}`);
-    saveClientMessage(message, userEmail, time);
+    saveClientMessage(message, userEmail, time, from);
   });
 });

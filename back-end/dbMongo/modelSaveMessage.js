@@ -1,10 +1,11 @@
 const connect = require('./connection');
 
-const saveClientMessage = async (chatMessage, nickname, timestamp) => connect()
+const saveClientMessage = async (chatMessage, nickname, timestamp, from) => connect()
   .then((db) => db
     .collection('messages')
-    .updateMany({ nickname }, { $push: { sent: { chatMessage, timestamp } } }, { upsert: true }))
-  .then(({ insertedId }) => ({ _id: insertedId, chatMessage, nickname, timestamp }))
+    .updateMany({ nickname }, { $push:
+      { messages: { chatMessage, timestamp, from } } }, { upsert: true }))
+  .then(({ insertedId }) => ({ _id: insertedId, chatMessage, nickname, timestamp, from }))
   .catch((error) => error);
 
 const getAllMessages = async () => connect()
