@@ -16,7 +16,7 @@ const validateLogin = async (email, pass) => {
   if (!userInfo) return { code: 404, message: 'usuário não encontrado' };
   console.log('passa', userInfo, userInfo.password, pass);
   if (userInfo.password !== pass && userInfo.email) return { code: 401, message: 'senha incorreta' };
-  const { password, ...info } = userInfo;
+  const { password, ...info } = userInfo.dataValues;
   return info;
 };
 
