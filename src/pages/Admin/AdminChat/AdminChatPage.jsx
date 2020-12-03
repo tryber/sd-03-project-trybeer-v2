@@ -14,7 +14,7 @@ function AdminChatPage({ match }) {
     <div style={ { background: 'white' } }>
       <Link to="/admin/chats"><button type="button">Voltar</button></Link>
       <AdminNavBar title="Chat" />
-      <ChatComponent from="Admin" userRole="admin" userEmail={ nickname } />
+      <ChatComponent from="Admin" userEmail={ nickname } />
     </div>
   );
 }

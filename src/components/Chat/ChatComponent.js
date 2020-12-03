@@ -5,12 +5,31 @@ import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
 import { getMessageHistory } from '../../services';
 
-function ChatComponent({ from, userRole, userEmail }) {
+function ChatComponent({ from, userEmail }) {
   const time = new Date().toLocaleTimeString('pt-br');
   const socket = useRef();
 
   const sliceInit = 0;
   const sliceEnd = 2;
+
+  const sentMessageStyle = {
+    display: 'flex',
+    border: '1px solid black',
+    width: '250px',
+    padding: '15px',
+    borderRadius: '15px',
+    background: '#00af9c',
+    borderTopLeftRadius: '0',
+  };
+  const receivedMessageStyle = {
+    display: 'flex',
+    border: '1px solid black',
+    width: '250px',
+    padding: '15px',
+    borderRadius: '15px',
+    background: '#00af9c',
+    borderTopRightRadius: '0',
+  };
 
   const [message, setMessage] = useState('');
   const [messageHistory, setMessageHistory] = useState();
@@ -37,12 +56,10 @@ function ChatComponent({ from, userRole, userEmail }) {
             ? messageHistory.history.messages.map((item) => (
               <li style={ { textAlign: 'left', padding: '0', margin: '0' } } key={ item.timestamp }>
                 <p data-testid="nickname" style={ { padding: '0', margin: '0' } }>
-                  {userEmail}
+                  {item.from === 'client' ? userEmail : 'Loja'}
                 </p>
                 <div
-                  style={ {
-                    display: 'flex', border: '1px solid black', width: '250px', padding: '15px', borderRadius: '15px', background: '#00af9c', borderTopLeftRadius: '0',
-                  } }
+                  style={ item.from === 'client' ? sentMessageStyle : receivedMessageStyle }
                 >
                   <p data-testid="message-time">
                     {item.timestamp.split(':').slice(sliceInit, sliceEnd).join(':')}
@@ -87,7 +104,6 @@ function ChatComponent({ from, userRole, userEmail }) {
 }
 
 ChatComponent.propTypes = {
-  userRole: PropTypes.string.isRequired,
   from: PropTypes.string.isRequired,
   userEmail: PropTypes.string.isRequired,
 };
