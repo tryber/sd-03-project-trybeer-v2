@@ -5,10 +5,10 @@ const { setNewName } = require('../services/profile');
 const { users } = require('../models');
 
 const tokenConfig = {
-    expiresIn: '1d',
-    algorithm: 'HS256',
+  expiresIn: '1d',
+  algorithm: 'HS256',
 };
-  
+
 const SECRET = 'BoraArrumarEmprego';
 
 jest.mock('../models');
