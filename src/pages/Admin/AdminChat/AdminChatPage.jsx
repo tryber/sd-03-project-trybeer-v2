@@ -12,9 +12,9 @@ function AdminChatPage({ match }) {
 
   return (
     <div style={ { background: 'white' } }>
-      <Link to="/admin/chats"><button type="button">Voltar</button></Link>
       <AdminNavBar title="Chat" />
       <ChatComponent from="Admin" userEmail={ nickname } />
+      <Link to="/admin/chats"><button type="button">Voltar</button></Link>
     </div>
   );
 }
