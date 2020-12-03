@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ChatCard({ nickname }) {
+function ChatCard({ nickname, lastMessage }) {
   return (
-    <li style={ { background: 'light-grey' } }>
-      {nickname}
+    <li style={ { background: 'lightgrey' } }>
+      <p>{nickname}</p>
+      <p>{lastMessage}</p>
     </li>
   );
 }
 
 ChatCard.propTypes = {
   nickname: PropTypes.string.isRequired,
+  lastMessage: PropTypes.string.isRequired,
 };
 
 export default ChatCard;
