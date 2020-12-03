@@ -62,7 +62,7 @@ function ChatComponent({ from, userRole, userEmail }) {
         <input
           placeholder="Digite sua mensagem"
           type="text"
-          data-testid={ userRole === 'client' ? 'message-input' : 'chat-message' }
+          data-testid="message-input"
           onChange={ (e) => setMessage(e.target.value) }
           value={ message }
           style={ { width: '250px', height: '25px' } }
