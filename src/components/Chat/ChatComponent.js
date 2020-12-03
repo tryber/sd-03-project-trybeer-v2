@@ -3,10 +3,9 @@ import React, {
 } from 'react';
 import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
+import { getMessageHistory } from '../../services';
 
-function ChatComponent({ callback, from }) {
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-  const { userEmail } = user;
+function ChatComponent({ from, userRole, userEmail }) {
   const time = new Date().toLocaleTimeString('pt-br');
   const socket = useRef();
 
@@ -18,7 +17,7 @@ function ChatComponent({ callback, from }) {
   const [refreshMessages, setRefreshMessages] = useState(false);
 
   const fetchMessageHistory = useCallback(
-    async () => setMessageHistory(await callback(userEmail)), [userEmail, callback],
+    async () => setMessageHistory(await getMessageHistory(userEmail)), [userEmail],
   );
 
   useEffect(() => {
@@ -60,7 +59,14 @@ function ChatComponent({ callback, from }) {
           marginTop: '10px', width: '360px', background: 'red', height: '37px', paddingTop: '5px',
         } }
       >
-        <input placeholder="Digite sua mensagem" type="text" data-testid="message-input" onChange={ (e) => setMessage(e.target.value) } value={ message } style={ { width: '250px', height: '25px' } } />
+        <input
+          placeholder="Digite sua mensagem"
+          type="text"
+          data-testid={ userRole === 'client' ? 'message-input' : 'chat-message' }
+          onChange={ (e) => setMessage(e.target.value) }
+          value={ message }
+          style={ { width: '250px', height: '25px' } }
+        />
         <button
           style={ { width: '70px', height: '31px', marginLeft: '4px' } }
           type="button"
@@ -81,8 +87,9 @@ function ChatComponent({ callback, from }) {
 }
 
 ChatComponent.propTypes = {
-  callback: PropTypes.func.isRequired,
+  userRole: PropTypes.string.isRequired,
   from: PropTypes.string.isRequired,
+  userEmail: PropTypes.string.isRequired,
 };
 
 export default ChatComponent;

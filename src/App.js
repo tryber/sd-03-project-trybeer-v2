@@ -15,6 +15,7 @@ import OrderDetail from './pages/Client/OrderDetail/OrderDetail';
 import CheckoutPage from './pages/Client/CheckoutPage/CheckoutPage';
 import AdminChatList from './pages/Admin/AdminChat/AdminChatList';
 import ClientChat from './pages/Client/ClientChat/ClientChatPage';
+import AdminChatPage from './pages/Admin/AdminChat/AdminChatPage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/admin/profile" component={ AdminProfile } />
               <Route path="/admin/orders/:id" component={ OrderDetailsPage } />
               <Route path="/admin/orders" component={ AdminOrdersPage } />
+              <Route path="/admin/chats/:nickname" component={ AdminChatPage } />
               <Route path="/admin/chats" component={ AdminChatList } />
               <Route path="/profile" component={ ClientProfile } />
               <Route path="/orders/:id" component={ OrderDetail } />
