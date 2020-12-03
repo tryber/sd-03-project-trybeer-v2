@@ -1,5 +1,5 @@
 import React, {
-useState, useEffect, useRef, useCallback,
+  useState, useEffect, useRef, useCallback,
 } from 'react';
 import { io } from 'socket.io-client';
 
@@ -40,6 +40,7 @@ function ChatComponent({ callback }) {
         onClick={ () => {
           socket.current.emit('message', { message, userEmail, time });
           setRefreshMessages(!refreshMessages);
+          setMessage('');
         } }
         data-testid="send-message"
       >
