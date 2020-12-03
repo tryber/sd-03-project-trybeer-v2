@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 function ChatCard({ nickname }) {
   return (
-    <div style={ { background: 'light-grey' } }>
+    <li style={ { background: 'light-grey' } }>
       {nickname}
-    </div>
+    </li>
   );
 }
 
 ChatCard.propTypes = {
   nickname: PropTypes.string.isRequired,
-}
+};
 
 export default ChatCard;
