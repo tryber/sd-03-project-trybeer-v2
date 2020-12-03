@@ -38,7 +38,7 @@ function ClientChatPage() {
               nickname={ data.nickname }
               lastMessage={ data.messages[data.messages.length - 1].chatMessage }
           />))
-          : 'Nenhuma conversa por aqui' }
+          : <l1 data-testid="text-for-no-conversation">Nenhuma conversa por aqui</l1> }
       </ul>
     </div>
   );
