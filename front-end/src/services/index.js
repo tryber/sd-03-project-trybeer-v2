@@ -134,6 +134,19 @@ const orderFinished = async (orderId, status) => {
   return request;
 };
 
+const getMessageHistory = async (userEmail) => {
+  const messages = await fetch('http://localhost:3001/chat/history', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ userEmail }),
+  });
+  const res = await messages.json();
+  return res;
+};
+
 export {
   userLogin,
   registerUser,
@@ -143,4 +156,5 @@ export {
   ordersList,
   orderDetails,
   orderFinished,
+  getMessageHistory,
 };
