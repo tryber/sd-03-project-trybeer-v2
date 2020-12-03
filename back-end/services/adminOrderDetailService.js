@@ -8,7 +8,7 @@ const adminOrderDetailService = async (req, res) => {
   if (result) {
     const products = await productService.getAllProducts();
     const { dataValues } = (await sales.findAll({ where: { id } }))[0];
-    const { status: orderStatus } = dataValues;
+    const { status: orderStatus, total_price } = dataValues;
     let orderProducts = [];
     result.map((e) => {
       orderProducts = [
@@ -20,7 +20,7 @@ const adminOrderDetailService = async (req, res) => {
       ];
       return orderProducts;
     });
-    res.status(200).send({ orderProducts, orderStatus });
+    res.status(200).send({ orderProducts, orderStatus, total_price });
   } else {
     res.status(404).send({ message: 'Order not found', code: 'not_found' });
   }

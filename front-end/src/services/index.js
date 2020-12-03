@@ -93,7 +93,7 @@ const userOrders = async (token) => {
 };
 
 const ordersList = async () => {
-  const request = fetch('http://localhost:3001/sales/search/all', {
+  const request = fetch('http://localhost:3001/admin/orders', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -101,7 +101,7 @@ const ordersList = async () => {
     },
   }).then((response) => response
     .json()
-    .then((data) => (response.ok ? Promise.resolve(data.sales) : Promise.reject(data.message))));
+    .then((data) => (response.ok ? Promise.resolve(data) : Promise.reject(data.message))));
   return request;
 };
 
