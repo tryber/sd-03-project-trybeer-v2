@@ -4,7 +4,7 @@ import React, {
 import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
 
-function ChatComponent({ callback }) {
+function ChatComponent({ callback, from }) {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const { userEmail } = user;
   const time = new Date().toLocaleTimeString('pt-br');
@@ -35,7 +35,7 @@ function ChatComponent({ callback }) {
       >
         <ul>
           {messageHistory && messageHistory.history
-            ? messageHistory.history.sent.map((item) => (
+            ? messageHistory.history.messages.map((item) => (
               <li style={ { textAlign: 'left', padding: '0', margin: '0' } } key={ item.timestamp }>
                 <p data-testid="nickname" style={ { padding: '0', margin: '0' } }>
                   {userEmail}
@@ -66,7 +66,9 @@ function ChatComponent({ callback }) {
           type="button"
           data-testid="send-message"
           onClick={ () => {
-            socket.current.emit('message', { message, userEmail, time });
+            socket.current.emit('message', {
+              message, userEmail, time, from,
+            });
             setRefreshMessages(!refreshMessages);
             setMessage('');
           } }
@@ -80,6 +82,7 @@ function ChatComponent({ callback }) {
 
 ChatComponent.propTypes = {
   callback: PropTypes.func.isRequired,
+  from: PropTypes.string.isRequired,
 };
 
 export default ChatComponent;

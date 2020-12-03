@@ -12,7 +12,7 @@ function ClientChatPage() {
   return (
     <div style={ { background: 'white' } }>
       <ClientNavBar title="Chat" />
-      <ChatComponent callback={ getMessageHistory } />
+      <ChatComponent callback={ getMessageHistory } from="client" />
     </div>
   );
 }
