@@ -1,8 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import ClientNavBar from '../../../components/Client/ClientNavBar/ClientNavBar';
+import AdminNavBar from '../../../components/Admin/AdminBar/AdminNavBar';
 import { getAdminChatList } from '../../../services';
 import ChatCard from '../../../components/Chat/ChatCard';
+
+const minusOne = -1;
+
+const sortMessagesByTimestamp = (a, b) => (a.messages[a.messages.length - 1].timestamp
+  > b.messages[b.messages.length - 1].timestamp ? minusOne : 1);
 
 function ClientChatPage() {
   const zero = 0;
@@ -16,7 +21,7 @@ function ClientChatPage() {
 
   useEffect(() => {
     fetchChatList();
-  }, [user, fetchChatList]);
+  }, [fetchChatList]);
 
   useEffect(() => {
   }, [chatList]);
@@ -25,13 +30,15 @@ function ClientChatPage() {
 
   return (
     <div style={ { background: 'white' } }>
-      <ClientNavBar title="Chat List" />
-      {chatList && chatList.length > zero
-        ? chatList.map((data) => (<ChatCard
-            key={ data.nickname }
-            nickname={ data.nickname }
-        />))
-        : 'loading chat list...' }
+      <AdminNavBar title="Chat List" />
+      <ul>
+        {chatList && chatList.length > zero
+          ? chatList.sort(sortMessagesByTimestamp).map((data) => (<ChatCard
+              key={ data.nickname }
+              nickname={ data.nickname }
+          />))
+          : 'loading chat list...' }
+      </ul>
     </div>
   );
 }
