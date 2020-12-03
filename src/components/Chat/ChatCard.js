@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 function ChatCard({ nickname, lastMessage }) {
   return (
     <li style={ { background: 'lightgrey' } }>
-      <p>{nickname}</p>
-      <p>{lastMessage}</p>
+      <p data-testid="profile-name">{nickname}</p>
+      <p data-testid="last-message">{lastMessage}</p>
     </li>
   );
 }
