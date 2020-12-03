@@ -36,6 +36,7 @@ function ClientChatPage() {
           ? chatList.sort(sortMessagesByTimestamp).map((data) => (<ChatCard
               key={ data.nickname }
               nickname={ data.nickname }
+              lastMessage={ data.messages[data.messages.length - 1].chatMessage }
           />))
           : 'Nenhuma conversa por aqui' }
       </ul>
