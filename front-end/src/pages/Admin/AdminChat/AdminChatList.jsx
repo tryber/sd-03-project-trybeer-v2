@@ -37,7 +37,7 @@ function ClientChatPage() {
               key={ data.nickname }
               nickname={ data.nickname }
           />))
-          : 'loading chat list...' }
+          : 'Nenhuma conversa por aqui' }
       </ul>
     </div>
   );
