@@ -14,8 +14,9 @@ const validateLogin = async (email, pass) => {
   if (pass.length < 6) return { code: 400, message: 'Senha no formato incorreto' };
   const userInfo = (await users.findAll({ where: { email } }))[0];
   if (!userInfo) return { code: 404, message: 'usuário não encontrado' };
-  if (userInfo.password !== pass) return { code: 401, message: 'senha incorreta' };
-  const { password, ...info } = userInfo.dataValues;
+  console.log('passa', userInfo, userInfo.password, pass);
+  if (userInfo.password !== pass && userInfo.email) return { code: 401, message: 'senha incorreta' };
+  const { password, ...info } = userInfo;
   return info;
 };
 
