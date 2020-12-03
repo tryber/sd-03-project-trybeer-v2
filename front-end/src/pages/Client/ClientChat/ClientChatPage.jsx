@@ -12,7 +12,7 @@ function ClientChatPage() {
   return (
     <div style={ { background: 'white' } }>
       <ClientNavBar title="Chat" />
-      <ChatComponent from="client" userRole="client" userEmail={ userEmail } />
+      <ChatComponent from="client" userEmail={ userEmail } />
     </div>
   );
 }
