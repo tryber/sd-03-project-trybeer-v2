@@ -147,6 +147,12 @@ const getMessageHistory = async (userEmail) => {
   return res;
 };
 
+const getAdminChatList = async () => {
+  const chatlist = await fetch('http://localhost:3001/chat');
+  const res = await chatlist.json();
+  return res;
+};
+
 export {
   userLogin,
   registerUser,
@@ -157,4 +163,5 @@ export {
   orderDetails,
   orderFinished,
   getMessageHistory,
+  getAdminChatList,
 };
