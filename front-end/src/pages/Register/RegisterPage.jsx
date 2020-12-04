@@ -33,7 +33,6 @@ const RegisterPage = () => {
   const [isValid, setIsValid] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [error, setError] = useState(null);
-  // const [redirect, setRedirect] = useState(false);
 
   const { setToken } = useContext(AuthContext);
 
