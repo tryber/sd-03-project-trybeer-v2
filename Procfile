@@ -1,2 +1,2 @@
-web: cd front-end && npm start;
+web: npm start;
 backend: cd back-end && npm start;
