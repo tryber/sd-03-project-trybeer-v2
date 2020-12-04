@@ -1,0 +1,33 @@
+.client-chat {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  height: 520px;
+  overflow-y: scroll;
+}
+
+.admin-chat {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  margin-left: 250px;
+}
+
+.client-message {
+  display: flex;
+  border: 1px solid black;
+  width: 250px;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #00af9c;
+  border-top-right-radius: 0;
+}
+.admin-message {
+  display: flex;
+  border: 1px solid black;
+  width: 250px;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #00af9c;
+  border-top-left-radius: 0;
+}

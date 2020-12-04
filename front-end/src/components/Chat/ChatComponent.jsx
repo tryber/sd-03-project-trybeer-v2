@@ -4,6 +4,7 @@ import React, {
 import { io } from 'socket.io-client';
 import PropTypes from 'prop-types';
 import { getMessageHistory } from '../../services';
+import './chatStyle.css';
 
 function ChatComponent({ from, userEmail }) {
   const time = new Date().toLocaleTimeString('pt-br');
@@ -11,25 +12,6 @@ function ChatComponent({ from, userEmail }) {
 
   const sliceInit = 0;
   const sliceEnd = 2;
-
-  const sentMessageStyle = {
-    display: 'flex',
-    border: '1px solid black',
-    width: '250px',
-    padding: '15px',
-    borderRadius: '15px',
-    background: '#00af9c',
-    borderTopLeftRadius: '0',
-  };
-  const receivedMessageStyle = {
-    display: 'flex',
-    border: '1px solid black',
-    width: '250px',
-    padding: '15px',
-    borderRadius: '15px',
-    background: '#00af9c',
-    borderTopRightRadius: '0',
-  };
 
   const [message, setMessage] = useState('');
   const [messageHistory, setMessageHistory] = useState();
@@ -45,12 +27,8 @@ function ChatComponent({ from, userEmail }) {
   }, [userEmail, fetchMessageHistory, refreshMessages]);
 
   return (
-    <div style={ { background: 'white' } }>
-      <div
-        style={ {
-          display: 'flex', flexDirection: 'column', width: '360px', height: '520px', overflowY: 'scroll',
-        } }
-      >
+    <div className={ from === 'client' ? 'client-chat' : 'admin-chat' }>
+      <div>
         <ul>
           {messageHistory && messageHistory.history
             ? messageHistory.history.messages.map((item) => (
@@ -59,7 +37,7 @@ function ChatComponent({ from, userEmail }) {
                   {item.from === 'client' ? userEmail : 'Loja'}
                 </p>
                 <div
-                  style={ item.from === 'client' ? sentMessageStyle : receivedMessageStyle }
+                  className={ item.from === 'client' ? 'client-message' : 'admin-message' }
                 >
                   <p data-testid="message-time">
                     {item.timestamp.split(':').slice(sliceInit, sliceEnd).join(':')}
