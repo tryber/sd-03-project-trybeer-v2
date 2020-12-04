@@ -36,7 +36,7 @@ app.use('/images', express.static(path.join(__dirname, '/images')));
 app.use('/products', products);
 app.use('/admin/orders', adminOrders);
 
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 // socket
 const server = app.listen(PORT, () => console.log(`ouvindo na porta ${PORT}`));
