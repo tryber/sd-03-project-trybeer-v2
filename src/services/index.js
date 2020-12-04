@@ -1,8 +1,9 @@
 require('dotenv').config();
+const PORT = process.env.PORT || 3001;
 //const path = require('path');
 //const route = express.static(path.join(__dirname, '../../../back-end'))
 const userLogin = async (email, password) => {
-  const request = fetch('/3001/login', {
+  const request = fetch(`/${PORT}/login`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -16,7 +17,7 @@ const userLogin = async (email, password) => {
 };
 
 const registerUser = async (name, email, password, role) => {
-  const request = fetch('/3001/register', {
+  const request = fetch(`/${PORT}/register`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
