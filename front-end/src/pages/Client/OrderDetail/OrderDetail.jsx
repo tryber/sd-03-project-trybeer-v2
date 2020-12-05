@@ -21,7 +21,6 @@ const getDetails = async (id, token) => {
 function OrderDetail() {
   const userData = JSON.parse(localStorage.getItem('user') || '{}');
   const [details, setDetails] = useState([]);
-  
   const { id } = useParams();
   const { token } = userData;
 
