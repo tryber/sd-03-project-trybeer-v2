@@ -17,7 +17,7 @@ export default function OrdersPage() {
   }, []);
 
   if (!userData) return <Redirect to="/login" />;
-  const time = 10000;
+
   return isLoading ? (
     <h1>Carregando...</h1>
   ) : (
