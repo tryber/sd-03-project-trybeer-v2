@@ -1,5 +1,5 @@
 const userLogin = async (email, password) => {
-  const request = fetch('http://localhost:3001/login', {
+  const request = fetch('http://ilan274-back.herokuapp.com/login', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -13,7 +13,7 @@ const userLogin = async (email, password) => {
 };
 
 const registerUser = async (name, email, password, role) => {
-  const request = fetch('http://localhost:3001/register', {
+  const request = fetch('http://ilan274-back.herokuapp.com/register', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -32,7 +32,7 @@ const registerUser = async (name, email, password, role) => {
 };
 
 const updateUser = async (name, email) => {
-  const request = fetch('http://localhost:3001/profile', {
+  const request = fetch('http://ilan274-back.herokuapp.com/profile', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -57,7 +57,7 @@ const registerOrder = async (
   sale_date = new Date(),
   status = 'Pendente',
 ) => {
-  const request = fetch('http://localhost:3001/checkout', {
+  const request = fetch('http://ilan274-back.herokuapp.com/checkout', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -79,7 +79,7 @@ const registerOrder = async (
 };
 
 const userOrders = async (token) => {
-  const request = fetch('http://localhost:3001/productList', {
+  const request = fetch('http://ilan274-back.herokuapp.com/productList', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -93,7 +93,7 @@ const userOrders = async (token) => {
 };
 
 const ordersList = async () => {
-  const request = fetch('http://localhost:3001/admin/orders', {
+  const request = fetch('http://ilan274-back.herokuapp.com/admin/orders', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -106,7 +106,7 @@ const ordersList = async () => {
 };
 
 const orderDetails = async (orderId) => {
-  const request = fetch(`http://localhost:3001/sales/search/${encodeURIComponent(orderId)}`, {
+  const request = fetch(`http://ilan274-back.herokuapp.com/sales/search/${encodeURIComponent(orderId)}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -119,7 +119,7 @@ const orderDetails = async (orderId) => {
 };
 
 const orderFinished = async (orderId, status) => {
-  const request = fetch(`http://localhost:3001/admin/orders/${encodeURIComponent(orderId)}`, {
+  const request = fetch(`http://ilan274-back.herokuapp.com/admin/orders/${encodeURIComponent(orderId)}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -135,7 +135,7 @@ const orderFinished = async (orderId, status) => {
 };
 
 const getMessageHistory = async (userEmail) => {
-  const messages = await fetch('http://localhost:3001/chat/history', {
+  const messages = await fetch('http://ilan274-back.herokuapp.com/chat/history', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -148,7 +148,7 @@ const getMessageHistory = async (userEmail) => {
 };
 
 const getAdminChatList = async () => {
-  const chatlist = await fetch('http://localhost:3001/chat');
+  const chatlist = await fetch('http://ilan274-back.herokuapp.com/chat');
   const res = await chatlist.json();
   return res;
 };
