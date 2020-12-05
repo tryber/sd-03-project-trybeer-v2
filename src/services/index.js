@@ -1,9 +1,5 @@
-require('dotenv').config();
-const PORT = process.env.PORT || 3001;
-//const path = require('path');
-//const route = express.static(path.join(__dirname, '../../../back-end'))
 const userLogin = async (email, password) => {
-  const request = fetch(`/${PORT}/login`, {
+  const request = fetch('http://localhost:3001/login', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -17,7 +13,7 @@ const userLogin = async (email, password) => {
 };
 
 const registerUser = async (name, email, password, role) => {
-  const request = fetch(`/${PORT}/register`, {
+  const request = fetch('http://localhost:3001/register', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -83,7 +79,7 @@ const registerOrder = async (
 };
 
 const userOrders = async (token) => {
-  const request = fetch('/3001/productList', {
+  const request = fetch('http://localhost:3001/productList', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
