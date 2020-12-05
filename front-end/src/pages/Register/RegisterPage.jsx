@@ -33,6 +33,7 @@ const RegisterPage = () => {
   const [isValid, setIsValid] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [error, setError] = useState(null);
+  const [redirect, setRedirect] = useState(false);
 
   const { setToken } = useContext(AuthContext);
 
@@ -59,7 +60,7 @@ const RegisterPage = () => {
     submitUser(name, email, password, isAdmin).then(
       (response) => {
         setToken(response);
-        // setRedirect(true);
+        setRedirect(true);
       },
       (response) => {
         setError(response);
@@ -71,16 +72,13 @@ const RegisterPage = () => {
       setIsAdmin(false);
       setIsValid(false);
       setIsSubmit(false);
-      // setRedirect(false);
+      setRedirect(false);
     };
   }, [isSubmit, isAdmin, name, email, password, setToken]);
 
-  const changeRedirect = (role = 'client') => {
-    if (role === 'administrator') {
-      return <Redirect to="/admin/orders" />;
-    }
-    return <Redirect to="/products" />;
-  };
+  if (redirect) {
+    return isAdmin === true ? <Redirect to="/admin/orders" /> : <Redirect to="/products" />;
+  }
 
   return (
     <div style={ { margin: 'auto', height: '640px', display: 'flex' } }>
@@ -159,7 +157,6 @@ const RegisterPage = () => {
             disabled={ !isValid }
             style={ { width: '150px', margin: 'auto' } }
             data-testid="signup-btn"
-            onSubmit={ () => changeRedirect(isAdmin) }
           >
             Cadastrar
           </button>

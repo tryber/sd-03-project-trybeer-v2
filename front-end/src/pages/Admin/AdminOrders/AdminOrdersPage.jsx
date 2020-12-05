@@ -8,7 +8,7 @@ import './adminOrdersPage.css';
 export default function OrdersPage() {
   const [sales, setSales] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const userData = JSON.parse(localStorage.getItem('user'));
+  const userData = JSON.parse(localStorage.getItem('user') || '{}');
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,7 +25,6 @@ export default function OrdersPage() {
       <AdminNavBar title="TryBeer" />
       <h1>Pedidos pendentes</h1>
       <div className="admin-orders-page-container">
-
         {sales
           ? sales.map((ele) => (
             <AdminOrderCard
