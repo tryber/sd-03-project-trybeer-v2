@@ -5,7 +5,7 @@ import ClientNavBar from '../../../components/Client/ClientNavBar/ClientNavBar';
 import OrderDetailsCard from '../../../components/Client/ClientOrderDetails/OrderDetailsCard';
 
 const getDetails = async (id, token) => {
-  const request = await fetch(`http://localhost:3001/orderDetails/${id}`, {
+  const request = await fetch(`https://ilan274-back.herokuapp.com/orderDetails/${id}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',

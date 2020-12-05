@@ -22,7 +22,7 @@ function ChatComponent({ from, userEmail }) {
   );
 
   useEffect(() => {
-    socket.current = io('http://localhost:3001', { transports: ['websocket'] });
+    socket.current = io('https://ilan274-back.herokuapp.com', { transports: ['websocket'] });
     fetchMessageHistory();
   }, [userEmail, fetchMessageHistory, refreshMessages]);
 
