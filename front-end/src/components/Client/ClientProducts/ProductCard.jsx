@@ -33,7 +33,7 @@ export default function ProductCard({ product, index }) {
 
   return (
     <div className="products-display" key={ name }>
-      <div>
+      <div style={ { borderRight: '1px solid lightgrey' } }>
         <img
           className={ `img-display skoll-chata-${index} ` }
           data-testid={ `${index}-product-img` }

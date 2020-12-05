@@ -82,8 +82,6 @@ export default function OrderDetailsPage() {
             -
             {' '}
             {sale.orderStatus ? sale.orderStatus : ''}
-            {console.log()}
-
           </span>
         </h1>
         <div>
