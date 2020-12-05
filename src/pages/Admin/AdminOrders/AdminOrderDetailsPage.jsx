@@ -11,7 +11,7 @@ import './adminOrderDetailsPage.css';
 const fixed = 2;
 
 const getDetails = async (id, token) => {
-  const request = await fetch(`http://localhost:3001/admin/orders/${id}`, {
+  const request = await fetch(`https://ilan274-back.herokuapp.com/admin/orders/${id}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
