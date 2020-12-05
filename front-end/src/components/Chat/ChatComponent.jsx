@@ -32,8 +32,8 @@ function ChatComponent({ from, userEmail }) {
         <ul>
           {messageHistory && messageHistory.history
             ? messageHistory.history.messages.map((item) => (
-              <li style={ { textAlign: 'left', padding: '0', margin: '0' } } key={ item.timestamp }>
-                <p data-testid="nickname" style={ { padding: '0', margin: '0' } }>
+              <li style={ { textAlign: 'left', padding: '10px', margin: '0px' } } key={ item.timestamp }>
+                <p data-testid="nickname" style={ { padding: '0', marginBottom: '5px' } }>
                   {item.from === 'client' ? userEmail : 'Loja'}
                 </p>
                 <div

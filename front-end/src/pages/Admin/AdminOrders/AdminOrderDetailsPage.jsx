@@ -55,6 +55,18 @@ export default function OrderDetailsPage() {
 
   if (!userData) return <Redirect to="/login" />;
 
+  const renderButtons = (status) => (status !== 'Entregue'
+    ? (
+      <div>
+        <button type="button" className="status-btn" onClick={ () => alterPrepared(id, sale.orderStatus) } data-testid="mark-as-prepared-btn">
+          Preparar pedido
+        </button>
+        <button type="button" className="status-btn" onClick={ () => alterDelivered(id, sale.orderStatus) } data-testid="mark-as-delivered-btn">
+          Marcar como entregue
+        </button>
+      </div>
+    ) : null);
+
   return isLoading || !sale ? (
     <h1>Carregando...</h1>
   ) : (
@@ -70,6 +82,8 @@ export default function OrderDetailsPage() {
             -
             {' '}
             {sale.orderStatus ? sale.orderStatus : ''}
+            {console.log()}
+
           </span>
         </h1>
         <div>
@@ -108,18 +122,7 @@ export default function OrderDetailsPage() {
             {sale.total_price ? parseFloat(sale.total_price).toFixed(fixed).replace('.', ',') : ''}
           </p>
         </div>
-        {pending ? (
-          <div>
-            <button type="button" className="status-btn" onClick={ () => alterPrepared(id, sale.orderStatus) } data-testid="mark-as-prepared-btn">
-              Preparar pedido
-            </button>
-            <button type="button" className="status-btn" onClick={ () => alterDelivered(id, sale.orderStatus) } data-testid="mark-as-delivered-btn">
-              Marcar como entregue
-            </button>
-          </div>
-        ) : (
-          <div>Obrigado pela compra!</div>
-        )}
+        { pending ? renderButtons(sale.orderStatus) : null}
       </div>
     </div>
   );
