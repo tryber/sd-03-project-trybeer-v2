@@ -24,7 +24,7 @@ const ProductsPage = () => {
     setIsLoading(false);
   }, [productCart]);
 
-  if (!userData) return <Redirect to="/login" />;
+  // if (!userData) return <Redirect to="/login" />;
   return isLoading ? <h1>Carregando...</h1> : (
     <div>
       <ClientNavBar title="TryBeer" />
