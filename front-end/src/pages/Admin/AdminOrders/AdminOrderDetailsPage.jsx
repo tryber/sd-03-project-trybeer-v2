@@ -1,9 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-shadow */
-// eslint-disable no-shadow react/jsx-indent
-
 import React, { useState, useEffect, useCallback } from 'react';
-import { Redirect, useParams, Link } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import AdminNavBar from '../../../components/Admin/AdminBar/AdminNavBar';
 import { orderFinished } from '../../../services';
 import './adminOrderDetailsPage.css';
@@ -28,7 +24,6 @@ export default function OrderDetailsPage() {
   const userData = JSON.parse(localStorage.getItem('user') || '{}');
   const [sale, setSale] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [pending, setPending] = useState(true);
   const { id } = useParams();
   const { token } = userData;
 
@@ -51,13 +46,19 @@ export default function OrderDetailsPage() {
   useEffect(() => {
     setIsLoading(false);
     requestDetails();
-  }, [setPending, requestDetails]);
-
-  useEffect(() => {
-    if (sale.orderStatus === 'Entregue') setPending(false);
-  }, [sale.orderStatus]);
+  }, [requestDetails]);
 
   if (!userData) return <Redirect to="/login" />;
+
+  const renderButtons = (prepared, delivered) => (
+    <div>
+      <button type="button" className="status-btn" onClick={ () => prepared(id, sale.orderStatus) } data-testid="mark-as-prepared-btn">
+        Preparar pedido
+      </button>
+      <button type="button" className="status-btn" onClick={ () => delivered(id, sale.orderStatus) } data-testid="mark-as-delivered-btn">
+        Marcar como entregue
+      </button>
+    </div>);
 
   return isLoading || !sale ? (
     <h1>Carregando...</h1>
@@ -78,31 +79,34 @@ export default function OrderDetailsPage() {
         </h1>
         <div>
           {sale.orderProducts ? (
-            sale.orderProducts.map((ele, i) => (
-              <div key={ ele }>
-                <li className="admin-order-details-li">
-                  <div className="admin-details-card">
-                    <span className="details-span-sq" data-testid={ `${i}-product-qtd` }>
-                      {ele.quantity}
-                    </span>
-                    <span className="details-span-pn" data-testid={ `${i}-product-name` }>
-                      {ele.name}
-                    </span>
-                    <span className="details-span-tp" data-testid={ `${i}-product-total-value` }>
-                      R$
-                      {' '}
-                      {(ele.price * ele.quantity).toFixed(fixed).replace('.', ',')}
-                    </span>
-                    <span className="details-span-up" data-testid={ `${i}-order-unit-price` }>
-                      (R$
-                      {' '}
-                      {ele.price.toFixed(fixed).replace('.', ',')}
-                      )
-                    </span>
-                  </div>
-                </li>
-              </div>
-            ))
+            <div>
+              {sale.orderProducts.map((ele, i) => (
+                <div key={ ele }>
+                  <li className="admin-order-details-li">
+                    <div className="admin-details-card">
+                      <span className="details-span-sq" data-testid={ `${i}-product-qtd` }>
+                        {ele.quantity}
+                      </span>
+                      <span className="details-span-pn" data-testid={ `${i}-product-name` }>
+                        {ele.name}
+                      </span>
+                      <span className="details-span-tp" data-testid={ `${i}-product-total-value` }>
+                        R$
+                        {' '}
+                        {(ele.price * ele.quantity).toFixed(fixed).replace('.', ',')}
+                      </span>
+                      <span className="details-span-up" data-testid={ `${i}-order-unit-price` }>
+                        (R$
+                        {' '}
+                        {ele.price.toFixed(fixed).replace('.', ',')}
+                        )
+                      </span>
+                    </div>
+                  </li>
+                </div>
+              ))}
+              {renderButtons(alterPrepared, alterDelivered)}
+            </div>
           ) : (
             <p>Loading...</p>
           )}
@@ -112,20 +116,6 @@ export default function OrderDetailsPage() {
             {sale.total_price ? parseFloat(sale.total_price).toFixed(fixed).replace('.', ',') : ''}
           </p>
         </div>
-        {pending ? (
-          <div>
-            <button type="button" className="status-btn" onClick={ () => alterPrepared(id, sale.orderStatus) } data-testid="mark-as-prepared-btn">
-              Preparar pedido
-            </button>
-            <button type="button" className="status-btn" onClick={ () => alterDelivered(id, sale.orderStatus) } data-testid="mark-as-delivered-btn">
-              Marcar como entregue
-            </button>
-          </div>
-        ) : (
-          <Link to="/admin/orders">
-            <button type="button" className="status-btn">Voltar</button>
-          </Link>
-        )}
       </div>
     </div>
   );

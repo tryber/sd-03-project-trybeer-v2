@@ -17,7 +17,7 @@ export default function OrdersPage() {
   }, []);
 
   if (!userData) return <Redirect to="/login" />;
-
+  const time = 10000;
   return isLoading ? (
     <h1>Carregando...</h1>
   ) : (
@@ -25,6 +25,7 @@ export default function OrdersPage() {
       <AdminNavBar title="TryBeer" />
       <h1>Pedidos pendentes</h1>
       <div className="admin-orders-page-container">
+
         {sales
           ? sales.map((ele) => (
             <AdminOrderCard

@@ -25,6 +25,7 @@ export default function AdminOrderCard(props) {
             className={ status === 'Entregue' ? 'status-entregue' : 'status-pendente' }
             data-testid={ `${id - 1}-order-status` }
           >
+            {console.log(`${id - 1}-order-status`)}
             {status}
           </p>
         </div>
