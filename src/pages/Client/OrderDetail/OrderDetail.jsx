@@ -23,7 +23,6 @@ function OrderDetail() {
   const [details, setDetails] = useState([]);
   const { id } = useParams();
   const { token } = userData;
-
   const requestDetails = useCallback(
     async () => setDetails(await getDetails(id, token)), [id, token],
   );

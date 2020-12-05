@@ -76,8 +76,8 @@ const RegisterPage = () => {
     };
   }, [isSubmit, isAdmin, name, email, password, setToken]);
 
-  const changeRedirect = (role = 'client') => {
-    if (role === 'administrator') {
+  const changeRedirect = (role) => {
+    if (role === true) {
       return <Redirect to="/admin/orders" />;
     }
     return <Redirect to="/products" />;
