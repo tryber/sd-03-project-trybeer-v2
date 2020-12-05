@@ -2,7 +2,7 @@ const zero = 0;
 
 const fetchProducts = async () => {
   try {
-    const result = await fetch('http://localhost:3001/products');
+    const result = await fetch('http://ilan274-back.herokuapp.com/products');
     const json = await result.json();
     return json;
   } catch (error) {
