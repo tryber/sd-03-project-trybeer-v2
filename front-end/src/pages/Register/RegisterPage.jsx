@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { registerUser } from '../../services';
 import AuthContext from '../../context/AuthContext';
+import './registerPage.css';
 
 const emailValidation = (email) => {
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
@@ -37,28 +38,35 @@ const RegisterPage = () => {
   const { setToken } = useContext(AuthContext);
 
   useEffect(() => {
-    if (emailValidation(email)
-    && isPasswordValid(password)
-    && nameValidation(name)
-    && isValidName(name)) return setIsValid(true);
+    if (
+      emailValidation(email)
+      && isPasswordValid(password)
+      && nameValidation(name)
+      && isValidName(name)
+    ) { return setIsValid(true); }
 
-    if (!emailValidation(email)
-    || !isPasswordValid(password)
-    || !nameValidation(name)
-    || !isValidName(name)) return setIsValid(false);
+    if (
+      !emailValidation(email)
+      || !isPasswordValid(password)
+      || !nameValidation(name)
+      || !isValidName(name)
+    ) { return setIsValid(false); }
 
     return () => setIsValid(false);
   }, [email, password, name]);
 
   useEffect(() => {
     if (!isSubmit) return undefined;
-    submitUser(name, email, password, isAdmin).then((response) => {
-      setToken(response);
-      setRedirect(true);
-    }, (response) => {
-      setError(response);
-      setIsSubmit(false);
-    });
+    submitUser(name, email, password, isAdmin).then(
+      (response) => {
+        setToken(response);
+        setRedirect(true);
+      },
+      (response) => {
+        setError(response);
+        setIsSubmit(false);
+      },
+    );
 
     return () => {
       setIsAdmin(false);
@@ -69,70 +77,90 @@ const RegisterPage = () => {
   }, [isSubmit, isAdmin, name, email, password, setToken]);
 
   if (redirect) {
-    const { role } = JSON.parse(localStorage.getItem('user'));
-    return role === 'administrator' ? <Redirect to="/admin/orders" /> : <Redirect to="/products" />;
+    return isAdmin === true ? <Redirect to="/admin/orders" /> : <Redirect to="/products" />;
   }
 
   return (
-    <div style={ { display: 'flex', flexDirection: 'column' } }>
-      {error && <h4>{error}</h4>}
+    <div style={ { margin: 'auto', height: '640px', display: 'flex' } }>
+      {error && <h2>{error}</h2>}
       <form
+        className="reg-form-container"
         onSubmit={ (event) => {
           event.preventDefault();
           setIsSubmit(true);
         } }
       >
-        <label htmlFor="name">
-          Nome
-          <input
-            id="name"
-            data-testid="signup-name"
-            placeholder="Nome"
-            type="text"
-            value={ name }
-            onChange={ (e) => setName(e.target.value) }
-            required
-            minLength={ 12 }
-            maxLength={ 100 }
-          />
-        </label>
-        <label htmlFor="email">
-          Email
-          <input
-            id="email"
-            data-testid="signup-email"
-            placeholder="Email"
-            type="email"
-            value={ email }
-            onChange={ (e) => setEmail(e.target.value) }
-            required
-          />
-        </label>
-        <label htmlFor="password">
-          Password
-          <input
-            id="password"
-            data-testid="signup-password"
-            placeholder="Senha"
-            type="password"
-            value={ password }
-            onChange={ (e) => setPassword(e.target.value) }
-            required
-            minLength={ 6 }
-          />
-        </label>
-        <label htmlFor="role">
-          Quero Vender
-          <input onClick={ () => setIsAdmin(!isAdmin) } data-testid="signup-seller" type="checkbox" id="role" />
-        </label>
-        <button
-          type="submit"
-          disabled={ !isValid }
-          style={ { width: '150px', margin: 'auto' } }
-          data-testid="signup-btn"
-        >
-          Cadastrar
-        </button>
+        <h2 className="title">Cadastre-se!</h2>
+        <div className="reg-login-div-inputs  reg-login-labels">
+          <label className="reg-login-labels" htmlFor="name">
+            <p>Nome</p>
+            <input
+              className="reg-inputs"
+              id="name"
+              data-testid="signup-name"
+              placeholder="Nome"
+              type="text"
+              value={ name }
+              onChange={ (e) => setName(e.target.value) }
+              required
+              minLength={ 12 }
+              maxLength={ 100 }
+            />
+          </label>
+        </div>
+        <div className="reg-login-div-inputs">
+          <label className="reg-login-labels" htmlFor="email">
+            <p>Email</p>
+            <input
+              className="reg-inputs"
+              id="email"
+              data-testid="signup-email"
+              placeholder="Email"
+              type="email"
+              value={ email }
+              onChange={ (e) => setEmail(e.target.value) }
+              required
+            />
+          </label>
+        </div>
+        <div className="reg-login-div-inputs">
+          <label className="reg-login-labels" htmlFor="password">
+            <p>Password</p>
+            <input
+              className="reg-inputs"
+              id="password"
+              data-testid="signup-password"
+              placeholder="Senha"
+              type="password"
+              value={ password }
+              onChange={ (e) => setPassword(e.target.value) }
+              required
+              minLength={ 6 }
+            />
+          </label>
+        </div>
+        <div className="reg-login-div-inputs">
+          <label htmlFor="role">
+            Quero Vender
+            <input
+              onClick={ () => setIsAdmin(!isAdmin) }
+              data-testid="signup-seller"
+              type="checkbox"
+              id="role"
+            />
+          </label>
+        </div>
+        <div style={ { marginTop: '10px' } }>
+          <button
+            className="reg-signup-button"
+            type="submit"
+            disabled={ !isValid }
+            style={ { width: '150px', margin: 'auto' } }
+            data-testid="signup-btn"
+          >
+            Cadastrar
+          </button>
+        </div>
       </form>
     </div>
   );

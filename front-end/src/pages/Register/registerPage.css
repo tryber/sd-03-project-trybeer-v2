@@ -1,0 +1,51 @@
+.reg-form-container {
+  background-color: #FFC500;
+  border-radius: 15px;
+  box-shadow: 0 11px 18px -8px rgba(0, 0, 0, 0.795);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 10px 50px;
+}
+
+.title {
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px;
+  color: #333;
+}
+
+.reg-login-labels p{
+  margin: 0;
+  padding: 5px;
+  color: #333;
+}
+
+.reg-login-div-inputs {
+  margin: 10px 0;
+}
+
+.reg-inputs {
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid #333;
+  border-radius: 4px;
+  padding: 5px;
+
+}
+
+.reg-signup-button:disabled {
+  width: 245px;
+  margin: 10px 0;
+  background-color: transparent;
+  color: gray;
+  border: none;
+}
+
+.reg-signup-button {
+  width: 245px;
+  margin: 10px 0;
+  background-color: transparent;
+  color: black;
+  border: none;
+}

@@ -1,22 +1,19 @@
 const userLogin = async (email, password) => {
-  const request = fetch('http://localhost:3001/user/login', {
+  const request = fetch('http://localhost:3001/login', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.token)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.token) : Promise.reject(data.message))));
   return request;
 };
 
 const registerUser = async (name, email, password, role) => {
-  const request = fetch('http://localhost:3001/user/register', {
+  const request = fetch('http://localhost:3001/register', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -28,18 +25,15 @@ const registerUser = async (name, email, password, role) => {
       password,
       role,
     }),
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.token)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.token) : Promise.reject(data.message))));
   return request;
 };
 
 const updateUser = async (name, email) => {
-  const request = fetch('http://localhost:3001/user/profile', {
-    method: 'PUT',
+  const request = fetch('http://localhost:3001/profile', {
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -48,12 +42,9 @@ const updateUser = async (name, email) => {
       name,
       email,
     }),
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.token)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.token) : Promise.reject(data.message))));
   return request;
 };
 
@@ -62,9 +53,11 @@ const registerOrder = async (
   totalPrice,
   deliveryAddress,
   deliveryNumber,
-  products = [],
+  store = [],
+  sale_date = new Date(),
+  status = 'Pendente',
 ) => {
-  const request = fetch('http://localhost:3001/sales/register', {
+  const request = fetch('http://localhost:3001/checkout', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -75,45 +68,40 @@ const registerOrder = async (
       totalPrice,
       deliveryAddress,
       deliveryNumber,
-      products,
+      store,
+      sale_date,
+      status,
     }),
   }).then((response) => response
     .json()
-    .then((data) => (response.ok
-      ? Promise.resolve(data.saleID)
-      : Promise.reject(data.message))));
+    .then((data) => (response.ok ? Promise.resolve(data.saleID) : Promise.reject(data.message))));
   return request;
 };
 
-const userOrders = async (userId) => {
-  const request = fetch(`http://localhost:3001/sales/search?userId=${encodeURIComponent(userId)}`, {
+const userOrders = async (token) => {
+  const request = fetch('http://localhost:3001/productList', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      authorization: token,
     },
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.sales)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data) : Promise.reject(data.message))));
   return request;
 };
 
 const ordersList = async () => {
-  const request = fetch('http://localhost:3001/sales/search/all', {
+  const request = fetch('http://localhost:3001/admin/orders', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.sales)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data) : Promise.reject(data.message))));
   return request;
 };
 
@@ -124,17 +112,14 @@ const orderDetails = async (orderId) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.sales)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.sales) : Promise.reject(data.message))));
   return request;
 };
 
 const orderFinished = async (orderId, status) => {
-  const request = fetch(`http://localhost:3001/sales/search/${encodeURIComponent(orderId)}`, {
+  const request = fetch(`http://localhost:3001/admin/orders/${encodeURIComponent(orderId)}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -143,13 +128,29 @@ const orderFinished = async (orderId, status) => {
     body: JSON.stringify({
       status,
     }),
-  })
-    .then((response) => response
-      .json()
-      .then((data) => (response.ok
-        ? Promise.resolve(data.sales)
-        : Promise.reject(data.message))));
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data.sales) : Promise.reject(data.message))));
   return request;
+};
+
+const getMessageHistory = async (userEmail) => {
+  const messages = await fetch('http://localhost:3001/chat/history', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ userEmail }),
+  });
+  const res = await messages.json();
+  return res;
+};
+
+const getAdminChatList = async () => {
+  const chatlist = await fetch('http://localhost:3001/chat');
+  const res = await chatlist.json();
+  return res;
 };
 
 export {
@@ -161,4 +162,6 @@ export {
   ordersList,
   orderDetails,
   orderFinished,
+  getMessageHistory,
+  getAdminChatList,
 };

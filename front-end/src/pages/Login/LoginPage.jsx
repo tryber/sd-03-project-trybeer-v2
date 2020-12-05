@@ -38,7 +38,7 @@ const LoginPage = () => {
       (response) => {
         setError(response);
         setIsSubmit(false);
-      }
+      },
     );
 
     return () => {
@@ -53,15 +53,15 @@ const LoginPage = () => {
   }
 
   return (
-    <div style={{ margin: 'auto', height: '640px', display: 'flex' }}>
+    <div style={ { margin: 'auto', height: '640px', display: 'flex' } }>
       <form
         className="form-container"
-        onSubmit={(event) => {
+        onSubmit={ (event) => {
           event.preventDefault();
           setIsSubmit(!isSubmit);
-        }}
+        } }
       >
-        <h2>Trybeer</h2>
+        <h2 className="title">Trybeer</h2>
         <div className="login-div-inputs login-labels">
           <label className="login-labels" htmlFor="email">
             <p>Email</p>
@@ -71,8 +71,8 @@ const LoginPage = () => {
               data-testid="email-input"
               placeholder="Email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={ email }
+              onChange={ (e) => setEmail(e.target.value) }
             />
           </label>
         </div>
@@ -80,24 +80,24 @@ const LoginPage = () => {
           <label className="login-labels" htmlFor="password">
             <p>Password</p>
             <input
-            className="inputs"
+              className="inputs"
               data-testid="password-input"
               placeholder="Password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={ password }
+              onChange={ (e) => setPassword(e.target.value) }
               required
-              minLength={6}
+              minLength={ 6 }
             />
           </label>
-          {error && <p style={{fontSize: "10px"}}>{error}</p>}
+          {/* {error && <p style={{fontSize: "10px"}}>{error}</p>} */}
         </div>
         <div>
           <button
             className="login-button"
             type="submit"
             data-testid="signin-btn"
-            disabled={!isValid}
+            disabled={ !isValid }
           >
             ENTRAR
           </button>

@@ -1,0 +1,29 @@
+const productService = require('./products');
+const { sales, salesProducts } = require('../models');
+
+const adminOrderDetailService = async (req, res) => {
+  const { id } = req.params;
+  const saleFound = (await salesProducts.findAll({ where: { sale_id: id } }));
+  const result = saleFound.map((e) => e.dataValues);
+  if (result) {
+    const products = await productService.getAllProducts();
+    const { dataValues } = (await sales.findAll({ where: { id } }))[0];
+    const { status: orderStatus, total_price } = dataValues;
+    let orderProducts = [];
+    result.map((e) => {
+      orderProducts = [
+        ...orderProducts,
+        Object.assign(
+          ...products.filter((p) => p.id === e.product_id),
+          { quantity: e.quantity },
+        ),
+      ];
+      return orderProducts;
+    });
+    res.status(200).send({ orderProducts, orderStatus, total_price });
+  } else {
+    res.status(404).send({ message: 'Order not found', code: 'not_found' });
+  }
+};
+
+module.exports = adminOrderDetailService;

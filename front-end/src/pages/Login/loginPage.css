@@ -43,6 +43,13 @@
   border: none;
 }
 
+.title {
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px;
+  color: #333;
+}
+
 .sign-in-button {
   background-color: transparent;
   border: none;

@@ -6,7 +6,8 @@ import './adminBar.css';
 function AdminNavBar({ title }) {
   return (
     <div>
-      <div className="admin-nav-bar" >
+      <h2 data-testid="top-title">{`${title}`}</h2>
+      <div className="admin-nav-bar">
         <h2 data-testid="top-title">{`${title}`}</h2>
       </div>
       <AdminSideBar />

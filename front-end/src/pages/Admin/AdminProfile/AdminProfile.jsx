@@ -10,10 +10,10 @@ function AdminProfile() {
     <div className="profile-hdr">
       <AdminNavBar title="Meu perfil" />
       <div className="profile-container">
-          <h2>Perfil</h2>
+        <h2>Perfil</h2>
         <div className="profile-info">
           <p data-testid="profile-name">{`Nome: ${userData.name}`}</p>
-          <p data-testid="profile-email">{`Email: ${userData.email}`}</p>
+          <p data-testid="profile-email">{`Email: ${userData.userEmail}`}</p>
         </div>
       </div>
     </div>

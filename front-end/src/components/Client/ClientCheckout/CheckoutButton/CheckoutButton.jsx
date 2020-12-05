@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProductsContext from '../../../../context/ProductContext';
 import { zero, getCartTotal } from '../../../../utils/products';
-import './checkoutButton.css'
+import './checkoutButton.css';
+
 const CheckoutButton = () => {
   const { productCart, update } = useContext(ProductsContext);
 

@@ -26,7 +26,7 @@ const CheckoutCard = ({
         </span>
         <span>
           <p data-testid={ `${index}-product-unit-price` }>
-            {`(R$ ${price.toFixed(initialFloat).replace('.', ',')}
+            {`(R$ ${parseFloat(price).toFixed(initialFloat).replace('.', ',')}
         un)`}
           </p>
         </span>

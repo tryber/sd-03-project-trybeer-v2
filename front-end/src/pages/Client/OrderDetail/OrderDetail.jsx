@@ -1,54 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Redirect } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import ClientNavBar from '../../../components/Client/ClientNavBar/ClientNavBar';
 import OrderDetailsCard from '../../../components/Client/ClientOrderDetails/OrderDetailsCard';
 
+const getDetails = async (id, token) => {
+  const request = await fetch(`http://localhost:3001/orderDetails/${id}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: token,
+    },
+  }).then((response) => response
+    .json()
+    .then((data) => (response.ok ? Promise.resolve(data) : Promise.reject(data.message))));
+  return request.details;
+};
+
 function OrderDetail() {
   const userData = JSON.parse(localStorage.getItem('user') || '{}');
-  const [details, setDetails] = useState({});
-  const [loading, setLoading] = useState(true);
-  console.log('details', details)
-  const { saleDate = {} } = details;
-  const sqlFormattedDate = (date = '') => {
-    const initialDateIndex = 5;
-    const finalDateIndex = 10;
-    const extractDayAndMonth = date.slice(initialDateIndex, finalDateIndex).split('-').reverse()
-      .join('/');
-    return extractDayAndMonth;
-  };
+  const [details, setDetails] = useState([]);
 
   const { id } = useParams();
-  const url = `http://localhost:3001/sales/search/${id}`;
-  const getDetails = async () => {
-    try {
-      const result = await fetch(url);
-      const json = await result.json();
-      console.log('json', json.sale);
-      return setDetails(json.sale);
-    } catch (error) {
-      return error.message;
-    }
-  };
+  const { token } = userData;
 
-  const requestDetails = async () => getDetails(setDetails);
-  
+  const requestDetails = useCallback(
+    async () => setDetails(await getDetails(id, token)), [id, token],
+  );
+
   useEffect(() => {
-    if (details.saleID) return undefined;
-    setLoading(false);
     requestDetails();
-    return () => {};
   }, [requestDetails, details.saleID]);
 
-  if (!userData.name) return <Redirect to="/login" />;
+  const date = details.map((e) => e.saleInfo[0].sale_date);
 
   return (
     <div>
       <ClientNavBar title="Detalhes de Pedido" />
-      {loading && <h1>Loading...</h1>}
-      {!loading && details.saleID && <OrderDetailsCard
-        object={ details }
-        date={ sqlFormattedDate(saleDate) }
-      />}
+      {details === undefined ? <h1>Loading...</h1>
+        : <OrderDetailsCard
+            details={ details }
+            saleDate={ date }
+        />}
     </div>
   );
 }

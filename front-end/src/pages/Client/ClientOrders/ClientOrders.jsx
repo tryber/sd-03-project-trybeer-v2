@@ -16,7 +16,7 @@ function ClientOrders() {
     setUserId(userData.id);
     if (!userId) return undefined;
     setIsFetching(true);
-    userOrders(userId).then(
+    userOrders(userData.token).then(
       (response) => {
         setOrders(response);
         setIsFetching(false);
@@ -31,24 +31,25 @@ function ClientOrders() {
       setErrors(null);
       setIsFetching(false);
     };
-  }, [userId, userData.id]);
+  }, [userId, userData.id, userData.token]);
 
   if (!userData.name) return <Redirect to="/login" />;
 
   return (
-    <div style={ { display: 'flex', flexDirection: 'column', width: "360px" } }>
+    <div style={ { display: 'flex', flexDirection: 'column', width: '360px' } }>
       <ClientNavBar title="Meus Pedidos" />
-      <div style={{overflowY: "scroll", height: "560px"}}>
-      {errors && <h4>{errors}</h4>}
-      {!isFetching && orders && orders.map((order, index) => (
-        <ClientOrderCard
-          key={ order.id }
-          index={ index }
-          id={ order.id }
-          saleDate={ order.saleDate }
-          totalPrice={ order.totalPrice }
-        />
-      ))}
+      <div style={ { overflowY: 'scroll', height: '560px' } }>
+        {errors && <h4>{errors}</h4>}
+        {!isFetching && orders.products && orders.products.map((order, index) => (
+          <ClientOrderCard
+            key={ order.id }
+            index={ index }
+            id={ order.id }
+            saleDate={ order.saleDate }
+            totalPrice={ order.totalPrice }
+            status={ order.status }
+          />
+        ))}
       </div>
     </div>
   );

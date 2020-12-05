@@ -83,11 +83,9 @@ function Checkout() {
       clearTimeout(timer);
     };
   }, [isSubmit, message]);
-
   if (!userData.name) return <Redirect to="/login" />;
 
   if (redirect) return <Redirect to="/products" />;
-
   return (
     <div>
       <ClientNavBar title="Finalizar Pedido" />
