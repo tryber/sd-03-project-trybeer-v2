@@ -60,7 +60,7 @@ const RegisterPage = () => {
     submitUser(name, email, password, isAdmin).then(
       (response) => {
         setToken(response);
-        // setRedirect(true);
+        setRedirect(true);
       },
       (response) => {
         setError(response);
