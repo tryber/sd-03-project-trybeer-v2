@@ -24,9 +24,8 @@ function App() {
         <ProductProvider>
           <Router>
             <Switch>
-              <Route exact path="/" component={ LoginPage } />
               <Route path="/login" component={ LoginPage } />
-              <Route exact path="/products" component={ ProductsPage } />
+              <Route path="/products" component={ ProductsPage } />
               <Route path="/checkout" component={ CheckoutPage } />
               <Route path="/register" component={ RegisterPage } />
               <Route path="/chat" component={ ClientChat } />
@@ -38,6 +37,7 @@ function App() {
               <Route path="/profile" component={ ClientProfile } />
               <Route path="/orders/:id" component={ OrderDetail } />
               <Route path="/orders" component={ ClientOrders } />
+              <Route path="*" component={ LoginPage } />
             </Switch>
           </Router>
         </ProductProvider>
