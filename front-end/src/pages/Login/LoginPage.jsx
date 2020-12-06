@@ -52,6 +52,10 @@ const LoginPage = () => {
     return role && role === 'administrator' ? <Redirect to="/admin/orders" /> : <Redirect to="/products" />;
   }
 
+  if (window.location.pathname === '/') {
+    return <Redirect to="/login" />;
+  }
+
   return (
     <div style={ { margin: 'auto', height: '640px', display: 'flex' } }>
       <form

@@ -1,5 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Switch, Route,
+} from 'react-router-dom';
 import AuthProvider from './context/AuthContextProvider';
 import ProductProvider from './context/ProductContextProvider';
 import './App.css';
@@ -24,9 +26,9 @@ function App() {
         <ProductProvider>
           <Router>
             <Switch>
-              <Route exact path="/login" component={ LoginPage } />
-              <Route exact path="/" component={ LoginPage } />
-              <Route exact path="/products" component={ ProductsPage } />
+              {/* <Route exact path="/" component={ LoginPage } /> */}
+              <Route path={ '/' || '/login' } component={ LoginPage } />
+              <Route path="/products" component={ ProductsPage } />
               <Route path="/checkout" component={ CheckoutPage } />
               <Route path="/register" component={ RegisterPage } />
               <Route path="/chat" component={ ClientChat } />
