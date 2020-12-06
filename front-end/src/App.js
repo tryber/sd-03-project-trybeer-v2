@@ -26,8 +26,8 @@ function App() {
         <ProductProvider>
           <Router>
             <Switch>
-              {/* <Route exact path="/" component={ LoginPage } /> */}
-              <Route path={ '/' || '/login' } component={ LoginPage } />
+              <Route exact path="/" component={ LoginPage } />
+              <Route path="/login" component={ LoginPage } />
               <Route path="/products" component={ ProductsPage } />
               <Route path="/checkout" component={ CheckoutPage } />
               <Route path="/register" component={ RegisterPage } />
