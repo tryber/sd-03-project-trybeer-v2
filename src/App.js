@@ -24,7 +24,7 @@ function App() {
         <ProductProvider>
           <Router>
             <Switch>
-              <Route path="/login" component={ LoginPage } />
+              <Route path={ '/' || '/login' }  component={ LoginPage } />
               <Route path="/products" component={ ProductsPage } />
               <Route path="/checkout" component={ CheckoutPage } />
               <Route path="/register" component={ RegisterPage } />
@@ -37,7 +37,6 @@ function App() {
               <Route path="/profile" component={ ClientProfile } />
               <Route path="/orders/:id" component={ OrderDetail } />
               <Route path="/orders" component={ ClientOrders } />
-              <Route path="*" component={ LoginPage } />
             </Switch>
           </Router>
         </ProductProvider>
