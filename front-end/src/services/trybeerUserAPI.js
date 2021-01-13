@@ -16,6 +16,7 @@ export const foo = async (email, password) => {
 export { foo as getLoginUser };
 
 export const register = async (name, email, password, role) => {
+  console.log('entrei no postNewUser');
   const data = await axios.post('http://localhost:3001/register', {
     name,
     email,
@@ -30,6 +31,7 @@ export const register = async (name, email, password, role) => {
       const errorMessage = { error: true, err };
       return errorMessage;
     });
+  console.log('recebi ', data);
   return data;
 };
 

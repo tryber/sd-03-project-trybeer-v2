@@ -96,6 +96,7 @@ function Register() {
   const history = useHistory();
 
   const clickToEnter = async () => {
+    console.log('entrei aqui');
     const newUser = await postNewUser(name, email, password, role);
 
     if (newUser.error) {
